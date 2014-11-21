@@ -1,5 +1,5 @@
-#ifndef TETRIS_WINDOW_H
-#define TETRIS_WINDOW_H
+#ifndef TRN_WINDOW_H
+#define TRN_WINDOW_H
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
