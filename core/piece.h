@@ -21,13 +21,13 @@ struct piece
 Piece* tetris_piece_new();
 void tetris_piece_destroy();
 
-void pieceMoveToLeft(Piece* toBeMoved);
-void pieceMoveToRight(Piece* toBeMoved);
-void pieceMoveToBottom(Piece* toBeMoved);
-void pieceMoveToTop(Piece* toBeMoved);
-void pieceRotateClockwise(Piece* toBeRotated);
-void pieceRotateCounterClockwise(Piece* toBeRotated);
-bool samePieces(Piece const left, Piece const right);
-PositionInGrid piecePositionInGrid(Piece* piece, unsigned int squareIndex);
+void trn_piece_move_to_left(Piece* toBeMoved);
+void trn_piece_move_to_right(Piece* toBeMoved);
+void trn_piece_move_to_bottom(Piece* toBeMoved);
+void trn_piece_move_to_top(Piece* toBeMoved);
+void trn_piece_rotate_clockwise(Piece* toBeRotated);
+void trn_piece_rotate_counter_clockwise(Piece* toBeRotated);
+bool trn_piece_equal(Piece const left, Piece const right);
+PositionInGrid trn_piece_position_in_grid(Piece* piece, unsigned int squareIndex);
 
 #endif

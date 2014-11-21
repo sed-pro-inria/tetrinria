@@ -67,22 +67,22 @@ void tetris_game_destroy(Game* game)
 
 bool gameTryToMoveRight(Game* game)
 {
-  return  gameTryToMove(game,pieceMoveToRight,pieceMoveToLeft);
+  return  gameTryToMove(game,trn_piece_move_to_right,trn_piece_move_to_left);
 }
 
 bool gameTryToMoveLeft(Game* game)
 {
-  return gameTryToMove(game,pieceMoveToLeft,pieceMoveToRight);
+  return gameTryToMove(game,trn_piece_move_to_left,trn_piece_move_to_right);
 }
 
 bool gameTryToMoveBottom(Game* game)
 {
-  return gameTryToMove(game,pieceMoveToBottom,pieceMoveToTop);
+  return gameTryToMove(game,trn_piece_move_to_bottom,trn_piece_move_to_top);
 }
 
 bool gameTryToRotateClockwise(Game* game)
 {
-  return gameTryToMove(game,pieceRotateClockwise,pieceRotateCounterClockwise);
+  return gameTryToMove(game,trn_piece_rotate_clockwise,trn_piece_rotate_counter_clockwise);
 }
 
 bool gameTryToMove(Game* game,void (*move)(Piece*),void (*unmove)(Piece*))

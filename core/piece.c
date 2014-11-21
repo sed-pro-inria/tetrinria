@@ -14,44 +14,44 @@ void tetris_piece_destroy(Piece* piece)
   free(piece);
 }
 
-void pieceMoveToLeft(Piece* toBeMoved)
+void trn_piece_move_to_left(Piece* toBeMoved)
 {
   toBeMoved->topLeftCorner.columnIndex--;
 }
 
-void pieceMoveToRight(Piece* toBeMoved)
+void trn_piece_move_to_right(Piece* toBeMoved)
 {
   toBeMoved->topLeftCorner.columnIndex++;
 }
 
-void pieceMoveToBottom(Piece* toBeMoved)
+void trn_piece_move_to_bottom(Piece* toBeMoved)
 {
   toBeMoved->topLeftCorner.rowIndex++;
 }
 
-void pieceMoveToTop(Piece* toBeMoved)
+void trn_piece_move_to_top(Piece* toBeMoved)
 {
   toBeMoved->topLeftCorner.rowIndex--;
 }
 
-void pieceRotateClockwise(Piece* toBeRotated)
+void trn_piece_rotate_clockwise(Piece* toBeRotated)
 {
     toBeRotated->angle = (toBeRotated->angle+1) % TETROMINO_NUMBER_OF_ROTATIONS;
 }
 
-void pieceRotateCounterClockwise(Piece* toBeRotated)
+void trn_piece_rotate_counter_clockwise(Piece* toBeRotated)
 {
     toBeRotated->angle = (toBeRotated->angle+3) % TETROMINO_NUMBER_OF_ROTATIONS;
 }
 
-bool samePieces(Piece const left, Piece const right)
+bool trn_piece_equal(Piece const left, Piece const right)
 {
   return samePositionsInGrid(left.topLeftCorner,right.topLeftCorner) &&
          left.tetromino.type == right.tetromino.type &&
          (left.angle == right.angle);
 }
 
-PositionInGrid piecePositionInGrid(Piece* piece, unsigned int squareIndex)
+PositionInGrid trn_piece_position_in_grid(Piece* piece, unsigned int squareIndex)
 {
     PositionInGrid pos;
     pos.rowIndex = piece->topLeftCorner.rowIndex + 

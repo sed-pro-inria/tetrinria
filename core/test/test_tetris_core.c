@@ -124,10 +124,10 @@ void testPiecePositionInGrid()
     PositionInGrid expectedPos3 = {5,5};
 
     // Actual results
-    PositionInGrid pos0 = piecePositionInGrid(&piece,0);
-    PositionInGrid pos1 = piecePositionInGrid(&piece,1);
-    PositionInGrid pos2 = piecePositionInGrid(&piece,2);
-    PositionInGrid pos3 = piecePositionInGrid(&piece,3);
+    PositionInGrid pos0 = trn_piece_position_in_grid(&piece,0);
+    PositionInGrid pos1 = trn_piece_position_in_grid(&piece,1);
+    PositionInGrid pos2 = trn_piece_position_in_grid(&piece,2);
+    PositionInGrid pos3 = trn_piece_position_in_grid(&piece,3);
 
     // Check actual results versus expected.
     CU_ASSERT( samePositionsInGrid(pos0, expectedPos0) );
@@ -381,9 +381,9 @@ void testPieceMoveToLeft()
   Piece expectedLeftPiece = {{5,2},TETROMINO_I,ANGLE_0};
   
   Piece piece = {{5,3},TETROMINO_I,ANGLE_0};
-  pieceMoveToLeft(&piece);
+  trn_piece_move_to_left(&piece);
   
-  CU_ASSERT( samePieces(piece,expectedLeftPiece) );
+  CU_ASSERT( trn_piece_equal(piece,expectedLeftPiece) );
 }
 
 void testPieceMoveToRight()
@@ -393,9 +393,9 @@ void testPieceMoveToRight()
   Piece expectedRightPiece = {{5,3},TETROMINO_I,ANGLE_0};
   
   Piece piece = {{5,2},TETROMINO_I,ANGLE_0};
-  pieceMoveToRight(&piece);
+  trn_piece_move_to_right(&piece);
   
-  CU_ASSERT( samePieces(piece,expectedRightPiece) );
+  CU_ASSERT( trn_piece_equal(piece,expectedRightPiece) );
 }
 
 void testPieceMoveToBottom()
@@ -405,9 +405,9 @@ void testPieceMoveToBottom()
   Piece expectedBottomPiece = {{6,3},TETROMINO_I,ANGLE_0};
   
   Piece piece = {{5,3},TETROMINO_I,ANGLE_0};
-  pieceMoveToBottom(&piece);
+  trn_piece_move_to_bottom(&piece);
   
-  CU_ASSERT( samePieces(piece,expectedBottomPiece) );
+  CU_ASSERT( trn_piece_equal(piece,expectedBottomPiece) );
 }
 
 void testPieceRotateClockwise()
@@ -421,17 +421,17 @@ void testPieceRotateClockwise()
   
   Piece piece = {{5,3},TETROMINO_I,ANGLE_0};
 
-  pieceRotateClockwise(&piece);
-  CU_ASSERT( samePieces(piece,expectedPiece90) );
+  trn_piece_rotate_clockwise(&piece);
+  CU_ASSERT( trn_piece_equal(piece,expectedPiece90) );
 
-  pieceRotateClockwise(&piece);
-  CU_ASSERT( samePieces(piece,expectedPiece180) );
+  trn_piece_rotate_clockwise(&piece);
+  CU_ASSERT( trn_piece_equal(piece,expectedPiece180) );
 
-  pieceRotateClockwise(&piece);
-  CU_ASSERT( samePieces(piece,expectedPiece270) );
+  trn_piece_rotate_clockwise(&piece);
+  CU_ASSERT( trn_piece_equal(piece,expectedPiece270) );
 
-  pieceRotateClockwise(&piece);
-  CU_ASSERT( samePieces(piece,expectedPiece0) );
+  trn_piece_rotate_clockwise(&piece);
+  CU_ASSERT( trn_piece_equal(piece,expectedPiece0) );
 }
 
 

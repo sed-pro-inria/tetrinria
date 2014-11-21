@@ -71,7 +71,7 @@ void tetris_grid_setCellsWithPiece(Grid* grid, Piece* piece, TetrominoType type)
          squareIndex < TETROMINO_NUMBER_OF_SQUARES ;
          squareIndex++)
     {
-        pos = piecePositionInGrid(piece, squareIndex);
+        pos = trn_piece_position_in_grid(piece, squareIndex);
         tetris_grid_set_cell(grid, pos, type);
     }
 }
@@ -96,7 +96,7 @@ bool tetris_grid_canSetCellsWithPiece(Grid* grid, Piece* piece)
          squareIndex < TETROMINO_NUMBER_OF_SQUARES ;
          squareIndex++)
     {
-        pos = piecePositionInGrid(piece, squareIndex);
+        pos = trn_piece_position_in_grid(piece, squareIndex);
         if (! tetris_grid_cellIsInGridAndIsVoid(grid,pos) ) return false;
     }
 
