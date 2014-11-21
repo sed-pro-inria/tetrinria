@@ -9,12 +9,12 @@ struct positionInGrid
   int rowIndex;
   int columnIndex;
 };
-typedef struct positionInGrid PositionInGrid;
+typedef struct positionInGrid TrnPositionInGrid;
 
-PositionInGrid* tetris_position_in_grid_new(size_t rowIndex, size_t columnIndex);
-void tetris_position_in_grid_destroy(PositionInGrid* position);
+TrnPositionInGrid* trn_position_in_grid_new(size_t rowIndex, size_t columnIndex);
+void trn_position_in_grid_destroy(TrnPositionInGrid* position);
 
-bool samePositionsInGrid(PositionInGrid const left, PositionInGrid const right);
+bool trn_position_in_grid_equal(TrnPositionInGrid const left, TrnPositionInGrid const right);
 
 #endif
 

@@ -16,7 +16,7 @@ install:
 
 script:
   - CTEST_OUTPUT_ON_FAILURE=TRUE make test
-  - valgrind --leak-check=full core/test/test_tetris_core
+  - valgrind --leak-check=full core/test/test_tetrinria_core
   - cd ..
   - cppcheck core 
   - cppcheck gtk

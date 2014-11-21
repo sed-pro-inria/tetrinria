@@ -5,103 +5,103 @@
 
 static size_t numberOfTetrominosSRS = 7;
 
-static TetrominoAllRotations tetrominoIAllRotations = {
+static TrnTetrominoAllRotations tetrominoIAllRotations = {
   { {1,0}, {1,1}, {1,2}, {1,3} },
   { {0,2}, {1,2}, {2,2}, {3,2} },
   { {2,0}, {2,1}, {2,2}, {2,3} },
   { {0,1}, {1,1}, {2,1}, {3,1} } 
 };
 
-static TetrominoAllRotations tetrominoOAllRotations = {
+static TrnTetrominoAllRotations tetrominoOAllRotations = {
   { {1,0}, {2,0}, {1,1}, {2,1} },
   { {1,0}, {2,0}, {1,1}, {2,1} },
   { {1,0}, {2,0}, {1,1}, {2,1} },
   { {1,0}, {2,0}, {1,1}, {2,1} }
 };
 
-static TetrominoAllRotations tetrominoTAllRotations = {
+static TrnTetrominoAllRotations tetrominoTAllRotations = {
   { {0,1}, {1,0}, {1,1}, {1,2} },
   { {0,1}, {1,1}, {1,2}, {2,1} },
   { {1,0}, {1,1}, {1,2}, {2,1} },
   { {0,1}, {1,0}, {1,1}, {2,1} }
 };
 
-static TetrominoAllRotations tetrominoSAllRotations = {
+static TrnTetrominoAllRotations tetrominoSAllRotations = {
   { {0,1}, {0,2}, {1,0}, {1,1} },
   { {0,1}, {1,1}, {1,2}, {2,2} },
   { {1,1}, {1,2}, {2,0}, {2,1} },
   { {0,0}, {1,0}, {1,1}, {2,1} }
 };
 
-static TetrominoAllRotations tetrominoZAllRotations = {
+static TrnTetrominoAllRotations tetrominoZAllRotations = {
   { {0,0}, {0,1}, {1,1}, {1,2} },
   { {0,2}, {1,1}, {1,2}, {2,1} },
   { {1,0}, {1,1}, {2,1}, {2,2} },
   { {0,1}, {1,0}, {1,1}, {2,0} }
 };
 
-static TetrominoAllRotations tetrominoJAllRotations = {
+static TrnTetrominoAllRotations tetrominoJAllRotations = {
   { {0,0}, {1,0}, {1,1}, {1,2} },
   { {0,1}, {0,2}, {1,1}, {2,1} },
   { {1,0}, {1,1}, {1,2}, {2,2} },
   { {0,1}, {1,1}, {2,0}, {2,1} }
 };
 
-static TetrominoAllRotations tetrominoLAllRotations = {
+static TrnTetrominoAllRotations tetrominoLAllRotations = {
   { {0,2}, {1,0}, {1,1}, {1,2} },
   { {0,1}, {1,1}, {2,1}, {2,2} },
   { {1,0}, {1,1}, {1,2}, {2,0} },
   { {0,0}, {0,1}, {1,1}, {2,1} }
 };
 
-static Tetromino tetrominoI;
-static Tetromino tetrominoO;
-static Tetromino tetrominoT;
-static Tetromino tetrominoS;
-static Tetromino tetrominoZ;
-static Tetromino tetrominoJ;
-static Tetromino tetrominoL;
+static TrnTetromino tetrominoI;
+static TrnTetromino tetrominoO;
+static TrnTetromino tetrominoT;
+static TrnTetromino tetrominoS;
+static TrnTetromino tetrominoZ;
+static TrnTetromino tetrominoJ;
+static TrnTetromino tetrominoL;
 
-TetrominosCollection* getTetrominosCollectionSRS()
+TrnTetrominosCollection* getTetrominosCollectionSRS()
 {
-    tetrominoI.color = CYAN;
-    tetrominoI.type = TETROMINO_SRS_I;
-    memcpy(tetrominoI.allRotations, tetrominoIAllRotations, sizeof(TetrominoAllRotations));
+    tetrominoI.color = TRN_CYAN;
+    tetrominoI.type = TRN_TETROMINO_SRS_I;
+    memcpy(tetrominoI.allRotations, tetrominoIAllRotations, sizeof(TrnTetrominoAllRotations));
 
-    tetrominoO.color = YELLOW;
-    tetrominoO.type = TETROMINO_SRS_O;
-    memcpy(tetrominoO.allRotations, tetrominoOAllRotations, sizeof(TetrominoAllRotations));
+    tetrominoO.color = TRN_YELLOW;
+    tetrominoO.type = TRN_TETROMINO_SRS_O;
+    memcpy(tetrominoO.allRotations, tetrominoOAllRotations, sizeof(TrnTetrominoAllRotations));
 
-    tetrominoT.color = PURPLE;
-    tetrominoT.type = TETROMINO_SRS_T;
-    memcpy(tetrominoT.allRotations, tetrominoTAllRotations, sizeof(TetrominoAllRotations));
+    tetrominoT.color = TRN_PURPLE;
+    tetrominoT.type = TRN_TETROMINO_SRS_T;
+    memcpy(tetrominoT.allRotations, tetrominoTAllRotations, sizeof(TrnTetrominoAllRotations));
 
-    tetrominoS.color = GREEN;
-    tetrominoS.type = TETROMINO_SRS_S;
-    memcpy(tetrominoS.allRotations, tetrominoSAllRotations, sizeof(TetrominoAllRotations));
+    tetrominoS.color = TRN_GREEN;
+    tetrominoS.type = TRN_TETROMINO_SRS_S;
+    memcpy(tetrominoS.allRotations, tetrominoSAllRotations, sizeof(TrnTetrominoAllRotations));
 
-    tetrominoZ.color = RED;
-    tetrominoZ.type = TETROMINO_SRS_Z;
-    memcpy(tetrominoZ.allRotations, tetrominoZAllRotations, sizeof(TetrominoAllRotations));
+    tetrominoZ.color = TRN_RED;
+    tetrominoZ.type = TRN_TETROMINO_SRS_Z;
+    memcpy(tetrominoZ.allRotations, tetrominoZAllRotations, sizeof(TrnTetrominoAllRotations));
 
-    tetrominoJ.color = BLUE;
-    tetrominoJ.type = TETROMINO_SRS_J;
-    memcpy(tetrominoJ.allRotations, tetrominoJAllRotations, sizeof(TetrominoAllRotations));
+    tetrominoJ.color = TRN_BLUE;
+    tetrominoJ.type = TRN_TETROMINO_SRS_J;
+    memcpy(tetrominoJ.allRotations, tetrominoJAllRotations, sizeof(TrnTetrominoAllRotations));
 
-    tetrominoL.color = ORANGE;
-    tetrominoL.type = TETROMINO_SRS_L;
-    memcpy(tetrominoL.allRotations, tetrominoLAllRotations, sizeof(TetrominoAllRotations));
+    tetrominoL.color = TRN_ORANGE;
+    tetrominoL.type = TRN_TETROMINO_SRS_L;
+    memcpy(tetrominoL.allRotations, tetrominoLAllRotations, sizeof(TrnTetrominoAllRotations));
 
-    TetrominosCollection* coll = (TetrominosCollection*) malloc(sizeof(TetrominosCollection));
+    TrnTetrominosCollection* coll = (TrnTetrominosCollection*) malloc(sizeof(TrnTetrominosCollection));
     coll->numberOfTetrominos = numberOfTetrominosSRS; 
-    coll->tetrominos = (Tetromino*) malloc(sizeof(Tetromino) * numberOfTetrominosSRS);
-    memcpy(coll->tetrominos+TETROMINO_SRS_I, &tetrominoI, sizeof(Tetromino));
-    memcpy(coll->tetrominos+TETROMINO_SRS_O, &tetrominoO, sizeof(Tetromino));
-    memcpy(coll->tetrominos+TETROMINO_SRS_T, &tetrominoT, sizeof(Tetromino));
-    memcpy(coll->tetrominos+TETROMINO_SRS_S, &tetrominoS, sizeof(Tetromino));
-    memcpy(coll->tetrominos+TETROMINO_SRS_Z, &tetrominoZ, sizeof(Tetromino));
-    memcpy(coll->tetrominos+TETROMINO_SRS_J, &tetrominoJ, sizeof(Tetromino));
-    memcpy(coll->tetrominos+TETROMINO_SRS_L, &tetrominoL, sizeof(Tetromino));
+    coll->tetrominos = (TrnTetromino*) malloc(sizeof(TrnTetromino) * numberOfTetrominosSRS);
+    memcpy(coll->tetrominos+TRN_TETROMINO_SRS_I, &tetrominoI, sizeof(TrnTetromino));
+    memcpy(coll->tetrominos+TRN_TETROMINO_SRS_O, &tetrominoO, sizeof(TrnTetromino));
+    memcpy(coll->tetrominos+TRN_TETROMINO_SRS_T, &tetrominoT, sizeof(TrnTetromino));
+    memcpy(coll->tetrominos+TRN_TETROMINO_SRS_S, &tetrominoS, sizeof(TrnTetromino));
+    memcpy(coll->tetrominos+TRN_TETROMINO_SRS_Z, &tetrominoZ, sizeof(TrnTetromino));
+    memcpy(coll->tetrominos+TRN_TETROMINO_SRS_J, &tetrominoJ, sizeof(TrnTetromino));
+    memcpy(coll->tetrominos+TRN_TETROMINO_SRS_L, &tetrominoL, sizeof(TrnTetromino));
 
     return coll;
 }

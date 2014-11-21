@@ -7,28 +7,28 @@
 #include "piece.h"
 
 typedef struct grid {
-    TetrominoType** tetrominoTypes;
+    TrnTetrominoType** tetrominoTypes;
     unsigned int numberOfRows;
     unsigned int numberOfColumns;
-} Grid;
+} TrnGrid;
 
-Grid* tetris_grid_new(unsigned int numberOfRows, unsigned int numberOfColumns);
-void tetris_grid_destroy(Grid* grid);
+TrnGrid* trn_grid_new(unsigned int numberOfRows, unsigned int numberOfColumns);
+void trn_grid_destroy(TrnGrid* grid);
 
-void tetris_grid_clear(Grid* grid);
-void tetris_grid_set_cell(Grid* grid, PositionInGrid pos, TetrominoType type);
-TetrominoType tetris_grid_get_cell(Grid* grid, PositionInGrid pos);
-void tetris_grid_setCellsWithPiece(Grid* grid, Piece* piece, TetrominoType type);
+void trn_grid_clear(TrnGrid* grid);
+void trn_grid_set_cell(TrnGrid* grid, TrnPositionInGrid pos, TrnTetrominoType type);
+TrnTetrominoType trn_grid_get_cell(TrnGrid* grid, TrnPositionInGrid pos);
+void trn_grid_set_cells_with_piece(TrnGrid* grid, TrnPiece* piece, TrnTetrominoType type);
 
-bool tetris_grid_cellIsInGrid(Grid* grid, PositionInGrid pos);
+bool trn_grid_cell_is_in_grid(TrnGrid* grid, TrnPositionInGrid pos);
 
-bool tetris_grid_cellIsInGridAndIsVoid(Grid* grid, PositionInGrid pos);
-bool tetris_grid_canSetCellsWithPiece(Grid* grid, Piece* piece);
+bool trn_grid_cell_is_in_grid_and_is_void(TrnGrid* grid, TrnPositionInGrid pos);
+bool trn_grid_can_set_cells_with_piece(TrnGrid* grid, TrnPiece* piece);
 
-bool tetris_grid_sameGrids(Grid const * const left, Grid const * const right);
+bool trn_grid_equal(TrnGrid const * const left, TrnGrid const * const right);
 
-void tetris_grid_print(Grid const * const grid);
+void trn_grid_print(TrnGrid const * const grid);
 
-bool tetris_is_last_row_complete(Grid const * const grid);
+bool trn_is_last_row_complete(TrnGrid const * const grid);
 
 #endif

@@ -3,7 +3,7 @@
 #include <malloc.h>
 
 
-void fill_cell(cairo_t *cr, RGBColor color, unsigned i, unsigned j)
+void fill_cell(cairo_t *cr, TrnRGBColor color, unsigned i, unsigned j)
 {
   const int line_width = 2;
   double x = j * NPIXELS + line_width;
@@ -23,9 +23,9 @@ void fill_cell(cairo_t *cr, RGBColor color, unsigned i, unsigned j)
 gint on_timeout_event(gpointer data)
 {
   TetrisGUI* self = (TetrisGUI*)data;
-  if (! gameTryToMoveBottom(self->game) )
-    gameNewPiece(self->game);
-  tetris_window_refresh(self->window);
+  if (! trn_game_try_to_move_bottom(self->game) )
+    trn_game_new_piece(self->game);
+  trn_window_refresh(self->window);
   g_timeout_add(500,on_timeout_event,(gpointer)self);
   return 0;
 }
@@ -36,17 +36,17 @@ gboolean on_preview_expose_event(GtkWidget* preview,GdkEventExpose* event, Tetri
 
   size_t rowIndex, columnIndex;
 
-  for ( rowIndex = 0; rowIndex < TETROMINO_NUMBER_OF_SQUARES; ++rowIndex )
+  for ( rowIndex = 0; rowIndex < TRN_TETROMINO_NUMBER_OF_SQUARES; ++rowIndex )
   {
-    for ( columnIndex = 0; columnIndex < TETROMINO_NUMBER_OF_SQUARES; ++columnIndex)
+    for ( columnIndex = 0; columnIndex < TRN_TETROMINO_NUMBER_OF_SQUARES; ++columnIndex)
     {
-      fill_cell(cr,WHITE,rowIndex,columnIndex);
+      fill_cell(cr,TRN_WHITE,rowIndex,columnIndex);
     }
   }
 
   size_t squareIndex;
-  PositionInGrid* position = gui->game->piece->tetromino.allRotations[ANGLE_0];
-  for (squareIndex=0;squareIndex<TETROMINO_NUMBER_OF_SQUARES;++squareIndex)
+  TrnPositionInGrid* position = gui->game->piece->tetromino.allRotations[TRN_ANGLE_0];
+  for (squareIndex=0;squareIndex<TRN_TETROMINO_NUMBER_OF_SQUARES;++squareIndex)
   {
     rowIndex = position[squareIndex].rowIndex;
     columnIndex = position[squareIndex].columnIndex;
@@ -60,20 +60,20 @@ gboolean on_matrix_expose_event(GtkWidget *matrix,GdkEventExpose *event, TetrisG
 {
   cairo_t* cr = gdk_cairo_create(matrix->window);
 
-  Grid* grid = gui->game->grid;
-  RGBColor color;
+  TrnGrid* grid = gui->game->grid;
+  TrnRGBColor color;
 
   unsigned int irow, icol;
   for (irow = 0; irow < grid->numberOfRows; irow++) {
     for (icol = 0; icol < grid->numberOfColumns; icol++) {
-      PositionInGrid pos;
+      TrnPositionInGrid pos;
       pos.rowIndex = irow;
       pos.columnIndex = icol;
-      TetrominoType type = tetris_grid_get_cell(grid,pos);
-      if (type == TETROMINO_VOID)
-          color = WHITE;
+      TrnTetrominoType type = trn_grid_get_cell(grid,pos);
+      if (type == TRN_TETROMINO_VOID)
+          color = TRN_WHITE;
       else
-          color = gui->game->tetrominosCollection->tetrominos[type].color;
+          color = gui->game->tetrominos_collection->tetrominos[type].color;
       fill_cell(cr, color, irow, icol);
     }
   }
@@ -88,30 +88,30 @@ gboolean on_key_press_event(GtkWidget *window,
 
   switch (event->keyval) {
   case GDK_Left:
-    gameTryToMoveLeft(gui->game);
+    trn_game_try_to_move_left(gui->game);
     break;
   case GDK_Right:
-    gameTryToMoveRight(gui->game);
+    trn_game_try_to_move_right(gui->game);
     break;
   case GDK_Up:
-    gameTryToRotateClockwise(gui->game);
+    trn_game_try_to_rotate_clockwise(gui->game);
     break;
   case GDK_Down:
-    if (!gameTryToMoveBottom(gui->game))
-      gameNewPiece(gui->game);
+    if (!trn_game_try_to_move_bottom(gui->game))
+      trn_game_new_piece(gui->game);
     break;
   case GDK_KEY_space:
     while (true) {
-        if (! gameTryToMoveBottom(gui->game))
+        if (! trn_game_try_to_move_bottom(gui->game))
             break;
     }
-    gameNewPiece(gui->game);
+    trn_game_new_piece(gui->game);
     break;
 
     break;
   }
 
-  tetris_window_refresh(gui->window);
+  trn_window_refresh(gui->window);
   
   return TRUE;
 }
@@ -119,44 +119,40 @@ gboolean on_key_press_event(GtkWidget *window,
 gboolean button_newgame_clicked(GtkWidget *widget, TetrisGUI* gui) {
   size_t numberOfRows = gui->game->grid->numberOfRows;
   size_t numberOfColumns = gui->game->grid->numberOfColumns;
-  tetris_game_destroy(gui->game);
-  gui->game = tetris_game_new(numberOfRows,numberOfColumns);
+  trn_game_destroy(gui->game);
+  gui->game = trn_game_new(numberOfRows,numberOfColumns);
   return TRUE;
 }
 
 gboolean button_pause_clicked(GtkWidget *widget, TetrisGUI* gui) {
-  if (gui->game->status == GAME_ON)
-    gui->game->status = GAME_PAUSED;
-  else if (gui->game->status == GAME_PAUSED)
-    gui->game->status = GAME_ON;
+  if (gui->game->status == TRN_GAME_ON)
+    gui->game->status = TRN_GAME_PAUSED;
+  else if (gui->game->status == TRN_GAME_PAUSED)
+    gui->game->status = TRN_GAME_ON;
   return TRUE;
 }
 
-TetrisGUI* tetris_gui_new(size_t numberOfRows, size_t numberOfColumns)
+TetrisGUI* trn_gui_new(size_t numberOfRows, size_t numberOfColumns)
 {
 
   TetrisGUI* gui = (TetrisGUI*)malloc(sizeof(TetrisGUI));
 
-  gui->game = tetris_game_new(numberOfRows,numberOfColumns);
+  gui->game = trn_game_new(numberOfRows,numberOfColumns);
 
-  gui->window = tetris_window_new(numberOfRows,numberOfColumns);
+  gui->window = trn_window_new(numberOfRows,numberOfColumns);
   
   g_signal_connect(gui->window->newGameButton, "clicked", G_CALLBACK(button_newgame_clicked), gui);
   g_signal_connect(gui->window->pauseButton, "clicked", G_CALLBACK(button_pause_clicked), gui);
 
-  tetris_window_show(gui->window);
+  trn_window_show(gui->window);
   g_timeout_add(500,on_timeout_event,(gpointer)gui);
 
   return gui;
 }
 
-
-void tetris_gui_destroy(TetrisGUI* gui)
+void trn_gui_destroy(TetrisGUI* gui)
 {
-  tetris_game_destroy(gui->game);
-  tetris_window_destroy(gui->window);
+  trn_game_destroy(gui->game);
+  trn_window_destroy(gui->window);
   free(gui);
 }
-
-
-

@@ -1,8 +1,8 @@
-add_executable(test_tetris_gtk test_tetris_gtk.c)
-target_link_libraries(test_tetris_gtk 
-    ${TETRIS_CORE_LIBRARY}
-    #${TETRIS_GTK_LIBRARY}
+add_executable(test_tetrinria_gtk test_tetrinria_gtk.c)
+target_link_libraries(test_tetrinria_gtk 
+    ${TETRINRIA_CORE_LIBRARY}
+    #${TETRINRIA_GTK_LIBRARY}
     cunit
 )
 
-add_test(test_tetris_gtk ${EXECUTABLE_OUTPUT_PATH}/test_tetris_gtk)
+add_test(test_tetrinria_gtk ${EXECUTABLE_OUTPUT_PATH}/test_tetrinria_gtk)

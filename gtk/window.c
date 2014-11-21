@@ -4,7 +4,7 @@
 
 #include <malloc.h>
 
-void tetris_window_refresh(TetrisWindow* window)
+void trn_window_refresh(TetrisWindow* window)
 {
   gtk_widget_queue_draw(window->base);
 }
@@ -12,7 +12,7 @@ void tetris_window_refresh(TetrisWindow* window)
 
 
 
-TetrisWindow* tetris_window_new(size_t numberOfRows, size_t numberOfColumns)
+TetrisWindow* trn_window_new(size_t numberOfRows, size_t numberOfColumns)
 {
   TetrisWindow* window = (TetrisWindow*)malloc(sizeof(TetrisWindow));
 
@@ -47,12 +47,12 @@ TetrisWindow* tetris_window_new(size_t numberOfRows, size_t numberOfColumns)
   return window;
 }
 
-void tetris_window_destroy(TetrisWindow* window)
+void trn_window_destroy(TetrisWindow* window)
 {
   
 }
 
-void tetris_window_show(TetrisWindow* window)
+void trn_window_show(TetrisWindow* window)
 {
   gtk_widget_show(window->preview);
   gtk_widget_show(window->pauseButton);

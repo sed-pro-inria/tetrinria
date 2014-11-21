@@ -8,18 +8,18 @@ struct rgbColor {
   float green;
   float blue;
 };
-typedef struct rgbColor RGBColor;
+typedef struct rgbColor TrnRGBColor;
 
-extern RGBColor const WHITE;
-extern RGBColor const RED;
-extern RGBColor const GREEN;
-extern RGBColor const BLUE;
-extern RGBColor const YELLOW;
-extern RGBColor const ORANGE;
-extern RGBColor const TURQUOISE;
-extern RGBColor const PURPLE;
-extern RGBColor const CYAN;
+extern TrnRGBColor const TRN_WHITE;
+extern TrnRGBColor const TRN_RED;
+extern TrnRGBColor const TRN_GREEN;
+extern TrnRGBColor const TRN_BLUE;
+extern TrnRGBColor const TRN_YELLOW;
+extern TrnRGBColor const TRN_ORANGE;
+extern TrnRGBColor const TRN_TURQUOISE;
+extern TrnRGBColor const TRN_PURPLE;
+extern TrnRGBColor const TRN_CYAN;
 
-bool sameColors(RGBColor const left, RGBColor const right);
+bool sameColors(TrnRGBColor const left, TrnRGBColor const right);
 
 #endif

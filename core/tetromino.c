@@ -2,11 +2,11 @@
 
 #include "tetromino.h"
 
-TetrominoType const TETROMINO_VOID = 100;
+TrnTetrominoType const TRN_TETROMINO_VOID = 100;
 
-Tetromino* tetris_tetromino_new(RGBColor const color, TetrominoType const type)
+TrnTetromino* trn_tetromino_new(TrnRGBColor const color, TrnTetrominoType const type)
 {
-  Tetromino* tetromino = (Tetromino*)malloc(sizeof(Tetromino));
+  TrnTetromino* tetromino = (TrnTetromino*)malloc(sizeof(TrnTetromino));
   
   tetromino->color = color;
   tetromino->type = type;
@@ -14,7 +14,7 @@ Tetromino* tetris_tetromino_new(RGBColor const color, TetrominoType const type)
   return tetromino;
 }
 
-void tetrominosCollectionDestroy(TetrominosCollection* coll)
+void tetrominos_collection_destroy(TrnTetrominosCollection* coll)
 {
     free(coll->tetrominos);
     free(coll);

@@ -10,24 +10,23 @@
 
 #define SPACE_DIMENSION 2
 
-typedef struct piece Piece;
-struct piece
+typedef struct piece
 {
-  PositionInGrid topLeftCorner;
-  Tetromino tetromino;
+  TrnPositionInGrid topLeftCorner;
+  TrnTetromino tetromino;
   size_t angle;
-};
+} TrnPiece;
 
-Piece* tetris_piece_new();
-void tetris_piece_destroy();
+TrnPiece* trn_piece_new();
+void trn_piece_destroy();
 
-void trn_piece_move_to_left(Piece* toBeMoved);
-void trn_piece_move_to_right(Piece* toBeMoved);
-void trn_piece_move_to_bottom(Piece* toBeMoved);
-void trn_piece_move_to_top(Piece* toBeMoved);
-void trn_piece_rotate_clockwise(Piece* toBeRotated);
-void trn_piece_rotate_counter_clockwise(Piece* toBeRotated);
-bool trn_piece_equal(Piece const left, Piece const right);
-PositionInGrid trn_piece_position_in_grid(Piece* piece, unsigned int squareIndex);
+void trn_piece_move_to_left(TrnPiece* toBeMoved);
+void trn_piece_move_to_right(TrnPiece* toBeMoved);
+void trn_piece_move_to_bottom(TrnPiece* toBeMoved);
+void trn_piece_move_to_top(TrnPiece* toBeMoved);
+void trn_piece_rotate_clockwise(TrnPiece* toBeRotated);
+void trn_piece_rotate_counter_clockwise(TrnPiece* toBeRotated);
+bool trn_piece_equal(TrnPiece const left, TrnPiece const right);
+TrnPositionInGrid trn_piece_position_in_grid(TrnPiece* piece, unsigned int squareIndex);
 
 #endif

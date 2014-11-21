@@ -5,105 +5,105 @@
 #include "tetromino_srs.h"
 #include <time.h>
 
-static TetrominoType getRandomTetrominoType(Game* game)
+static TrnTetrominoType getRandomTrnTetrominoType(Game* game)
 {
 #ifdef WITH_MOCK
-    static size_t noMoreRandomTetrominoTypeIndex = 0;
-    size_t numberOfNoMoreRandomTetrominoType = 2;
-    TetrominoType noMoreRandomTetrominoType[2] = 
-      {TETROMINO_SRS_J, TETROMINO_SRS_L};
+    static size_t tetromino_type_index = 0;
+    size_t number_of_tetromino_type = 2;
+    TrnTetrominoType mocked_tetromino_type[2] = 
+      {TRN_TETROMINO_SRS_J, TRN_TETROMINO_SRS_L};
 
-    TetrominoType tetrominoType = 
-      noMoreRandomTetrominoType[noMoreRandomTetrominoTypeIndex];
-    noMoreRandomTetrominoTypeIndex = (noMoreRandomTetrominoTypeIndex + 1) % 
-                                     numberOfNoMoreRandomTetrominoType;
+    TrnTetrominoType tetrominoType = 
+      mocked_tetromino_type[tetromino_type_index];
+    tetromino_type_index = (tetromino_type_index + 1) % 
+                                     number_of_tetromino_type;
     return tetrominoType;
 #else
-    return rand() % game->tetrominosCollection->numberOfTetrominos;
+    return rand() % game->tetrominos_collection->numberOfTetrominos;
 #endif
 }
 
-void gameNewPiece(Game* game)
+void trn_game_new_piece(Game* game)
 {
-  if (game->status != GAME_ON)
+  if (game->status != TRN_GAME_ON)
      return;
 
   game->piece->topLeftCorner.rowIndex = 0;
   game->piece->topLeftCorner.columnIndex = (game->grid->numberOfColumns - 
-                                          TETROMINO_GRID_SIZE)/2;
-  game->piece->angle = ANGLE_0;
+                                          TRN_TETROMINO_GRID_SIZE)/2;
+  game->piece->angle = TRN_ANGLE_0;
   
-  TetrominoType type = getRandomTetrominoType(game);
-  game->piece->tetromino = game->tetrominosCollection->tetrominos[type];
+  TrnTetrominoType type = getRandomTrnTetrominoType(game);
+  game->piece->tetromino = game->tetrominos_collection->tetrominos[type];
   
-  if ( tetris_grid_canSetCellsWithPiece(game->grid,game->piece) )
-    tetris_grid_setCellsWithPiece(game->grid, game->piece, game->piece->tetromino.type);
+  if ( trn_grid_can_set_cells_with_piece(game->grid,game->piece) )
+    trn_grid_set_cells_with_piece(game->grid, game->piece, game->piece->tetromino.type);
   else
-    game->status = GAME_OVER;
+    game->status = TRN_GAME_OVER;
 }
 
-Game* tetris_game_new(size_t numberOfRows, size_t numberOfColumns)
+Game* trn_game_new(size_t numberOfRows, size_t numberOfColumns)
 {
     srand(time(NULL));
     Game* game = (Game*) malloc(sizeof(Game));
-    game->status = GAME_ON;
-    game->grid = tetris_grid_new(numberOfRows, numberOfColumns);
-    game->tetrominosCollection = getTetrominosCollectionSRS();
+    game->status = TRN_GAME_ON;
+    game->grid = trn_grid_new(numberOfRows, numberOfColumns);
+    game->tetrominos_collection = getTetrominosCollectionSRS();
 
     // Initialize piece
-    game->piece = (Piece*) malloc(sizeof(Piece));
-    gameNewPiece(game);
+    game->piece = (TrnPiece*) malloc(sizeof(TrnPiece));
+    trn_game_new_piece(game);
 
     return game;
 }
 
-void tetris_game_destroy(Game* game)
+void trn_game_destroy(Game* game)
 {
-    free(game->tetrominosCollection);
+    free(game->tetrominos_collection);
     free(game->piece);
-    tetris_grid_destroy(game->grid);
+    trn_grid_destroy(game->grid);
     free(game);
 }
 
-bool gameTryToMoveRight(Game* game)
+bool trn_game_try_to_move_right(Game* game)
 {
-  return  gameTryToMove(game,trn_piece_move_to_right,trn_piece_move_to_left);
+  return  trn_game_try_to_move(game,trn_piece_move_to_right,trn_piece_move_to_left);
 }
 
-bool gameTryToMoveLeft(Game* game)
+bool trn_game_try_to_move_left(Game* game)
 {
-  return gameTryToMove(game,trn_piece_move_to_left,trn_piece_move_to_right);
+  return trn_game_try_to_move(game,trn_piece_move_to_left,trn_piece_move_to_right);
 }
 
-bool gameTryToMoveBottom(Game* game)
+bool trn_game_try_to_move_bottom(Game* game)
 {
-  return gameTryToMove(game,trn_piece_move_to_bottom,trn_piece_move_to_top);
+  return trn_game_try_to_move(game,trn_piece_move_to_bottom,trn_piece_move_to_top);
 }
 
-bool gameTryToRotateClockwise(Game* game)
+bool trn_game_try_to_rotate_clockwise(Game* game)
 {
-  return gameTryToMove(game,trn_piece_rotate_clockwise,trn_piece_rotate_counter_clockwise);
+  return trn_game_try_to_move(game,trn_piece_rotate_clockwise,trn_piece_rotate_counter_clockwise);
 }
 
-bool gameTryToMove(Game* game,void (*move)(Piece*),void (*unmove)(Piece*))
+bool trn_game_try_to_move(Game* game,void (*move)(TrnPiece*),void (*unmove)(TrnPiece*))
 {
-  if (game->status != GAME_ON)
+  if (game->status != TRN_GAME_ON)
      return false;
 
   bool managedToMove = true;
 
-  tetris_grid_setCellsWithPiece(game->grid, 
+  trn_grid_set_cells_with_piece(game->grid, 
                         game->piece,
-                        TETROMINO_VOID);
+                        TRN_TETROMINO_VOID);
 
   move(game->piece);
 
-  if (! tetris_grid_canSetCellsWithPiece(game->grid, game->piece)) {
+  if (! trn_grid_can_set_cells_with_piece(game->grid, game->piece)) {
       managedToMove = false;
       unmove(game->piece);
   }
 
-  tetris_grid_setCellsWithPiece(game->grid, 
+  trn_grid_set_cells_with_piece(game->grid, 
                         game->piece,
                         game->piece->tetromino.type);
 
