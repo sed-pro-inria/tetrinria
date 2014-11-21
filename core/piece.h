@@ -1,5 +1,5 @@
-#ifndef TETRIS_PIECE_H
-#define TETRIS_PIECE_H
+#ifndef TRN_PIECE_H
+#define TRN_PIECE_H
 
 #include <stddef.h>
 #include <stdbool.h>

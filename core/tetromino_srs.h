@@ -1,5 +1,5 @@
-#ifndef TETRIS_TETROMINO_SRS_H
-#define TETRIS_TETROMINO_SRS_H
+#ifndef TRN_TETROMINO_SRS_H
+#define TRN_TETROMINO_SRS_H
 
 #include "tetromino.h"
 

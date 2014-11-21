@@ -1,5 +1,5 @@
-#ifndef TETRIS_POSITION_IN_GRID_H
-#define TETRIS_POSITION_IN_GRID_H
+#ifndef TRN_POSITION_IN_GRID_H
+#define TRN_POSITION_IN_GRID_H
 
 #include <stdbool.h>
 #include <stddef.h>

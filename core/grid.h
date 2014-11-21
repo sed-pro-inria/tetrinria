@@ -1,5 +1,5 @@
-#ifndef TETRIS_GRID_H
-#define TETRIS_GRID_H
+#ifndef TRN_GRID_H
+#define TRN_GRID_H
 
 #include <stdbool.h>
 

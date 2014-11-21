@@ -1,5 +1,5 @@
-#ifndef TETRIS_GAME_H
-#define TETRIS_GAME_H
+#ifndef TRN_GAME_H
+#define TRN_GAME_H
 
 #include "grid.h"
 #include "piece.h"
