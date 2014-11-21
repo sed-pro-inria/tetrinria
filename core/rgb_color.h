@@ -1,5 +1,5 @@
-#ifndef TETRIS_RGB_COLOR_H
-#define TETRIS_RGB_COLOR_H
+#ifndef TRN_RGB_COLOR_H
+#define TRN_RGB_COLOR_H
 
 #include <stdbool.h>
 

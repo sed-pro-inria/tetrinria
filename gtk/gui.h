@@ -1,5 +1,5 @@
-#ifndef TETRIS_APPLICATION_H
-#define TETRIS_APPLICATION_H
+#ifndef TRN_APPLICATION_H
+#define TRN_APPLICATION_H
 
 #include "game.h"
 #include "window.h"

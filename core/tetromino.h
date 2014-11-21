@@ -1,5 +1,5 @@
-#ifndef TETRIS_TETROMINO_H
-#define TETRIS_TETROMINO_H
+#ifndef TRN_TETROMINO_H
+#define TRN_TETROMINO_H
 
 #include <stdbool.h>
 #include <stddef.h>
