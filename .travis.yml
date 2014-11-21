@@ -8,11 +8,15 @@ compiler:
 
 install:
   - sudo apt-get update
-  - sudo apt-get install cmake libgtk2.0-dev libcunit1-dev
+  - sudo apt-get install cmake libgtk2.0-dev libcunit1-dev cppcheck valingrind
   - mkdir build_test
   - cd build_test
   - cmake -DCMAKE_BUILD_TYPE=TEST ..
-  - make
+  - VERBOSE=1 make
 
 script:
   - CTEST_OUTPUT_ON_FAILURE=TRUE make test
+  - valgrind --leak-check=full core/test/test_tetris_core
+  - cd ..
+  - cppcheck core 
+  - cppcheck gtk
