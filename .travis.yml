@@ -1,0 +1,18 @@
+os:
+  - linux
+
+language: c
+
+compiler:
+  - gcc
+
+install:
+  - sudo apt-get update
+  - sudo apt-get install cmake libgtk2.0-dev libcunit1
+  - mkdir build_test
+  - cd build_test
+  - cmake -DCMAKE_BUILD_TYPE=TEST ..
+  - make
+
+script:
+  - CTEST_OUTPUT_ON_FAILURE=TRUE make test
