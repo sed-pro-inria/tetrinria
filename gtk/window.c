@@ -64,7 +64,7 @@ void trn_window_show(TrnWindow* window)
   gtk_widget_show(window->base);
 }
 
-void trn_window_update_score(TrnWindow* window, size_t score) 
+void trn_window_update_score(TrnWindow* window, int score) 
 {
   char score_text[255];
   sprintf(score_text, "Score: %u", score);
