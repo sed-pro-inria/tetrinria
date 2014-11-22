@@ -8,8 +8,8 @@
 static TrnTetrominoType getRandomTrnTetrominoType(Game* game)
 {
 #ifdef WITH_MOCK
-    static size_t tetromino_type_index = 0;
-    size_t number_of_tetromino_type = 2;
+    static int tetromino_type_index = 0;
+    int number_of_tetromino_type = 2;
     TrnTetrominoType mocked_tetromino_type[2] = 
       {TRN_TETROMINO_J, TRN_TETROMINO_L};
 
@@ -43,7 +43,7 @@ void trn_game_new_piece(Game* game)
     game->status = TRN_GAME_OVER;
 }
 
-Game* trn_game_new(size_t numberOfRows, size_t numberOfColumns)
+Game* trn_game_new(int numberOfRows, int numberOfColumns)
 {
     srand(time(NULL));
     Game* game = (Game*) malloc(sizeof(Game));

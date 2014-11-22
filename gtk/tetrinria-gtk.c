@@ -12,8 +12,8 @@
 
 int main(int argc, char* argv[]) 
 {
-  size_t const numberOfRows = 20;
-  size_t const numberOfColumns = 10;
+  int const numberOfRows = 20;
+  int const numberOfColumns = 10;
 
   gtk_init(&argc, &argv);
   trn_init();

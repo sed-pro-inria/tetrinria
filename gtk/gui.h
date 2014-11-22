@@ -11,7 +11,7 @@ typedef struct
   Game* game;
 } TrnGUI;
 
-TrnGUI* trn_gui_new(size_t numberOfRows, size_t numberOfColumns);
+TrnGUI* trn_gui_new(int numberOfRows, int numberOfColumns);
 void trn_gui_destroy(TrnGUI* gui);
 gboolean on_key_press_event(GtkWidget *window,
                             GdkEventKey *event,

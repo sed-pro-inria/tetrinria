@@ -10,11 +10,11 @@ typedef struct game {
     TrnGameStatus status;
     TrnGrid* grid;
     TrnPiece* piece;
-    size_t score;
+    int score;
 } Game;
 
 void trn_game_new_piece(Game* game);
-Game* trn_game_new(size_t numberOfRows, size_t numberOfColumns);
+Game* trn_game_new(int numberOfRows, int numberOfColumns);
 void trn_game_destroy(Game* game);
 
 bool trn_game_try_to_move(Game* game,

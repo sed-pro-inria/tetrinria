@@ -11,8 +11,8 @@ TrnPiece* trn_piece_new(TrnTetrominoType const type)
 }
 
 TrnPiece trn_piece_create(TrnTetrominoType const type,
-                          size_t topLeftCornerRowIndex,
-                          size_t topLeftCornerColumIndex,
+                          int topLeftCornerRowIndex,
+                          int topLeftCornerColumIndex,
                           TrnTetrominoRotationAngle angle)
 {
     TrnPiece piece;
@@ -66,7 +66,7 @@ bool trn_piece_equal(TrnPiece const left, TrnPiece const right)
 }
 
 TrnPositionInGrid trn_piece_position_in_grid(TrnPiece* piece, 
-                                             unsigned int squareIndex)
+                                             int squareIndex)
 {
     const TrnTetrominoRotation rotation = 
         TRN_ALL_TETROMINO_FOUR_ROTATIONS[piece->type][piece->angle];

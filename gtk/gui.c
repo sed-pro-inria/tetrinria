@@ -3,7 +3,7 @@
 #include <malloc.h>
 
 
-void fill_cell(cairo_t *cr, TrnRGBColor color, unsigned i, unsigned j)
+void fill_cell(cairo_t *cr, TrnRGBColor color, int i, int j)
 {
   const int line_width = 2;
   double x = j * NPIXELS + line_width;
@@ -37,7 +37,7 @@ gboolean on_preview_expose_event(GtkWidget* preview,GdkEventExpose* event, TrnGU
 {
   cairo_t* cr = gdk_cairo_create(preview->window);
 
-  size_t rowIndex, columnIndex;
+  int rowIndex, columnIndex;
 
   for ( rowIndex = 0; rowIndex < TRN_TETROMINO_NUMBER_OF_SQUARES; ++rowIndex )
   {
@@ -47,7 +47,7 @@ gboolean on_preview_expose_event(GtkWidget* preview,GdkEventExpose* event, TrnGU
     }
   }
 
-  size_t squareIndex;
+  int squareIndex;
 
   TrnPiece* piece = gui->game->piece;
 
@@ -73,7 +73,7 @@ gboolean on_matrix_expose_event(GtkWidget *matrix,GdkEventExpose *event, TrnGUI*
   TrnGrid* grid = gui->game->grid;
   TrnRGBColor color;
 
-  unsigned int irow, icol;
+  int irow, icol;
   for (irow = 0; irow < grid->numberOfRows; irow++) {
     for (icol = 0; icol < grid->numberOfColumns; icol++) {
       TrnPositionInGrid pos;
@@ -131,8 +131,8 @@ gboolean on_key_press_event(GtkWidget *window,
 }
 
 gboolean button_newgame_clicked(GtkWidget *widget, TrnGUI* gui) {
-  size_t numberOfRows = gui->game->grid->numberOfRows;
-  size_t numberOfColumns = gui->game->grid->numberOfColumns;
+  int numberOfRows = gui->game->grid->numberOfRows;
+  int numberOfColumns = gui->game->grid->numberOfColumns;
   trn_game_destroy(gui->game);
   gui->game = trn_game_new(numberOfRows,numberOfColumns);
   return TRUE;
@@ -146,7 +146,7 @@ gboolean button_pause_clicked(GtkWidget *widget, TrnGUI* gui) {
   return TRUE;
 }
 
-TrnGUI* trn_gui_new(size_t numberOfRows, size_t numberOfColumns)
+TrnGUI* trn_gui_new(int numberOfRows, int numberOfColumns)
 {
 
   TrnGUI* gui = (TrnGUI*)malloc(sizeof(TrnGUI));
@@ -174,7 +174,7 @@ void trn_gui_destroy(TrnGUI* gui)
 
 void trn_gui_score_complete_rows(TrnGUI* gui)
 {
-  size_t row_index;
+  int row_index;
 
   for ( row_index=0; row_index<gui->game->grid->numberOfRows; ++row_index)
   {

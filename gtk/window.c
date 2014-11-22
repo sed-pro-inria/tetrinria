@@ -11,7 +11,7 @@ void trn_window_refresh(TrnWindow* window)
 
 
 
-TrnWindow* trn_window_new(size_t numberOfRows, size_t numberOfColumns)
+TrnWindow* trn_window_new(int numberOfRows, int numberOfColumns)
 {
   TrnWindow* window = (TrnWindow*)malloc(sizeof(TrnWindow));
 
