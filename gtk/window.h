@@ -18,10 +18,10 @@ typedef struct {
   GtkWidget* preview;
 } TrnWindow;
 
-TrnWindow* trn_window_new(int numberOfRows,int numberOfColumns);
-void trn_window_destroy(TrnWindow* window);
-void trn_window_show(TrnWindow* window);
-void trn_window_refresh(TrnWindow* window);
-void trn_window_update_score(TrnWindow* window, int score);
+TrnWindow* trn_window_new(int const numberOfRows, int const numberOfColumns);
+void trn_window_destroy(TrnWindow * window);
+void trn_window_show(TrnWindow  const *  const window);
+void trn_window_refresh(TrnWindow const * const window);
+void trn_window_update_score(TrnWindow const * const window, int const score);
 
 #endif

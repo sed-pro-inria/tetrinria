@@ -3,26 +3,22 @@
 
 #include <malloc.h>
 
-void trn_window_refresh(TrnWindow* window)
-{
-  gtk_widget_queue_draw(window->base);
-}
 
-
-
-
-TrnWindow* trn_window_new(int numberOfRows, int numberOfColumns)
+TrnWindow* trn_window_new(int const numberOfRows, int const numberOfColumns)
 {
   TrnWindow* window = (TrnWindow*)malloc(sizeof(TrnWindow));
 
   window->base = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  g_signal_connect(G_OBJECT(window->base), "destroy", G_CALLBACK(gtk_main_quit), NULL);
+  g_signal_connect(G_OBJECT(window->base), "destroy",
+                   G_CALLBACK(gtk_main_quit), NULL);
 
   window->horizontalBox = gtk_hbox_new(TRUE, 10);
   gtk_container_add(GTK_CONTAINER(window->base), window->horizontalBox);  
   
   window->matrix = gtk_drawing_area_new();
-  gtk_widget_set_size_request(window->matrix, numberOfColumns*NPIXELS, numberOfRows*NPIXELS);
+  gtk_widget_set_size_request(window->matrix,
+                              numberOfColumns*NPIXELS,
+                              numberOfRows*NPIXELS);
 
   gtk_container_add(GTK_CONTAINER(window->horizontalBox), window->matrix);
 
@@ -33,7 +29,6 @@ TrnWindow* trn_window_new(int numberOfRows, int numberOfColumns)
   gtk_container_add(GTK_CONTAINER(window->verticalBox), window->newGameButton);
  
   window->pauseButton = gtk_button_new_with_label ("Pause");
-  //g_signal_connect(button_newgame, "clicked", G_CALLBACK(button_newgame_clicked), NULL);
   gtk_container_add(GTK_CONTAINER(window->verticalBox), window->pauseButton);
  
   window->scoreLabel = gtk_label_new("Score:");
@@ -46,13 +41,17 @@ TrnWindow* trn_window_new(int numberOfRows, int numberOfColumns)
   
   return window;
 }
+void trn_window_refresh(TrnWindow const * const window)
+{
+  gtk_widget_queue_draw(window->base);
+}
 
 void trn_window_destroy(TrnWindow* window)
 {
     free(window);
 }
 
-void trn_window_show(TrnWindow* window)
+void trn_window_show(TrnWindow const *  const window)
 {
   gtk_widget_show(window->preview);
   gtk_widget_show(window->pauseButton);
@@ -64,7 +63,7 @@ void trn_window_show(TrnWindow* window)
   gtk_widget_show(window->base);
 }
 
-void trn_window_update_score(TrnWindow* window, int score) 
+void trn_window_update_score(TrnWindow const * const window, int const score)
 {
   char score_text[255];
   sprintf(score_text, "Score: %u", score);
