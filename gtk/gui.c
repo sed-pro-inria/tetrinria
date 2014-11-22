@@ -171,6 +171,7 @@ void trn_gui_destroy(TetrisGUI* gui)
   free(gui);
 }
 
+
 void trn_gui_score_complete_rows(TetrisGUI* gui)
 {
   size_t row_index;
@@ -183,4 +184,5 @@ void trn_gui_score_complete_rows(TetrisGUI* gui)
       ++gui->game->score;
     }
   }
+  trn_window_update_score(gui->window, gui->game->score);
 }

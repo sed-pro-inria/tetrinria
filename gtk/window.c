@@ -36,8 +36,9 @@ TetrisWindow* trn_window_new(size_t numberOfRows, size_t numberOfColumns)
   //g_signal_connect(button_newgame, "clicked", G_CALLBACK(button_newgame_clicked), NULL);
   gtk_container_add(GTK_CONTAINER(window->verticalBox), window->pauseButton);
  
- window->scoreLabel = gtk_label_new("Score");
+  window->scoreLabel = gtk_label_new("Score:");
   gtk_container_add(GTK_CONTAINER (window->verticalBox), window->scoreLabel);
+
 
   window->preview = gtk_drawing_area_new();
   gtk_container_add(GTK_CONTAINER (window->verticalBox), window->preview);
@@ -61,5 +62,12 @@ void trn_window_show(TetrisWindow* window)
   gtk_widget_show(window->verticalBox);
   gtk_widget_show(window->matrix);
   gtk_widget_show(window->base);
+}
+
+void trn_window_update_score(TetrisWindow* window, size_t score) 
+{
+  char score_text[255];
+  sprintf(score_text, "Score: %u", score);
+  gtk_label_set_text(GTK_LABEL(window->scoreLabel), score_text);
 }
 
