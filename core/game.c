@@ -58,6 +58,7 @@ Game* trn_game_new(int const numberOfRows, int const numberOfColumns)
     game->status = TRN_GAME_ON;
     game->grid = trn_grid_new(numberOfRows, numberOfColumns);
     game->score = 0;
+    game->lines_count = 0;
 
     game->current_piece = trn_piece_new(getRandomTrnTetrominoType());
     move_piece_to_column_center(game->current_piece,game);

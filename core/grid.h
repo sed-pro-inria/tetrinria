@@ -6,7 +6,7 @@
 #include "tetromino.h"
 #include "piece.h"
 
-typedef struct grid {
+typedef struct {
     TrnTetrominoType** tetrominoTypes;
     int numberOfRows;
     int numberOfColumns;

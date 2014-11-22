@@ -9,10 +9,12 @@ TrnWindow* trn_window_new(int const numberOfRows, int const numberOfColumns)
   TrnWindow* window = (TrnWindow*)malloc(sizeof(TrnWindow));
 
   window->base = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_default_size(GTK_WINDOW(window->base), 400, 500);
+  gtk_window_set_resizable (GTK_WINDOW(window->base), FALSE);
   g_signal_connect(G_OBJECT(window->base), "destroy",
                    G_CALLBACK(gtk_main_quit), NULL);
 
-  window->horizontalBox = gtk_hbox_new(TRUE, 10);
+  window->horizontalBox = gtk_hbox_new(FALSE, 0);
   gtk_container_add(GTK_CONTAINER(window->base), window->horizontalBox);  
   
   window->matrix = gtk_drawing_area_new();
@@ -22,7 +24,7 @@ TrnWindow* trn_window_new(int const numberOfRows, int const numberOfColumns)
 
   gtk_container_add(GTK_CONTAINER(window->horizontalBox), window->matrix);
 
-  window->verticalBox = gtk_vbox_new(TRUE, 10);
+  window->verticalBox = gtk_vbox_new(FALSE, 0);
   gtk_container_add(GTK_CONTAINER(window->horizontalBox), window->verticalBox);
 
   window->newGameButton = gtk_button_new_with_label ("New game");
@@ -30,10 +32,18 @@ TrnWindow* trn_window_new(int const numberOfRows, int const numberOfColumns)
  
   window->pauseButton = gtk_button_new_with_label ("Pause");
   gtk_container_add(GTK_CONTAINER(window->verticalBox), window->pauseButton);
- 
-  window->scoreLabel = gtk_label_new("Score:");
-  gtk_container_add(GTK_CONTAINER (window->verticalBox), window->scoreLabel);
 
+  GtkRequisition req;
+  window->level_label = gtk_label_new("Level: 1");
+  gtk_container_add(GTK_CONTAINER (window->verticalBox), window->level_label);
+  gtk_widget_size_request(window->level_label, &req);
+  gtk_widget_set_size_request(window->level_label, req.width, req.height);
+  
+  window->lines_label = gtk_label_new("Lines: 0");
+  gtk_container_add(GTK_CONTAINER (window->verticalBox), window->lines_label);
+
+  window->scoreLabel = gtk_label_new("Score: 0");
+  gtk_container_add(GTK_CONTAINER (window->verticalBox), window->scoreLabel);
 
   window->preview = gtk_drawing_area_new();
   gtk_container_add(GTK_CONTAINER (window->verticalBox), window->preview);
@@ -56,6 +66,8 @@ void trn_window_show(TrnWindow const *  const window)
   gtk_widget_show(window->preview);
   gtk_widget_show(window->pauseButton);
   gtk_widget_show(window->newGameButton);
+  gtk_widget_show(window->level_label);
+  gtk_widget_show(window->lines_label);
   gtk_widget_show(window->scoreLabel);
   gtk_widget_show(window->horizontalBox);
   gtk_widget_show(window->verticalBox);
@@ -68,5 +80,12 @@ void trn_window_update_score(TrnWindow const * const window, int const score)
   char score_text[255];
   sprintf(score_text, "Score: %u", score);
   gtk_label_set_text(GTK_LABEL(window->scoreLabel), score_text);
+}
+
+void trn_window_update_lines(TrnWindow const * const window, int const lines)
+{
+  char lines_text[255];
+  sprintf(lines_text, "Lines: %u", lines);
+  gtk_label_set_text(GTK_LABEL(window->lines_label), lines_text);
 }
 

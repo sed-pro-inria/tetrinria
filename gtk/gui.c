@@ -177,14 +177,17 @@ void trn_gui_destroy(TrnGUI* gui)
 void trn_gui_score_complete_rows(TrnGUI* gui)
 {
   int row_index;
+  int lines_count = 0;
 
   for ( row_index=0; row_index<gui->game->grid->numberOfRows; ++row_index)
   {
     if ( trn_grid_is_row_complete(gui->game->grid, row_index) )
     {
       trn_grid_pop_row_and_make_above_fall(gui->game->grid, row_index);
-      ++gui->game->score;
+      ++lines_count;
     }
   }
+  gui->game->score = gui->game->lines_count + lines_count;
+  trn_window_update_lines(gui->window, gui->game->lines_count + lines_count);
   trn_window_update_score(gui->window, gui->game->score);
 }
