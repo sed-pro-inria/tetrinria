@@ -7,7 +7,6 @@
 
 static TrnTetrominoType getRandomTrnTetrominoType(Game* game)
 {
-#ifdef WITH_MOCK
     static int tetromino_type_index = 0;
     int number_of_tetromino_type = 2;
     TrnTetrominoType mocked_tetromino_type[2] = 
@@ -18,9 +17,11 @@ static TrnTetrominoType getRandomTrnTetrominoType(Game* game)
     tetromino_type_index = (tetromino_type_index + 1) % 
                                      number_of_tetromino_type;
     return tetrominoType;
-#else
+}
+
+static TrnTetrominoType mockGetRandomTrnTetrominoType()
+{
     return rand() % TRN_NUMBER_OF_TETROMINO;
-#endif
 }
 
 void trn_game_new_piece(Game* game)
@@ -33,7 +34,11 @@ void trn_game_new_piece(Game* game)
                                           TRN_TETROMINO_GRID_SIZE)/2;
   game->piece->angle = TRN_ANGLE_0;
   
+#ifdef WITH_MOCK
   game->piece->type = getRandomTrnTetrominoType(game);
+#else
+  game->piece->type = mockGetRandomTrnTetrominoType();
+#endif
   
   if ( trn_grid_can_set_cells_with_piece(game->grid,game->piece) )
     trn_grid_set_cells_with_piece(game->grid, 
