@@ -19,7 +19,7 @@ static TrnTetrominoType getRandomTrnTetrominoType(Game* game)
                                      number_of_tetromino_type;
     return tetrominoType;
 #else
-    return rand() % game->tetrominos_collection->numberOfTetrominos;
+    return rand() % TRN_NUMBER_OF_TETROMINO;
 #endif
 }
 

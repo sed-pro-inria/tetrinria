@@ -1,7 +1,7 @@
 #include "init.h"
 #include "tetromino.h"
 
-TrnRGBColor TRN_ALL_TETROMINO_COLORS[TRN_NUMBER_OF_TETRONINO];
+TrnRGBColor TRN_ALL_TETROMINO_COLORS[TRN_NUMBER_OF_TETROMINO];
 
 void trn_init()
 {

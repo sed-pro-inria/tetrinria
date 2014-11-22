@@ -4,7 +4,7 @@
 #include "tetromino.h"
 
 const TrnTetrominoFourRotationsArray
-  TRN_ALL_TETROMINO_FOUR_ROTATIONS[TRN_NUMBER_OF_TETRONINO] =
+  TRN_ALL_TETROMINO_FOUR_ROTATIONS[TRN_NUMBER_OF_TETROMINO] =
 {
   { // I
   { {1,0}, {1,1}, {1,2}, {1,3} },

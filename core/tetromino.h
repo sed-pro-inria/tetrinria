@@ -7,7 +7,7 @@
 #include "rgb_color.h"
 #include "position_in_grid.h"
 
-#define TRN_NUMBER_OF_TETRONINO 7
+#define TRN_NUMBER_OF_TETROMINO 7
 #define TRN_TETROMINO_NUMBER_OF_SQUARES 4
 #define TRN_TETROMINO_NUMBER_OF_ROTATIONS 4
 #define TRN_TETROMINO_GRID_SIZE 4
@@ -29,9 +29,9 @@ typedef TrnPositionInGrid* TrnTetrominoRotation;
 typedef TrnPositionInGrid** TrnTetrominoFourRotations;
 
 extern TrnRGBColor
-  TRN_ALL_TETROMINO_COLORS[TRN_NUMBER_OF_TETRONINO];
+  TRN_ALL_TETROMINO_COLORS[TRN_NUMBER_OF_TETROMINO];
 
 extern const TrnTetrominoFourRotationsArray
-  TRN_ALL_TETROMINO_FOUR_ROTATIONS[TRN_NUMBER_OF_TETRONINO];
+  TRN_ALL_TETROMINO_FOUR_ROTATIONS[TRN_NUMBER_OF_TETROMINO];
 
 #endif
