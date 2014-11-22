@@ -9,11 +9,12 @@ typedef enum { TRN_GAME_ON, TRN_GAME_OVER, TRN_GAME_PAUSED} TrnGameStatus;
 typedef struct {
     TrnGameStatus status;
     TrnGrid* grid;
-    TrnPiece* piece;
+    TrnPiece* current_piece;
+    TrnPiece* next_piece;
     int score;
 } Game;
 
-void trn_game_new_piece(Game * const game);
+void trn_game_next_piece(Game * const game);
 
 Game* trn_game_new(int const numberOfRows, int const numberOfColumns);
 

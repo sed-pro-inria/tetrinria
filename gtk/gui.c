@@ -26,14 +26,16 @@ gint on_timeout_event(gpointer data)
   if (! trn_game_try_to_move_bottom(self->game) )
   {
     trn_gui_score_complete_rows(self);
-    trn_game_new_piece(self->game);
+    trn_game_next_piece(self->game);
   }
   trn_window_refresh(self->window);
   g_timeout_add(500,on_timeout_event,(gpointer)self);
   return 0;
 }
 
-gboolean on_preview_expose_event(GtkWidget* preview,GdkEventExpose* UNUSED(event), TrnGUI* gui)
+gboolean on_preview_expose_event(GtkWidget* preview,
+                                 GdkEventExpose* UNUSED(event),
+                                 TrnGUI* gui)
 {
   cairo_t* cr = gdk_cairo_create(preview->window);
 
@@ -49,7 +51,7 @@ gboolean on_preview_expose_event(GtkWidget* preview,GdkEventExpose* UNUSED(event
 
   int squareIndex;
 
-  TrnPiece* piece = gui->game->piece;
+  TrnPiece* piece = gui->game->next_piece;
 
   TrnTetrominoRotation tetromino_rotation = 
       TRN_ALL_TETROMINO_FOUR_ROTATIONS[piece->type][TRN_ANGLE_0];
@@ -110,7 +112,7 @@ gboolean on_key_press_event(GtkWidget* UNUSED(widget),
     if (!trn_game_try_to_move_bottom(gui->game))
     {
       trn_gui_score_complete_rows(gui);
-      trn_game_new_piece(gui->game);
+      trn_game_next_piece(gui->game);
     }
     break;
   case GDK_KEY_space:
@@ -119,7 +121,7 @@ gboolean on_key_press_event(GtkWidget* UNUSED(widget),
             break;
     }
     trn_gui_score_complete_rows(gui);
-    trn_game_new_piece(gui->game);
+    trn_game_next_piece(gui->game);
     break;
 
     break;

@@ -559,7 +559,7 @@ void stack_some_pieces()
         if (! trn_game_try_to_move_bottom(game))
             break;
     }
-    trn_game_new_piece(game);
+    trn_game_next_piece(game);
 
     // TrnPiece 1. While the piece is falling:
     // Rotate it 1 times.
@@ -575,7 +575,7 @@ void stack_some_pieces()
         if (! trn_game_try_to_move_bottom(game))
             break;
     }
-    trn_game_new_piece(game);
+    trn_game_next_piece(game);
 
     // TrnPiece 2. While the piece is falling:
     // Rotate it 1 times.
@@ -591,7 +591,7 @@ void stack_some_pieces()
         if (! trn_game_try_to_move_bottom(game))
             break;
     }
-    trn_game_new_piece(game);
+    trn_game_next_piece(game);
 
     // TrnPiece 3. While the piece is falling:
     // Rotate it 3 times.

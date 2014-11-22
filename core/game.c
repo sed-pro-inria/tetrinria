@@ -5,9 +5,9 @@
 #include "tetromino_srs.h"
 #include <time.h>
 
-#ifdef WITH_MOCK
-static TrnTetrominoType mockGetRandomTrnTetrominoType()
+static TrnTetrominoType getRandomTrnTetrominoType()
 {
+#ifdef WITH_MOCK
     static int tetromino_type_index = 0;
     int number_of_tetromino_type = 2;
     TrnTetrominoType mocked_tetromino_type[2] = 
@@ -18,34 +18,35 @@ static TrnTetrominoType mockGetRandomTrnTetrominoType()
     tetromino_type_index = (tetromino_type_index + 1) % 
                                      number_of_tetromino_type;
     return tetrominoType;
-}
 #else
-static TrnTetrominoType getRandomTrnTetrominoType()
-{
     return rand() % TRN_NUMBER_OF_TETROMINO;
-}
 #endif
+}
 
-void trn_game_new_piece(Game * const game)
+static void move_piece_to_column_center(TrnPiece * const piece,
+                                        Game const * const game)
+{
+  int columnIndex = (game->grid->numberOfColumns - 
+                     TRN_TETROMINO_GRID_SIZE)/2;
+
+  piece->topLeftCorner.columnIndex = columnIndex;
+}
+
+void trn_game_next_piece(Game * const game)
 {
   if (game->status != TRN_GAME_ON)
      return;
 
-  game->piece->topLeftCorner.rowIndex = 0;
-  game->piece->topLeftCorner.columnIndex = (game->grid->numberOfColumns - 
-                                          TRN_TETROMINO_GRID_SIZE)/2;
-  game->piece->angle = TRN_ANGLE_0;
-  
-#ifdef WITH_MOCK
-  game->piece->type = mockGetRandomTrnTetrominoType();
-#else
-  game->piece->type = getRandomTrnTetrominoType(game);
-#endif
-  
-  if ( trn_grid_can_set_cells_with_piece(game->grid,game->piece) )
+  free(game->current_piece);
+  game->current_piece = game->next_piece;
+  move_piece_to_column_center(game->current_piece,game);
+
+  game->next_piece = trn_piece_new(getRandomTrnTetrominoType());
+
+  if ( trn_grid_can_set_cells_with_piece(game->grid,game->current_piece) )
     trn_grid_set_cells_with_piece(game->grid, 
-                                  game->piece,
-                                  game->piece->type);
+                                  game->current_piece,
+                                  game->current_piece->type);
   else
     game->status = TRN_GAME_OVER;
 }
@@ -58,16 +59,18 @@ Game* trn_game_new(int const numberOfRows, int const numberOfColumns)
     game->grid = trn_grid_new(numberOfRows, numberOfColumns);
     game->score = 0;
 
-    // Initialize piece
-    game->piece = (TrnPiece*) malloc(sizeof(TrnPiece));
-    trn_game_new_piece(game);
+    game->current_piece = trn_piece_new(getRandomTrnTetrominoType());
+    move_piece_to_column_center(game->current_piece,game);
+
+    game->next_piece = trn_piece_new(getRandomTrnTetrominoType());
 
     return game;
 }
 
 void trn_game_destroy(Game * game)
 {
-    free(game->piece);
+    free(game->current_piece);
+    free(game->next_piece);
     trn_grid_destroy(game->grid);
     free(game);
 }
@@ -105,21 +108,19 @@ bool trn_game_try_to_move(Game* game,void (*move)(TrnPiece * const),
   bool managedToMove = true;
 
   trn_grid_set_cells_with_piece(game->grid, 
-                        game->piece,
+                        game->current_piece,
                         TRN_TETROMINO_VOID);
 
-  move(game->piece);
+  move(game->current_piece);
 
-  if (! trn_grid_can_set_cells_with_piece(game->grid, game->piece)) {
+  if (! trn_grid_can_set_cells_with_piece(game->grid, game->current_piece)) {
       managedToMove = false;
-      unmove(game->piece);
+      unmove(game->current_piece);
   }
 
   trn_grid_set_cells_with_piece(game->grid, 
-                        game->piece,
-                        game->piece->type);
+                        game->current_piece,
+                        game->current_piece->type);
 
   return managedToMove;
 }
-
-
