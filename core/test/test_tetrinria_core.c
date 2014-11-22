@@ -7,14 +7,11 @@
 #include "tetromino_srs.h"
 #include "grid.h"
 #include "game.h"
-
-static int random_row_index;
-static int const ZERO = 0;
+#include "init.h"
 
 /* Suite initialization */
 int init_suite()
 {
-   /*random_row_index = rand() % NUMBER_OF_ROWS;*/
    return 0;
 }
 
@@ -649,9 +646,7 @@ void stack_some_pieces()
 int main()
 {
   trn_init();
-  CU_pSuite suiteTetromino = NULL;
   CU_pSuite suitePiece = NULL;
-  CU_pSuite suitePoint = NULL;
   CU_pSuite Suite_grid = NULL;
   CU_pSuite suiteFunctional = NULL;
 
@@ -673,9 +668,6 @@ int main()
    ADD_TEST_TO_SUITE(Suite_grid,test_grid_find_last_complete_row_index)
    /*ADD_TEST_TO_SUITE(Suite_grid,test_set_row_to_zero)*/
    /*ADD_TEST_TO_SUITE(Suite_grid,test_set_grid_to_zero)*/
-
-   /* Create TrnTetromino test suite */
-   /*ADD_SUITE_TO_REGISTRY(suiteTetromino)*/
 
    /* Create TrnPiece test suite */
    ADD_SUITE_TO_REGISTRY(suitePiece )

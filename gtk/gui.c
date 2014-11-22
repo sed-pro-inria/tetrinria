@@ -51,7 +51,7 @@ gboolean on_preview_expose_event(GtkWidget* preview,GdkEventExpose* UNUSED(event
 
   TrnPiece* piece = gui->game->piece;
 
-  const TrnTetrominoRotation tetromino_rotation = 
+  TrnTetrominoRotation tetromino_rotation = 
       TRN_ALL_TETROMINO_FOUR_ROTATIONS[piece->type][TRN_ANGLE_0];
 
   TrnRGBColor color = TRN_ALL_TETROMINO_COLORS[piece->type];

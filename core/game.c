@@ -5,7 +5,8 @@
 #include "tetromino_srs.h"
 #include <time.h>
 
-static TrnTetrominoType getRandomTrnTetrominoType(Game const * const game)
+#ifdef WITH_MOCK
+static TrnTetrominoType mockGetRandomTrnTetrominoType()
 {
     static int tetromino_type_index = 0;
     int number_of_tetromino_type = 2;
@@ -18,11 +19,12 @@ static TrnTetrominoType getRandomTrnTetrominoType(Game const * const game)
                                      number_of_tetromino_type;
     return tetrominoType;
 }
-
-static TrnTetrominoType mockGetRandomTrnTetrominoType()
+#else
+static TrnTetrominoType getRandomTrnTetrominoType()
 {
     return rand() % TRN_NUMBER_OF_TETROMINO;
 }
+#endif
 
 void trn_game_new_piece(Game * const game)
 {
@@ -35,9 +37,9 @@ void trn_game_new_piece(Game * const game)
   game->piece->angle = TRN_ANGLE_0;
   
 #ifdef WITH_MOCK
-  game->piece->type = getRandomTrnTetrominoType(game);
-#else
   game->piece->type = mockGetRandomTrnTetrominoType();
+#else
+  game->piece->type = getRandomTrnTetrominoType(game);
 #endif
   
   if ( trn_grid_can_set_cells_with_piece(game->grid,game->piece) )

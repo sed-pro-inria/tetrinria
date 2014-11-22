@@ -81,7 +81,7 @@ void trn_grid_set_cells_with_piece(TrnGrid * const grid,
     }
 }
 
-bool trn_grid_cell_is_in_grid(TrnGrid * const grid,
+bool trn_grid_cell_is_in_grid(TrnGrid const * const grid,
                               TrnPositionInGrid const pos)
 {
     return 0 <= pos.rowIndex && pos.rowIndex < grid->numberOfRows &&
@@ -164,7 +164,7 @@ void trn_grid_print(TrnGrid const * const grid)
             if (type == TRN_TETROMINO_VOID) {
                 printf(" ");
             } else {
-                printf(symbols[type]);
+                printf("%s",symbols[type]);
             }
         }
         printf("|\n");

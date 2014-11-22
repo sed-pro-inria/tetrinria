@@ -70,7 +70,7 @@ bool trn_piece_equal(TrnPiece const left, TrnPiece const right)
 TrnPositionInGrid trn_piece_position_in_grid(TrnPiece const * const piece, 
                                              int squareIndex)
 {
-    const TrnTetrominoRotation rotation = 
+    TrnTetrominoRotation rotation = 
         TRN_ALL_TETROMINO_FOUR_ROTATIONS[piece->type][piece->angle];
 
     const TrnPositionInGrid square = rotation[squareIndex];

@@ -29,7 +29,7 @@ void trn_grid_set_cells_with_piece(TrnGrid * const grid,
                                    TrnPiece const * const piece,
                                    TrnTetrominoType const type);
 
-bool trn_grid_cell_is_in_grid(TrnGrid * const grid,
+bool trn_grid_cell_is_in_grid(TrnGrid const * const grid,
                               TrnPositionInGrid const pos);
 
 bool trn_grid_cell_is_in_grid_and_is_void(TrnGrid const * const grid,

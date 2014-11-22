@@ -3,7 +3,7 @@
 
 #include "tetromino.h"
 
-const TrnTetrominoFourRotationsArray
+TrnTetrominoFourRotationsArray
   TRN_ALL_TETROMINO_FOUR_ROTATIONS[TRN_NUMBER_OF_TETROMINO] =
 {
   { // I

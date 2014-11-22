@@ -6,9 +6,7 @@
 #include "rgb_color.h"
 #include "tetromino_srs.h"
 #include "gui.h"
-
-
-
+#include "init.h"
 
 int main(int argc, char* argv[]) 
 {

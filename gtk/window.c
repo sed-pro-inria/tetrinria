@@ -49,7 +49,6 @@ TrnWindow* trn_window_new(int numberOfRows, int numberOfColumns)
 
 void trn_window_destroy(TrnWindow* window)
 {
-  
 }
 
 void trn_window_show(TrnWindow* window)
