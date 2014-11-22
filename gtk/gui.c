@@ -33,7 +33,7 @@ gint on_timeout_event(gpointer data)
   return 0;
 }
 
-gboolean on_preview_expose_event(GtkWidget* preview,GdkEventExpose* event, TrnGUI* gui)
+gboolean on_preview_expose_event(GtkWidget* preview,GdkEventExpose* UNUSED(event), TrnGUI* gui)
 {
   cairo_t* cr = gdk_cairo_create(preview->window);
 
@@ -66,7 +66,7 @@ gboolean on_preview_expose_event(GtkWidget* preview,GdkEventExpose* event, TrnGU
   return TRUE;
 }
 
-gboolean on_matrix_expose_event(GtkWidget *matrix,GdkEventExpose *event, TrnGUI* gui)
+gboolean on_matrix_expose_event(GtkWidget *matrix,GdkEventExpose* UNUSED(event), TrnGUI* gui)
 {
   cairo_t* cr = gdk_cairo_create(matrix->window);
 
@@ -91,8 +91,8 @@ gboolean on_matrix_expose_event(GtkWidget *matrix,GdkEventExpose *event, TrnGUI*
   return TRUE;
 }
 
-gboolean on_key_press_event(GtkWidget *window,
-                            GdkEventKey *event,
+gboolean on_key_press_event(GtkWidget* UNUSED(widget),
+                            GdkEventKey* event,
                             TrnGUI* gui)
 {
 
@@ -130,7 +130,7 @@ gboolean on_key_press_event(GtkWidget *window,
   return TRUE;
 }
 
-gboolean button_newgame_clicked(GtkWidget *widget, TrnGUI* gui) {
+gboolean button_newgame_clicked(GtkWidget* UNUSED(widget), TrnGUI* gui) {
   int numberOfRows = gui->game->grid->numberOfRows;
   int numberOfColumns = gui->game->grid->numberOfColumns;
   trn_game_destroy(gui->game);
@@ -138,7 +138,7 @@ gboolean button_newgame_clicked(GtkWidget *widget, TrnGUI* gui) {
   return TRUE;
 }
 
-gboolean button_pause_clicked(GtkWidget *widget, TrnGUI* gui) {
+gboolean button_pause_clicked(GtkWidget* UNUSED(widget), TrnGUI* gui) {
   if (gui->game->status == TRN_GAME_ON)
     gui->game->status = TRN_GAME_PAUSED;
   else if (gui->game->status == TRN_GAME_PAUSED)
