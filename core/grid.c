@@ -169,13 +169,12 @@ void trn_grid_print(TrnGrid const * const grid)
     printf("+\n");
 }
 
-bool trn_is_last_row_complete(TrnGrid const * const grid)
+bool trn_grid_is_row_complete(TrnGrid const * const grid, size_t rowIndex)
 {
-    unsigned int rowIndex;
     unsigned int columnIndex;
 
     TrnPositionInGrid pos;
-    pos.rowIndex = grid->numberOfRows - 1;
+    pos.rowIndex = rowIndex;
 
     TrnTetrominoType type;
 
@@ -187,4 +186,51 @@ bool trn_is_last_row_complete(TrnGrid const * const grid)
     }
 
     return true;
+}
+
+void trn_grid_copy_row_bellow(TrnGrid* grid, size_t rowIndex)
+{
+  TrnPositionInGrid top_pos;
+  TrnPositionInGrid bottom_pos;
+
+  top_pos.rowIndex = rowIndex;
+  bottom_pos.rowIndex = rowIndex+1;
+
+  size_t columnIndex;
+  TrnTetrominoType top_type;
+
+  for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
+      top_pos.columnIndex = columnIndex;
+      bottom_pos.columnIndex = columnIndex;
+      top_type = trn_grid_get_cell(grid, top_pos);
+      trn_grid_set_cell(grid, bottom_pos, top_type);
+  }
+}
+
+void trn_grid_pop_row_and_make_above_fall(TrnGrid* grid, size_t rowIndexToPop)
+{
+  // Note: 
+  // This would failed:
+  //     for (rowIndex = rowIndexToPop-1 ; rowIndex >= 0 ; rowIndex--)
+  // Indeed, 0-1 >= 0 can not stop the loop because with size_t 0-1 is a large
+  // number.
+  size_t rowIndex;
+  for (rowIndex = rowIndexToPop-1 ; rowIndex > 0 ; rowIndex--) {
+    trn_grid_copy_row_bellow(grid, rowIndex);
+  }
+  trn_grid_copy_row_bellow(grid, 0);
+
+  size_t firstRowIndex = 0;
+  trn_grid_clear_row(grid,firstRowIndex);
+}
+
+void trn_grid_clear_row(TrnGrid* grid, size_t rowIndex)
+{
+  TrnPositionInGrid pos;
+  pos.rowIndex = rowIndex;
+  size_t columnIndex;
+  for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
+    pos.columnIndex = columnIndex;
+    trn_grid_set_cell(grid, pos, TRN_TETROMINO_VOID);
+  }
 }

@@ -10,7 +10,7 @@ set( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -Wextra" )
 #    - Turn on compilation of CUnit main files are compiled
 #    - Add to Makefile the rule 'make test'.
 # Other build type are for example DEBUG or REALEASE.
-SET(CMAKE_C_FLAGS_TEST "-DWITH_MOCK")
+SET(CMAKE_C_FLAGS_TEST "-DWITH_MOCK -g")
 
 if(CMAKE_BUILD_TYPE MATCHES TEST)
     enable_testing()

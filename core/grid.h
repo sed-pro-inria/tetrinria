@@ -29,6 +29,12 @@ bool trn_grid_equal(TrnGrid const * const left, TrnGrid const * const right);
 
 void trn_grid_print(TrnGrid const * const grid);
 
-bool trn_is_last_row_complete(TrnGrid const * const grid);
+bool trn_grid_is_row_complete(TrnGrid const * const grid, size_t rowIndex);
+
+void trn_grid_copy_row_bellow(TrnGrid* grid, size_t rowIndex);
+
+void trn_grid_pop_row_and_make_above_fall(TrnGrid* grid, size_t rowIndexToPop);
+
+void trn_grid_clear_row(TrnGrid* grid, size_t rowIndex);
 
 #endif

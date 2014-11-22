@@ -329,7 +329,7 @@ void TestGridCanSetCellsWithPiece()
     CU_ASSERT_FALSE( trn_grid_can_set_cells_with_piece(grid, &piece8) )
 }
 
-void test_grid_is_last_row_complete()
+void test_grid_is_row_complete()
 {
     // Create a grid.
     unsigned int numberOfRows = 4;
@@ -337,7 +337,7 @@ void test_grid_is_last_row_complete()
     TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
 
     // Last row is void only.
-    CU_ASSERT_FALSE( trn_is_last_row_complete(grid) );
+    CU_ASSERT_FALSE( trn_grid_is_row_complete(grid,numberOfRows) );
 
     // Last row is full.
     TrnPositionInGrid pos;
@@ -347,13 +347,61 @@ void test_grid_is_last_row_complete()
         pos.columnIndex = columnIndex;
         trn_grid_set_cell(grid, pos, TRN_TETROMINO_I);
     }
-    CU_ASSERT_TRUE( trn_is_last_row_complete(grid) );
+    CU_ASSERT_TRUE( trn_grid_is_row_complete(grid,numberOfRows) );
 
     // Last row is full except last element. 
     pos.rowIndex = numberOfRows-1 ;
     pos.columnIndex = numberOfColumns-1 ;
     trn_grid_set_cell(grid, pos, TRN_TETROMINO_VOID);
-    CU_ASSERT_FALSE( trn_is_last_row_complete(grid) );
+    CU_ASSERT_FALSE( trn_grid_is_row_complete(grid,numberOfRows) );
+}
+
+void test_grid_pop_row_and_make_above_fall()
+{
+  size_t numberOfRows = 4;
+  size_t numberOfColumns = 4;
+
+  size_t rowIndex;
+  size_t columnIndex;
+  TrnPositionInGrid pos;
+
+  /* Initial grid
+   * +----+
+   * |L   |
+   * |LL  |
+   * |LLL |
+   * |LLLL|
+   * +----+
+   */
+  TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
+  for (rowIndex = 0 ; rowIndex < numberOfRows ; rowIndex++) {
+      pos.rowIndex = rowIndex;
+      for (columnIndex = 0 ; columnIndex <= rowIndex ; columnIndex++) {
+          pos.columnIndex = columnIndex;
+          trn_grid_set_cell(grid, pos, TRN_TETROMINO_L);
+      }
+  }
+
+  trn_grid_pop_row_and_make_above_fall(grid, numberOfRows-1);
+
+  /* Expected grid
+   * +----+
+   * |    |
+   * |L   |
+   * |LL  |
+   * |LLL |
+   * +----+
+   */
+  TrnGrid* expected_grid = trn_grid_new(numberOfRows, numberOfColumns);
+  for (rowIndex = 0 ; rowIndex < numberOfRows ; rowIndex++) {
+      pos.rowIndex = rowIndex;
+      for (columnIndex = 0 ; columnIndex < rowIndex ; columnIndex++) {
+          pos.columnIndex = columnIndex;
+          trn_grid_set_cell(expected_grid, pos, TRN_TETROMINO_L);
+      }
+  }
+
+  CU_ASSERT_TRUE( trn_grid_equal(grid, expected_grid) );
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -479,8 +527,6 @@ void stack_some_pieces()
             break;
     }
     trn_game_new_piece(game);
-    printf("\n");
-    trn_grid_print(game->grid);
 
     // TrnPiece 1. While the piece is falling:
     // Rotate it 1 times.
@@ -497,8 +543,6 @@ void stack_some_pieces()
             break;
     }
     trn_game_new_piece(game);
-    printf("\n");
-    trn_grid_print(game->grid);
 
     // TrnPiece 2. While the piece is falling:
     // Rotate it 1 times.
@@ -515,8 +559,6 @@ void stack_some_pieces()
             break;
     }
     trn_game_new_piece(game);
-    printf("\n");
-    trn_grid_print(game->grid);
 
     // TrnPiece 3. While the piece is falling:
     // Rotate it 3 times.
@@ -591,6 +633,7 @@ int main()
    ADD_TEST_TO_SUITE(Suite_grid,TestGridCellIsInGrid)
    ADD_TEST_TO_SUITE(Suite_grid,TestGridCellIsInGridAndIsVoid)
    ADD_TEST_TO_SUITE(Suite_grid,TestGridCanSetCellsWithPiece)
+   ADD_TEST_TO_SUITE(Suite_grid,test_grid_pop_row_and_make_above_fall)
    /*ADD_TEST_TO_SUITE(Suite_grid,test_set_row_to_zero)*/
    /*ADD_TEST_TO_SUITE(Suite_grid,test_set_grid_to_zero)*/
 
