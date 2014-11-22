@@ -5,37 +5,33 @@
 #include <stddef.h>
 
 #include "rgb_color.h"
-#include "positionInGrid.h"
+#include "position_in_grid.h"
 
+#define TRN_NUMBER_OF_TETRONINO 7
 #define TRN_TETROMINO_NUMBER_OF_SQUARES 4
 #define TRN_TETROMINO_NUMBER_OF_ROTATIONS 4
 #define TRN_TETROMINO_GRID_SIZE 4
 
-typedef unsigned int TrnTetrominoType;
+typedef enum {TRN_TETROMINO_I, TRN_TETROMINO_O, TRN_TETROMINO_T, 
+              TRN_TETROMINO_S, TRN_TETROMINO_Z, TRN_TETROMINO_J,
+              TRN_TETROMINO_L, TRN_TETROMINO_VOID} TrnTetrominoType;
 
-extern TrnTetrominoType const TRN_TETROMINO_VOID;
+typedef enum {TRN_ANGLE_0, TRN_ANGLE_90, TRN_ANGLE_180, TRN_ANGLE_270 }
+  TrnTetrominoRotationAngle;
 
-typedef TrnPositionInGrid TrnTetrominoRotation[TRN_TETROMINO_NUMBER_OF_SQUARES];
-typedef TrnTetrominoRotation TrnTetrominoAllRotations[TRN_TETROMINO_NUMBER_OF_ROTATIONS];
+typedef TrnPositionInGrid 
+  TrnTetrominoRotationArray[TRN_TETROMINO_NUMBER_OF_SQUARES];
 
-enum TrnTetrominoRotationAngle { TRN_ANGLE_0=0, TRN_ANGLE_90=1, TRN_ANGLE_180=2, TRN_ANGLE_270=3 };
+typedef TrnTetrominoRotationArray
+  TrnTetrominoFourRotationsArray[TRN_TETROMINO_NUMBER_OF_ROTATIONS];
 
-typedef struct tetromino
-{
-  TrnRGBColor color;
-  TrnTetrominoType type;
-  TrnTetrominoAllRotations allRotations;
-} TrnTetromino;
+typedef TrnPositionInGrid* TrnTetrominoRotation;
+typedef TrnPositionInGrid** TrnTetrominoFourRotations;
 
-typedef struct tetromino_collection
-{
-    unsigned int numberOfTetrominos;
-    TrnTetromino* tetrominos;
-} TrnTetrominosCollection;
+extern TrnRGBColor
+  TRN_ALL_TETROMINO_COLORS[TRN_NUMBER_OF_TETRONINO];
 
-TrnTetromino* trn_tetromino_new(TrnRGBColor const color, TrnTetrominoType const type);
-
-
-void tetrominos_collection_destroy(TrnTetrominosCollection* coll);
+extern const TrnTetrominoFourRotationsArray
+  TRN_ALL_TETROMINO_FOUR_ROTATIONS[TRN_NUMBER_OF_TETRONINO];
 
 #endif

@@ -2,11 +2,25 @@
 
 TrnPiece* trn_piece_new(TrnTetrominoType const type)
 {
-  TrnPiece* piece = (TrnPiece*)malloc(sizeof(TrnPiece));
+  TrnPiece* piece = (TrnPiece*) malloc(sizeof(TrnPiece));
+  piece->type = type;
+  piece->topLeftCorner.rowIndex = 0;
+  piece->topLeftCorner.columnIndex = 0;
+  piece->angle = TRN_ANGLE_0;
+  return piece;
+}
 
-  //piece->topLeftCorner = trn_position_in_grid_new(0,0);
-  //piece->tetromino = trn_tetromino_new(type);
-  //piece->angle = TRN_ANGLE_0;
+TrnPiece trn_piece_create(TrnTetrominoType const type,
+                          size_t topLeftCornerRowIndex,
+                          size_t topLeftCornerColumIndex,
+                          TrnTetrominoRotationAngle angle)
+{
+    TrnPiece piece;
+    piece.type = type;
+    piece.topLeftCorner.rowIndex = topLeftCornerRowIndex;
+    piece.topLeftCorner.columnIndex = topLeftCornerColumIndex;
+    piece.angle = angle;
+    return piece;
 }
 
 void trn_piece_destroy(TrnPiece* piece)
@@ -47,18 +61,21 @@ void trn_piece_rotate_counter_clockwise(TrnPiece* toBeRotated)
 bool trn_piece_equal(TrnPiece const left, TrnPiece const right)
 {
   return trn_position_in_grid_equal(left.topLeftCorner,right.topLeftCorner) &&
-         left.tetromino.type == right.tetromino.type &&
+         left.type == right.type &&
          (left.angle == right.angle);
 }
 
-TrnPositionInGrid trn_piece_position_in_grid(TrnPiece* piece, unsigned int squareIndex)
+TrnPositionInGrid trn_piece_position_in_grid(TrnPiece* piece, 
+                                             unsigned int squareIndex)
 {
-    TrnPositionInGrid pos;
-    pos.rowIndex = piece->topLeftCorner.rowIndex + 
-       piece->tetromino.allRotations[piece->angle][squareIndex].rowIndex;
+    const TrnTetrominoRotation rotation = 
+        TRN_ALL_TETROMINO_FOUR_ROTATIONS[piece->type][piece->angle];
 
-    pos.columnIndex = piece->topLeftCorner.columnIndex + 
-       piece->tetromino.allRotations[piece->angle][squareIndex].columnIndex;
+    const TrnPositionInGrid square = rotation[squareIndex];
+
+    TrnPositionInGrid pos;
+    pos.rowIndex = piece->topLeftCorner.rowIndex + square.rowIndex;
+    pos.columnIndex = piece->topLeftCorner.columnIndex + square.columnIndex;
 
     return pos;
 }

@@ -45,12 +45,19 @@ gboolean on_preview_expose_event(GtkWidget* preview,GdkEventExpose* event, Tetri
   }
 
   size_t squareIndex;
-  TrnPositionInGrid* position = gui->game->piece->tetromino.allRotations[TRN_ANGLE_0];
+
+  TrnPiece* piece = gui->game->piece;
+
+  const TrnTetrominoRotation tetromino_rotation = 
+      TRN_ALL_TETROMINO_FOUR_ROTATIONS[piece->type][TRN_ANGLE_0];
+
+  TrnRGBColor color = TRN_ALL_TETROMINO_COLORS[piece->type];
+
   for (squareIndex=0;squareIndex<TRN_TETROMINO_NUMBER_OF_SQUARES;++squareIndex)
   {
-    rowIndex = position[squareIndex].rowIndex;
-    columnIndex = position[squareIndex].columnIndex;
-    fill_cell(cr,gui->game->piece->tetromino.color,rowIndex,columnIndex);
+    rowIndex = tetromino_rotation[squareIndex].rowIndex;
+    columnIndex = tetromino_rotation[squareIndex].columnIndex;
+    fill_cell(cr,color,rowIndex,columnIndex);
   }
 
   return TRUE;
@@ -73,7 +80,7 @@ gboolean on_matrix_expose_event(GtkWidget *matrix,GdkEventExpose *event, TetrisG
       if (type == TRN_TETROMINO_VOID)
           color = TRN_WHITE;
       else
-          color = gui->game->tetrominos_collection->tetrominos[type].color;
+          color = TRN_ALL_TETROMINO_COLORS[type];
       fill_cell(cr, color, irow, icol);
     }
   }

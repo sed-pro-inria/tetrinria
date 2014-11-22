@@ -10,14 +10,15 @@ typedef struct game {
     TrnGameStatus status;
     TrnGrid* grid;
     TrnPiece* piece;
-    TrnTetrominosCollection* tetrominos_collection;
 } Game;
 
 void trn_game_new_piece(Game* game);
 Game* trn_game_new(size_t numberOfRows, size_t numberOfColumns);
 void trn_game_destroy(Game* game);
 
-bool trn_game_try_to_move(Game* game, void (*move)(TrnPiece*), void (*unmove)(TrnPiece*));
+bool trn_game_try_to_move(Game* game,
+                          void (*move)(TrnPiece*),
+                          void (*unmove)(TrnPiece*));
 bool trn_game_try_to_move_right(Game* game);
 bool trn_game_try_to_move_left(Game* game);
 bool trn_game_try_to_move_bottom(Game* game);

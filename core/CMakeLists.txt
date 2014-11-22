@@ -4,10 +4,10 @@ add_library(${TETRINRIA_CORE_LIBRARY} SHARED
     rgb_color.c
     piece.c
     tetromino.c
-    tetromino_srs.c
-    positionInGrid.c
+    position_in_grid.c
     grid.c
     game.c
+    init.c
 )
 
 if(CMAKE_BUILD_TYPE MATCHES TEST)

@@ -12,10 +12,9 @@ TrnRGBColor const TRN_TURQUOISE = RGB(0x1a, 0xbc, 0x9c);
 TrnRGBColor const TRN_PURPLE = RGB(0x8e, 0x44, 0xad);
 TrnRGBColor const TRN_CYAN = {0,1,1};
 
-bool sameColors(TrnRGBColor const left, TrnRGBColor const right)
+bool trn_color_equal(TrnRGBColor const left, TrnRGBColor const right)
 {
   return (left.red == right.red) &&
          (left.green == right.green) &&
          (left.blue == right.blue);
 }
-

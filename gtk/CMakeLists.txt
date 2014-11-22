@@ -14,7 +14,7 @@ target_link_libraries(tetrinria-gtk
     ${GTK2_LIBRARIES}
 )
 
-if(CMAKE_BUILD_TYPE MATCHES TEST)
-    add_subdirectory(test)
-endif(CMAKE_BUILD_TYPE MATCHES TEST)
+#if(CMAKE_BUILD_TYPE MATCHES TEST)
+    #add_subdirectory(test)
+#endif(CMAKE_BUILD_TYPE MATCHES TEST)
 

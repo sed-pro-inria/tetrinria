@@ -16,6 +16,7 @@ int main(int argc, char* argv[])
   size_t const numberOfColumns = 10;
 
   gtk_init(&argc, &argv);
+  trn_init();
 
   TetrisGUI* gui = trn_gui_new(numberOfRows,numberOfColumns);
    g_signal_connect(G_OBJECT(gui->window->base), "key_press_event", G_CALLBACK(on_key_press_event), gui);

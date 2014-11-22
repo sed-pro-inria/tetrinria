@@ -11,20 +11,16 @@
 static size_t random_row_index;
 static size_t const ZERO = 0;
 
-TrnTetrominosCollection* tetrominos_collection;
-
 /* Suite initialization */
 int init_suite()
 {
    /*random_row_index = rand() % NUMBER_OF_ROWS;*/
-   tetrominos_collection = getTetrominosCollectionSRS();
    return 0;
 }
 
 /* Suite termination */
 int clean_suite()
 {
-   tetrominos_collection_destroy(tetrominos_collection);
    return 0;
 }
 
@@ -79,21 +75,21 @@ void test_grid_set_get_cell()
     pos.rowIndex = 0;
     for (columnIndex = 0 ; columnIndex < numberOfColumns ; columnIndex++) {
         pos.columnIndex = columnIndex;
-        trn_grid_set_cell(grid, pos, TRN_TETROMINO_SRS_O);
+        trn_grid_set_cell(grid, pos, TRN_TETROMINO_O);
     }
 
     // Set Third row.
     pos.rowIndex = 2;
     for (columnIndex = 0 ; columnIndex < numberOfColumns ; columnIndex++) {
         pos.columnIndex = columnIndex;
-        trn_grid_set_cell(grid, pos, TRN_TETROMINO_SRS_I);
+        trn_grid_set_cell(grid, pos, TRN_TETROMINO_I);
     }
 
     // Check first row.
     pos.rowIndex = 0;
     for (columnIndex = 0 ; columnIndex < numberOfColumns ; columnIndex++) {
         pos.columnIndex = columnIndex;
-        CU_ASSERT( trn_grid_get_cell(grid, pos) == TRN_TETROMINO_SRS_O);
+        CU_ASSERT( trn_grid_get_cell(grid, pos) == TRN_TETROMINO_O);
     }
 
     // Check second row, it has been initialize to TRN_TETROMINO_VOID by grid_new.
@@ -107,15 +103,14 @@ void test_grid_set_get_cell()
     pos.rowIndex = 2;
     for (columnIndex = 0 ; columnIndex < numberOfColumns ; columnIndex++) {
         pos.columnIndex = columnIndex;
-        CU_ASSERT( trn_grid_get_cell(grid, pos) == TRN_TETROMINO_SRS_I);
+        CU_ASSERT( trn_grid_get_cell(grid, pos) == TRN_TETROMINO_I);
     }
 }
 
 void test_piece_position_in_grid()
 {
     // Create a piece;
-    TrnTetromino TRN_TETROMINO_I = tetrominos_collection->tetrominos[TRN_TETROMINO_SRS_I];
-    TrnPiece piece = {{2,3},TRN_TETROMINO_I,TRN_ANGLE_90};
+    TrnPiece piece = trn_piece_create(TRN_TETROMINO_I,2,3,TRN_ANGLE_90);
 
     // Expected result
     TrnPositionInGrid expectedPos0 = {2,5};
@@ -144,10 +139,9 @@ void test_grid_set_cells_with_piece()
     TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
 
     // Create a piece;
-    TrnTetromino TRN_TETROMINO_I = tetrominos_collection->tetrominos[TRN_TETROMINO_SRS_I];
-    TrnPiece piece = {{2,3},TRN_TETROMINO_I,TRN_ANGLE_90};
+    TrnPiece piece = trn_piece_create(TRN_TETROMINO_I,2,3,TRN_ANGLE_90);
 
-    trn_grid_set_cells_with_piece(grid, &piece, piece.tetromino.type);
+    trn_grid_set_cells_with_piece(grid, &piece, piece.type);
 
     // The piece position in grid.
     TrnPositionInGrid pos0 = {2,5};
@@ -170,7 +164,7 @@ void test_grid_set_cells_with_piece()
                 trn_position_in_grid_equal(pos, pos2) ||
                 trn_position_in_grid_equal(pos, pos3))
             {
-                expectedType = TRN_TETROMINO_SRS_I;
+                expectedType = TRN_TETROMINO_I;
             } else {
                 expectedType = TRN_TETROMINO_VOID;
             }
@@ -238,7 +232,7 @@ void TestGridCellIsInGridAndIsVoid()
 
     // TrnGrid has been initialize to TRN_TETROMINO_VOID, modify one cell type.
     TrnPositionInGrid posNotVoid = {1,2};
-    trn_grid_set_cell(grid, posNotVoid, TRN_TETROMINO_SRS_O);
+    trn_grid_set_cell(grid, posNotVoid, TRN_TETROMINO_O);
 
     unsigned int rowIndex;
     unsigned int columnIndex;
@@ -287,32 +281,30 @@ void TestGridCanSetCellsWithPiece()
     unsigned int numberOfColumns = 10;
     TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
 
-    TrnTetromino TRN_TETROMINO_I = tetrominos_collection->tetrominos[TRN_TETROMINO_SRS_I];
-
     // For now, the grid has only void cells.
 
     // Ok, in grid and void.
-    TrnPiece piece0 = {{0,0},TRN_TETROMINO_I,TRN_ANGLE_0};
+    TrnPiece piece0 = trn_piece_create(TRN_TETROMINO_I,0,0,TRN_ANGLE_0);
     CU_ASSERT_TRUE( trn_grid_can_set_cells_with_piece(grid, &piece0) )
 
     // Ok, still in grid (in the first row).
-    TrnPiece piece1 = {{-1,0},TRN_TETROMINO_I,TRN_ANGLE_0};
+    TrnPiece piece1 = trn_piece_create(TRN_TETROMINO_I,-1,0,TRN_ANGLE_0);
     CU_ASSERT_TRUE( trn_grid_can_set_cells_with_piece(grid, &piece1) )
 
     // No more in grid.
-    TrnPiece piece2 = {{-2,0},TRN_TETROMINO_I,TRN_ANGLE_0};
+    TrnPiece piece2 = trn_piece_create(TRN_TETROMINO_I,-2,0,TRN_ANGLE_0);
     CU_ASSERT_FALSE( trn_grid_can_set_cells_with_piece(grid, &piece2) )
 
     // Ok, in grid and void.
-    TrnPiece piece3 = {{5,0},TRN_TETROMINO_I,TRN_ANGLE_90};
+    TrnPiece piece3 = trn_piece_create(TRN_TETROMINO_I,5,0,TRN_ANGLE_90);
     CU_ASSERT_TRUE( trn_grid_can_set_cells_with_piece(grid, &piece3) )
 
     // Ok, still in grid (in the first column).
-    TrnPiece piece4 = {{5,-2},TRN_TETROMINO_I,TRN_ANGLE_90};
+    TrnPiece piece4 = trn_piece_create(TRN_TETROMINO_I,5,-2,TRN_ANGLE_90);
     CU_ASSERT_TRUE( trn_grid_can_set_cells_with_piece(grid, &piece4) )
 
     // No more in grid.
-    TrnPiece piece5 = {{5,-3},TRN_TETROMINO_I,TRN_ANGLE_90};
+    TrnPiece piece5 = trn_piece_create(TRN_TETROMINO_I,5,-3,TRN_ANGLE_90);
     CU_ASSERT_FALSE( trn_grid_can_set_cells_with_piece(grid, &piece5) )
 
     // Now, fill the last grid row with non-void tetrominos.
@@ -321,19 +313,19 @@ void TestGridCanSetCellsWithPiece()
     pos.rowIndex = numberOfRows-1 ;
     for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
         pos.columnIndex = columnIndex;
-        trn_grid_set_cell(grid, pos, TRN_TETROMINO_SRS_I);
+        trn_grid_set_cell(grid, pos, TRN_TETROMINO_I);
     }
 
     // Ok, in grid and void.
-    TrnPiece piece6 = {{0,0},TRN_TETROMINO_I,TRN_ANGLE_90};
+    TrnPiece piece6 = trn_piece_create(TRN_TETROMINO_I,0,0,TRN_ANGLE_90);
     CU_ASSERT_TRUE( trn_grid_can_set_cells_with_piece(grid, &piece6) )
 
     // Still in grid and void, just above the non-void row.
-    TrnPiece piece7 = {{numberOfRows-5,0},TRN_TETROMINO_I,TRN_ANGLE_90};
+    TrnPiece piece7 = trn_piece_create(TRN_TETROMINO_I,numberOfRows-5,0,TRN_ANGLE_90);
     CU_ASSERT_TRUE( trn_grid_can_set_cells_with_piece(grid, &piece7) )
 
     // In grid, but last cell of piece overlap a non-void cell of the grid.
-    TrnPiece piece8 = {{numberOfRows-4,0},TRN_TETROMINO_I,TRN_ANGLE_90};
+    TrnPiece piece8 = trn_piece_create(TRN_TETROMINO_I,numberOfRows-4,0,TRN_ANGLE_90);
     CU_ASSERT_FALSE( trn_grid_can_set_cells_with_piece(grid, &piece8) )
 }
 
@@ -353,7 +345,7 @@ void test_grid_is_last_row_complete()
     pos.rowIndex = numberOfRows-1 ;
     for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
         pos.columnIndex = columnIndex;
-        trn_grid_set_cell(grid, pos, TRN_TETROMINO_SRS_I);
+        trn_grid_set_cell(grid, pos, TRN_TETROMINO_I);
     }
     CU_ASSERT_TRUE( trn_is_last_row_complete(grid) );
 
@@ -376,11 +368,9 @@ void test_grid_is_last_row_complete()
 
 void test_piece_move_to_left()
 {
-  TrnTetromino TRN_TETROMINO_I = tetrominos_collection->tetrominos[TRN_TETROMINO_SRS_I];
-
-  TrnPiece expectedLeftPiece = {{5,2},TRN_TETROMINO_I,TRN_ANGLE_0};
+  TrnPiece expectedLeftPiece = trn_piece_create(TRN_TETROMINO_I,5,2,TRN_ANGLE_0);
   
-  TrnPiece piece = {{5,3},TRN_TETROMINO_I,TRN_ANGLE_0};
+  TrnPiece piece = trn_piece_create(TRN_TETROMINO_I,5,3,TRN_ANGLE_0);
   trn_piece_move_to_left(&piece);
   
   CU_ASSERT( trn_piece_equal(piece,expectedLeftPiece) );
@@ -388,11 +378,9 @@ void test_piece_move_to_left()
 
 void test_piece_move_to_right()
 {
-  TrnTetromino TRN_TETROMINO_I = tetrominos_collection->tetrominos[TRN_TETROMINO_SRS_I];
-
-  TrnPiece expectedRightPiece = {{5,3},TRN_TETROMINO_I,TRN_ANGLE_0};
+  TrnPiece expectedRightPiece = trn_piece_create(TRN_TETROMINO_I,5,3,TRN_ANGLE_0);
   
-  TrnPiece piece = {{5,2},TRN_TETROMINO_I,TRN_ANGLE_0};
+  TrnPiece piece = trn_piece_create(TRN_TETROMINO_I,5,2,TRN_ANGLE_0);
   trn_piece_move_to_right(&piece);
   
   CU_ASSERT( trn_piece_equal(piece,expectedRightPiece) );
@@ -400,11 +388,9 @@ void test_piece_move_to_right()
 
 void test_piece_move_to_bottom()
 {
-  TrnTetromino TRN_TETROMINO_I = tetrominos_collection->tetrominos[TRN_TETROMINO_SRS_I];
-
-  TrnPiece expectedBottomPiece = {{6,3},TRN_TETROMINO_I,TRN_ANGLE_0};
+  TrnPiece expectedBottomPiece = trn_piece_create(TRN_TETROMINO_I,6,3,TRN_ANGLE_0);
   
-  TrnPiece piece = {{5,3},TRN_TETROMINO_I,TRN_ANGLE_0};
+  TrnPiece piece = trn_piece_create(TRN_TETROMINO_I,5,3,TRN_ANGLE_0);
   trn_piece_move_to_bottom(&piece);
   
   CU_ASSERT( trn_piece_equal(piece,expectedBottomPiece) );
@@ -412,14 +398,12 @@ void test_piece_move_to_bottom()
 
 void test_piece_rotate_clockwise()
 {
-  TrnTetromino TRN_TETROMINO_I = tetrominos_collection->tetrominos[TRN_TETROMINO_SRS_I];
-
-  TrnPiece expectedPiece0 = {{5,3},TRN_TETROMINO_I,TRN_ANGLE_0};
-  TrnPiece expectedPiece90 = {{5,3},TRN_TETROMINO_I,TRN_ANGLE_90};
-  TrnPiece expectedPiece180 = {{5,3},TRN_TETROMINO_I,TRN_ANGLE_180};
-  TrnPiece expectedPiece270 = {{5,3},TRN_TETROMINO_I,TRN_ANGLE_270};
+  TrnPiece expectedPiece0 = trn_piece_create(TRN_TETROMINO_I,5,3,TRN_ANGLE_0);
+  TrnPiece expectedPiece90 = trn_piece_create(TRN_TETROMINO_I,5,3,TRN_ANGLE_90);
+  TrnPiece expectedPiece180 = trn_piece_create(TRN_TETROMINO_I,5,3,TRN_ANGLE_180);
+  TrnPiece expectedPiece270 = trn_piece_create(TRN_TETROMINO_I,5,3,TRN_ANGLE_270);
   
-  TrnPiece piece = {{5,3},TRN_TETROMINO_I,TRN_ANGLE_0};
+  TrnPiece piece = trn_piece_create(TRN_TETROMINO_I,5,3,TRN_ANGLE_0);
 
   trn_piece_rotate_clockwise(&piece);
   CU_ASSERT( trn_piece_equal(piece,expectedPiece90) );
@@ -561,7 +545,7 @@ void stack_some_pieces()
         pos.rowIndex = rowIndex;
         for (columnIndex = 2 ; columnIndex < 4 ; columnIndex++) {
             pos.columnIndex = columnIndex;
-            trn_grid_set_cell(expected_grid, pos, TRN_TETROMINO_SRS_J);
+            trn_grid_set_cell(expected_grid, pos, TRN_TETROMINO_J);
         }
     }
 
@@ -570,7 +554,7 @@ void stack_some_pieces()
         pos.rowIndex = rowIndex;
         for (columnIndex = 0 ; columnIndex < 2 ; columnIndex++) {
             pos.columnIndex = columnIndex;
-            trn_grid_set_cell(expected_grid, pos, TRN_TETROMINO_SRS_L);
+            trn_grid_set_cell(expected_grid, pos, TRN_TETROMINO_L);
         }
     }
 
@@ -586,6 +570,7 @@ void stack_some_pieces()
  */
 int main()
 {
+  trn_init();
   CU_pSuite suiteTetromino = NULL;
   CU_pSuite suitePiece = NULL;
   CU_pSuite suitePoint = NULL;

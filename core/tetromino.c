@@ -1,21 +1,57 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "tetromino.h"
 
-TrnTetrominoType const TRN_TETROMINO_VOID = 100;
-
-TrnTetromino* trn_tetromino_new(TrnRGBColor const color, TrnTetrominoType const type)
+const TrnTetrominoFourRotationsArray
+  TRN_ALL_TETROMINO_FOUR_ROTATIONS[TRN_NUMBER_OF_TETRONINO] =
 {
-  TrnTetromino* tetromino = (TrnTetromino*)malloc(sizeof(TrnTetromino));
-  
-  tetromino->color = color;
-  tetromino->type = type;
+  { // I
+  { {1,0}, {1,1}, {1,2}, {1,3} },
+  { {0,2}, {1,2}, {2,2}, {3,2} },
+  { {2,0}, {2,1}, {2,2}, {2,3} },
+  { {0,1}, {1,1}, {2,1}, {3,1} } 
+  },
 
-  return tetromino;
-}
+  { // O
+  { {1,0}, {2,0}, {1,1}, {2,1} },
+  { {1,0}, {2,0}, {1,1}, {2,1} },
+  { {1,0}, {2,0}, {1,1}, {2,1} },
+  { {1,0}, {2,0}, {1,1}, {2,1} }
+  },
 
-void tetrominos_collection_destroy(TrnTetrominosCollection* coll)
-{
-    free(coll->tetrominos);
-    free(coll);
-}
+  { // T
+  { {0,1}, {1,0}, {1,1}, {1,2} },
+  { {0,1}, {1,1}, {1,2}, {2,1} },
+  { {1,0}, {1,1}, {1,2}, {2,1} },
+  { {0,1}, {1,0}, {1,1}, {2,1} }
+  },
+
+  { // S
+  { {0,1}, {0,2}, {1,0}, {1,1} },
+  { {0,1}, {1,1}, {1,2}, {2,2} },
+  { {1,1}, {1,2}, {2,0}, {2,1} },
+  { {0,0}, {1,0}, {1,1}, {2,1} }
+  },
+
+  { // Z
+  { {0,0}, {0,1}, {1,1}, {1,2} },
+  { {0,2}, {1,1}, {1,2}, {2,1} },
+  { {1,0}, {1,1}, {2,1}, {2,2} },
+  { {0,1}, {1,0}, {1,1}, {2,0} }
+  },
+
+  { // J
+  { {0,0}, {1,0}, {1,1}, {1,2} },
+  { {0,1}, {0,2}, {1,1}, {2,1} },
+  { {1,0}, {1,1}, {1,2}, {2,2} },
+  { {0,1}, {1,1}, {2,0}, {2,1} }
+  },
+
+  { // L
+  { {0,2}, {1,0}, {1,1}, {1,2} },
+  { {0,1}, {1,1}, {2,1}, {2,2} },
+  { {1,0}, {1,1}, {1,2}, {2,0} },
+  { {0,0}, {0,1}, {1,1}, {2,1} }
+  }
+};

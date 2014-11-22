@@ -3,12 +3,11 @@
 
 #include <stdbool.h>
 
-struct rgbColor {
+typedef struct {
   float red;
   float green;
   float blue;
-};
-typedef struct rgbColor TrnRGBColor;
+} TrnRGBColor;
 
 extern TrnRGBColor const TRN_WHITE;
 extern TrnRGBColor const TRN_RED;
@@ -20,6 +19,6 @@ extern TrnRGBColor const TRN_TURQUOISE;
 extern TrnRGBColor const TRN_PURPLE;
 extern TrnRGBColor const TRN_CYAN;
 
-bool sameColors(TrnRGBColor const left, TrnRGBColor const right);
+bool trn_color_equal(TrnRGBColor const left, TrnRGBColor const right);
 
 #endif
