@@ -169,7 +169,7 @@ void trn_grid_print(TrnGrid const * const grid)
     printf("+\n");
 }
 
-bool trn_grid_is_row_complete(TrnGrid const * const grid, size_t rowIndex)
+bool trn_grid_is_row_complete(TrnGrid const * const grid, int rowIndex)
 {
     unsigned int columnIndex;
 
@@ -188,7 +188,7 @@ bool trn_grid_is_row_complete(TrnGrid const * const grid, size_t rowIndex)
     return true;
 }
 
-void trn_grid_copy_row_bellow(TrnGrid* grid, size_t rowIndex)
+void trn_grid_copy_row_bellow(TrnGrid* grid, int rowIndex)
 {
   TrnPositionInGrid top_pos;
   TrnPositionInGrid bottom_pos;
@@ -196,7 +196,7 @@ void trn_grid_copy_row_bellow(TrnGrid* grid, size_t rowIndex)
   top_pos.rowIndex = rowIndex;
   bottom_pos.rowIndex = rowIndex+1;
 
-  size_t columnIndex;
+  int columnIndex;
   TrnTetrominoType top_type;
 
   for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
@@ -207,28 +207,40 @@ void trn_grid_copy_row_bellow(TrnGrid* grid, size_t rowIndex)
   }
 }
 
-void trn_grid_pop_row_and_make_above_fall(TrnGrid* grid, size_t rowIndexToPop)
+void trn_grid_pop_row_and_make_above_fall(TrnGrid* grid, int rowIndexToPop)
 {
-  // Note: 
-  // This would failed:
-  //     for (rowIndex = rowIndexToPop-1 ; rowIndex >= 0 ; rowIndex--)
-  // Indeed, 0-1 >= 0 can not stop the loop because with size_t 0-1 is a large
-  // number.
-  size_t rowIndex;
-  for (rowIndex = rowIndexToPop-1 ; rowIndex > 0 ; rowIndex--) {
+  int rowIndex;
+  for (rowIndex = rowIndexToPop-1 ; rowIndex >= 0 ; rowIndex-- ) {
     trn_grid_copy_row_bellow(grid, rowIndex);
   }
-  trn_grid_copy_row_bellow(grid, 0);
 
-  size_t firstRowIndex = 0;
+  int firstRowIndex = 0;
   trn_grid_clear_row(grid,firstRowIndex);
 }
 
-void trn_grid_clear_row(TrnGrid* grid, size_t rowIndex)
+size_t trn_grid_pop_first_complete_rows_block()
+{
+    size_t number_of_poped_rows = 0;
+    /* ... pop row blocs ... */
+    return number_of_poped_rows;
+}
+
+/* Return -1 if no complete row */
+int tnr_grid_find_last_complete_row_index(TrnGrid* grid)
+{
+  int rowIndex;
+  for (rowIndex = grid->numberOfRows-1 ; rowIndex >= 0  ; rowIndex--) {
+      if (trn_grid_is_row_complete(grid, rowIndex))
+              return rowIndex;
+  }
+  return -1;
+}
+
+void trn_grid_clear_row(TrnGrid* grid, int rowIndex)
 {
   TrnPositionInGrid pos;
   pos.rowIndex = rowIndex;
-  size_t columnIndex;
+  int columnIndex;
   for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
     pos.columnIndex = columnIndex;
     trn_grid_set_cell(grid, pos, TRN_TETROMINO_VOID);

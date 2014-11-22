@@ -6,4 +6,3 @@ bool trn_position_in_grid_equal(TrnPositionInGrid const left,
   return (left.rowIndex == right.rowIndex) &&
          (left.columnIndex == right.columnIndex);
 }
-

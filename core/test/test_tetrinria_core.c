@@ -404,6 +404,42 @@ void test_grid_pop_row_and_make_above_fall()
   CU_ASSERT_TRUE( trn_grid_equal(grid, expected_grid) );
 }
 
+
+void test_grid_find_last_complete_row_index()
+{
+  size_t numberOfRows = 4;
+  size_t numberOfColumns = 4;
+
+  size_t rowIndex;
+  size_t columnIndex;
+  TrnPositionInGrid pos;
+
+  /* Initial grid
+   * +----+
+   * |    | 0
+   * |LLLL| 1
+   * |LLL | 2
+   * |LL  | 3
+   * +----+
+   */
+  TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
+  for (rowIndex = 1 ; rowIndex < numberOfRows ; rowIndex++) {
+      pos.rowIndex = rowIndex;
+      for (columnIndex = 0 ; columnIndex <= numberOfColumns-rowIndex ; columnIndex++) {
+          pos.columnIndex = columnIndex;
+          trn_grid_set_cell(grid, pos, TRN_TETROMINO_L);
+      }
+  }
+
+  CU_ASSERT_EQUAL(tnr_grid_find_last_complete_row_index(grid), 1)
+
+  pos.rowIndex = 1;
+  pos.columnIndex = 0;
+  trn_grid_set_cell(grid, pos, TRN_TETROMINO_VOID);
+
+  CU_ASSERT_EQUAL(tnr_grid_find_last_complete_row_index(grid), -1)
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // TrnTetrominos suite tests
 //////////////////////////////////////////////////////////////////////////////
@@ -634,6 +670,7 @@ int main()
    ADD_TEST_TO_SUITE(Suite_grid,TestGridCellIsInGridAndIsVoid)
    ADD_TEST_TO_SUITE(Suite_grid,TestGridCanSetCellsWithPiece)
    ADD_TEST_TO_SUITE(Suite_grid,test_grid_pop_row_and_make_above_fall)
+   ADD_TEST_TO_SUITE(Suite_grid,test_grid_find_last_complete_row_index)
    /*ADD_TEST_TO_SUITE(Suite_grid,test_set_row_to_zero)*/
    /*ADD_TEST_TO_SUITE(Suite_grid,test_set_grid_to_zero)*/
 
