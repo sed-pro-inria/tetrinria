@@ -1,7 +1,7 @@
 #include "grid.h"
 #include <stdlib.h>
 
-TrnGrid* trn_grid_new(int numberOfRows, int numberOfColumns)
+TrnGrid* trn_grid_new(int const numberOfRows, int const numberOfColumns)
 {
     /* Allocate grid */
     TrnGrid* grid = (TrnGrid*) malloc(sizeof(TrnGrid));
@@ -41,7 +41,7 @@ void trn_grid_destroy(TrnGrid* grid)
     free(grid);
 }
 
-void trn_grid_clear(TrnGrid* grid)
+void trn_grid_clear(TrnGrid * const grid)
 {
     int rowIndex;
     int columnIndex;
@@ -52,17 +52,22 @@ void trn_grid_clear(TrnGrid* grid)
     }
 }
 
-void trn_grid_set_cell(TrnGrid* grid, TrnPositionInGrid pos, TrnTetrominoType type)
+void trn_grid_set_cell(TrnGrid * const grid,
+                       TrnPositionInGrid const pos,
+                       TrnTetrominoType const type)
 {
     grid->tetrominoTypes[pos.rowIndex][pos.columnIndex] = type;
 }
 
-TrnTetrominoType trn_grid_get_cell(TrnGrid* grid, TrnPositionInGrid pos)
+TrnTetrominoType trn_grid_get_cell(TrnGrid const *  const grid,
+                                   TrnPositionInGrid const pos)
 {
     return grid->tetrominoTypes[pos.rowIndex][pos.columnIndex];
 }
 
-void trn_grid_set_cells_with_piece(TrnGrid* grid, TrnPiece* piece, TrnTetrominoType type)
+void trn_grid_set_cells_with_piece(TrnGrid * const grid,
+                                   TrnPiece const * const piece,
+                                   TrnTetrominoType const type)
 {
     int squareIndex;
     TrnPositionInGrid pos;
@@ -76,18 +81,22 @@ void trn_grid_set_cells_with_piece(TrnGrid* grid, TrnPiece* piece, TrnTetrominoT
     }
 }
 
-bool trn_grid_cell_is_in_grid(TrnGrid* grid, TrnPositionInGrid pos)
+bool trn_grid_cell_is_in_grid(TrnGrid * const grid,
+                              TrnPositionInGrid const pos)
 {
     return 0 <= pos.rowIndex && pos.rowIndex < grid->numberOfRows &&
            0 <= pos.columnIndex && pos.columnIndex < grid->numberOfColumns;
 }
 
-bool trn_grid_cell_is_in_grid_and_is_void(TrnGrid* grid, TrnPositionInGrid pos)
+bool trn_grid_cell_is_in_grid_and_is_void(TrnGrid const * const grid,
+                                          TrnPositionInGrid const pos)
 {
-    return trn_grid_cell_is_in_grid(grid,pos) && trn_grid_get_cell(grid, pos) == TRN_TETROMINO_VOID;
+    return trn_grid_cell_is_in_grid(grid,pos) &&
+           trn_grid_get_cell(grid, pos) == TRN_TETROMINO_VOID;
 }
 
-bool trn_grid_can_set_cells_with_piece(TrnGrid* grid, TrnPiece* piece)
+bool trn_grid_can_set_cells_with_piece(TrnGrid * const grid,
+                                       TrnPiece const * const piece)
 {
     int squareIndex;
     TrnPositionInGrid pos;
@@ -169,7 +178,7 @@ void trn_grid_print(TrnGrid const * const grid)
     printf("+\n");
 }
 
-bool trn_grid_is_row_complete(TrnGrid const * const grid, int rowIndex)
+bool trn_grid_is_row_complete(TrnGrid const * const grid, int const rowIndex)
 {
     int columnIndex;
 
@@ -188,7 +197,7 @@ bool trn_grid_is_row_complete(TrnGrid const * const grid, int rowIndex)
     return true;
 }
 
-void trn_grid_copy_row_bellow(TrnGrid* grid, int rowIndex)
+void trn_grid_copy_row_bellow(TrnGrid * const grid, int const rowIndex)
 {
   TrnPositionInGrid top_pos;
   TrnPositionInGrid bottom_pos;
@@ -207,7 +216,8 @@ void trn_grid_copy_row_bellow(TrnGrid* grid, int rowIndex)
   }
 }
 
-void trn_grid_pop_row_and_make_above_fall(TrnGrid* grid, int rowIndexToPop)
+void trn_grid_pop_row_and_make_above_fall(TrnGrid * const grid,
+                                          int const rowIndexToPop)
 {
   int rowIndex;
   for (rowIndex = rowIndexToPop-1 ; rowIndex >= 0 ; rowIndex-- ) {
@@ -226,7 +236,7 @@ int trn_grid_pop_first_complete_rows_block()
 }
 
 /* Return -1 if no complete row */
-int tnr_grid_find_last_complete_row_index(TrnGrid* grid)
+int tnr_grid_find_last_complete_row_index(TrnGrid const * const grid)
 {
   int rowIndex;
   for (rowIndex = grid->numberOfRows-1 ; rowIndex >= 0  ; rowIndex--) {
@@ -236,7 +246,7 @@ int tnr_grid_find_last_complete_row_index(TrnGrid* grid)
   return -1;
 }
 
-void trn_grid_clear_row(TrnGrid* grid, int rowIndex)
+void trn_grid_clear_row(TrnGrid * const grid, int const rowIndex)
 {
   TrnPositionInGrid pos;
   pos.rowIndex = rowIndex;

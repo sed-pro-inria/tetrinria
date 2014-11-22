@@ -5,7 +5,7 @@
 #include "tetromino_srs.h"
 #include <time.h>
 
-static TrnTetrominoType getRandomTrnTetrominoType(Game* game)
+static TrnTetrominoType getRandomTrnTetrominoType(Game const * const game)
 {
     static int tetromino_type_index = 0;
     int number_of_tetromino_type = 2;
@@ -24,7 +24,7 @@ static TrnTetrominoType mockGetRandomTrnTetrominoType()
     return rand() % TRN_NUMBER_OF_TETROMINO;
 }
 
-void trn_game_new_piece(Game* game)
+void trn_game_new_piece(Game * const game)
 {
   if (game->status != TRN_GAME_ON)
      return;
@@ -48,7 +48,7 @@ void trn_game_new_piece(Game* game)
     game->status = TRN_GAME_OVER;
 }
 
-Game* trn_game_new(int numberOfRows, int numberOfColumns)
+Game* trn_game_new(int const numberOfRows, int const numberOfColumns)
 {
     srand(time(NULL));
     Game* game = (Game*) malloc(sizeof(Game));
@@ -63,39 +63,39 @@ Game* trn_game_new(int numberOfRows, int numberOfColumns)
     return game;
 }
 
-void trn_game_destroy(Game* game)
+void trn_game_destroy(Game * game)
 {
     free(game->piece);
     trn_grid_destroy(game->grid);
     free(game);
 }
 
-bool trn_game_try_to_move_right(Game* game)
+bool trn_game_try_to_move_right(Game * const game)
 {
   return  trn_game_try_to_move(game,trn_piece_move_to_right, 
                                     trn_piece_move_to_left);
 }
 
-bool trn_game_try_to_move_left(Game* game)
+bool trn_game_try_to_move_left(Game * const game)
 {
   return trn_game_try_to_move(game,trn_piece_move_to_left, 
                                    trn_piece_move_to_right);
 }
 
-bool trn_game_try_to_move_bottom(Game* game)
+bool trn_game_try_to_move_bottom(Game * const game)
 {
   return trn_game_try_to_move(game,trn_piece_move_to_bottom,
                                    trn_piece_move_to_top);
 }
 
-bool trn_game_try_to_rotate_clockwise(Game* game)
+bool trn_game_try_to_rotate_clockwise(Game * const game)
 {
   return trn_game_try_to_move(game,trn_piece_rotate_clockwise,
                                    trn_piece_rotate_counter_clockwise);
 }
 
-bool trn_game_try_to_move(Game* game,void (*move)(TrnPiece*),
-                                     void (*unmove)(TrnPiece*))
+bool trn_game_try_to_move(Game* game,void (*move)(TrnPiece * const),
+                                     void (*unmove)(TrnPiece * const))
 {
   if (game->status != TRN_GAME_ON)
      return false;

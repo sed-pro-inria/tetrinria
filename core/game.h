@@ -6,23 +6,29 @@
 
 typedef enum { TRN_GAME_ON, TRN_GAME_OVER, TRN_GAME_PAUSED} TrnGameStatus;
 
-typedef struct game {
+typedef struct {
     TrnGameStatus status;
     TrnGrid* grid;
     TrnPiece* piece;
     int score;
 } Game;
 
-void trn_game_new_piece(Game* game);
-Game* trn_game_new(int numberOfRows, int numberOfColumns);
-void trn_game_destroy(Game* game);
+void trn_game_new_piece(Game * const game);
+
+Game* trn_game_new(int const numberOfRows, int const numberOfColumns);
+
+void trn_game_destroy(Game * game);
 
 bool trn_game_try_to_move(Game* game,
-                          void (*move)(TrnPiece*),
-                          void (*unmove)(TrnPiece*));
-bool trn_game_try_to_move_right(Game* game);
-bool trn_game_try_to_move_left(Game* game);
-bool trn_game_try_to_move_bottom(Game* game);
-bool trn_game_try_to_rotate_clockwise(Game* game);
+                          void (*move)(TrnPiece * const),
+                          void (*unmove)(TrnPiece * const));
+
+bool trn_game_try_to_move_right(Game * const game);
+
+bool trn_game_try_to_move_left(Game * const game);
+
+bool trn_game_try_to_move_bottom(Game * const game);
+
+bool trn_game_try_to_rotate_clockwise(Game * const game);
 
 #endif

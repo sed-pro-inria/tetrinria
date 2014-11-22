@@ -11,9 +11,9 @@ TrnPiece* trn_piece_new(TrnTetrominoType const type)
 }
 
 TrnPiece trn_piece_create(TrnTetrominoType const type,
-                          int topLeftCornerRowIndex,
-                          int topLeftCornerColumIndex,
-                          TrnTetrominoRotationAngle angle)
+                          int const topLeftCornerRowIndex,
+                          int const topLeftCornerColumIndex,
+                          TrnTetrominoRotationAngle const angle)
 {
     TrnPiece piece;
     piece.type = type;
@@ -28,34 +28,36 @@ void trn_piece_destroy(TrnPiece* piece)
   free(piece);
 }
 
-void trn_piece_move_to_left(TrnPiece* toBeMoved)
+void trn_piece_move_to_left(TrnPiece * const toBeMoved)
 {
   toBeMoved->topLeftCorner.columnIndex--;
 }
 
-void trn_piece_move_to_right(TrnPiece* toBeMoved)
+void trn_piece_move_to_right(TrnPiece * const toBeMoved)
 {
   toBeMoved->topLeftCorner.columnIndex++;
 }
 
-void trn_piece_move_to_bottom(TrnPiece* toBeMoved)
+void trn_piece_move_to_bottom(TrnPiece * const toBeMoved)
 {
   toBeMoved->topLeftCorner.rowIndex++;
 }
 
-void trn_piece_move_to_top(TrnPiece* toBeMoved)
+void trn_piece_move_to_top(TrnPiece * const toBeMoved)
 {
   toBeMoved->topLeftCorner.rowIndex--;
 }
 
-void trn_piece_rotate_clockwise(TrnPiece* toBeRotated)
+void trn_piece_rotate_clockwise(TrnPiece * const toBeRotated)
 {
-    toBeRotated->angle = (toBeRotated->angle+1) % TRN_TETROMINO_NUMBER_OF_ROTATIONS;
+    toBeRotated->angle = (toBeRotated->angle+1) % 
+      TRN_TETROMINO_NUMBER_OF_ROTATIONS;
 }
 
-void trn_piece_rotate_counter_clockwise(TrnPiece* toBeRotated)
+void trn_piece_rotate_counter_clockwise(TrnPiece * const toBeRotated)
 {
-    toBeRotated->angle = (toBeRotated->angle+3) % TRN_TETROMINO_NUMBER_OF_ROTATIONS;
+    toBeRotated->angle = (toBeRotated->angle+3) % 
+      TRN_TETROMINO_NUMBER_OF_ROTATIONS;
 }
 
 bool trn_piece_equal(TrnPiece const left, TrnPiece const right)
@@ -65,7 +67,7 @@ bool trn_piece_equal(TrnPiece const left, TrnPiece const right)
          (left.angle == right.angle);
 }
 
-TrnPositionInGrid trn_piece_position_in_grid(TrnPiece* piece, 
+TrnPositionInGrid trn_piece_position_in_grid(TrnPiece const * const piece, 
                                              int squareIndex)
 {
     const TrnTetrominoRotation rotation = 
