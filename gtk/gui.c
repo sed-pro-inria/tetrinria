@@ -187,7 +187,8 @@ void trn_gui_score_complete_rows(TrnGUI* gui)
       ++lines_count;
     }
   }
-  gui->game->score = gui->game->lines_count + lines_count;
-  trn_window_update_lines(gui->window, gui->game->lines_count + lines_count);
+  gui->game->lines_count = gui->game->lines_count + lines_count;
+  gui->game->score = gui->game->lines_count;
+  trn_window_update_lines(gui->window, gui->game->lines_count);
   trn_window_update_score(gui->window, gui->game->score);
 }
