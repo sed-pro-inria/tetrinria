@@ -22,7 +22,7 @@ void fill_cell(cairo_t *cr, TrnRGBColor color, unsigned i, unsigned j)
 
 gint on_timeout_event(gpointer data)
 {
-  TetrisGUI* self = (TetrisGUI*)data;
+  TrnGUI* self = (TrnGUI*)data;
   if (! trn_game_try_to_move_bottom(self->game) )
   {
     trn_gui_score_complete_rows(self);
@@ -33,7 +33,7 @@ gint on_timeout_event(gpointer data)
   return 0;
 }
 
-gboolean on_preview_expose_event(GtkWidget* preview,GdkEventExpose* event, TetrisGUI* gui)
+gboolean on_preview_expose_event(GtkWidget* preview,GdkEventExpose* event, TrnGUI* gui)
 {
   cairo_t* cr = gdk_cairo_create(preview->window);
 
@@ -66,7 +66,7 @@ gboolean on_preview_expose_event(GtkWidget* preview,GdkEventExpose* event, Tetri
   return TRUE;
 }
 
-gboolean on_matrix_expose_event(GtkWidget *matrix,GdkEventExpose *event, TetrisGUI* gui)
+gboolean on_matrix_expose_event(GtkWidget *matrix,GdkEventExpose *event, TrnGUI* gui)
 {
   cairo_t* cr = gdk_cairo_create(matrix->window);
 
@@ -93,7 +93,7 @@ gboolean on_matrix_expose_event(GtkWidget *matrix,GdkEventExpose *event, TetrisG
 
 gboolean on_key_press_event(GtkWidget *window,
                             GdkEventKey *event,
-                            TetrisGUI* gui)
+                            TrnGUI* gui)
 {
 
   switch (event->keyval) {
@@ -130,7 +130,7 @@ gboolean on_key_press_event(GtkWidget *window,
   return TRUE;
 }
 
-gboolean button_newgame_clicked(GtkWidget *widget, TetrisGUI* gui) {
+gboolean button_newgame_clicked(GtkWidget *widget, TrnGUI* gui) {
   size_t numberOfRows = gui->game->grid->numberOfRows;
   size_t numberOfColumns = gui->game->grid->numberOfColumns;
   trn_game_destroy(gui->game);
@@ -138,7 +138,7 @@ gboolean button_newgame_clicked(GtkWidget *widget, TetrisGUI* gui) {
   return TRUE;
 }
 
-gboolean button_pause_clicked(GtkWidget *widget, TetrisGUI* gui) {
+gboolean button_pause_clicked(GtkWidget *widget, TrnGUI* gui) {
   if (gui->game->status == TRN_GAME_ON)
     gui->game->status = TRN_GAME_PAUSED;
   else if (gui->game->status == TRN_GAME_PAUSED)
@@ -146,10 +146,10 @@ gboolean button_pause_clicked(GtkWidget *widget, TetrisGUI* gui) {
   return TRUE;
 }
 
-TetrisGUI* trn_gui_new(size_t numberOfRows, size_t numberOfColumns)
+TrnGUI* trn_gui_new(size_t numberOfRows, size_t numberOfColumns)
 {
 
-  TetrisGUI* gui = (TetrisGUI*)malloc(sizeof(TetrisGUI));
+  TrnGUI* gui = (TrnGUI*)malloc(sizeof(TrnGUI));
 
   gui->game = trn_game_new(numberOfRows,numberOfColumns);
 
@@ -164,7 +164,7 @@ TetrisGUI* trn_gui_new(size_t numberOfRows, size_t numberOfColumns)
   return gui;
 }
 
-void trn_gui_destroy(TetrisGUI* gui)
+void trn_gui_destroy(TrnGUI* gui)
 {
   trn_game_destroy(gui->game);
   trn_window_destroy(gui->window);
@@ -172,7 +172,7 @@ void trn_gui_destroy(TetrisGUI* gui)
 }
 
 
-void trn_gui_score_complete_rows(TetrisGUI* gui)
+void trn_gui_score_complete_rows(TrnGUI* gui)
 {
   size_t row_index;
 

@@ -16,12 +16,12 @@ typedef struct {
   GtkWidget* horizontalBox;
   GtkWidget* matrix;
   GtkWidget* preview;
-} TetrisWindow;
+} TrnWindow;
 
-TetrisWindow* trn_window_new(size_t numberOfRows,size_t numberOfColumns);
-void trn_window_destroy(TetrisWindow* window);
-void trn_window_show(TetrisWindow* window);
-void trn_window_refresh(TetrisWindow* window);
-void trn_window_update_score(TetrisWindow* window, size_t score);
+TrnWindow* trn_window_new(size_t numberOfRows,size_t numberOfColumns);
+void trn_window_destroy(TrnWindow* window);
+void trn_window_show(TrnWindow* window);
+void trn_window_refresh(TrnWindow* window);
+void trn_window_update_score(TrnWindow* window, size_t score);
 
 #endif

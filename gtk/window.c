@@ -3,7 +3,7 @@
 
 #include <malloc.h>
 
-void trn_window_refresh(TetrisWindow* window)
+void trn_window_refresh(TrnWindow* window)
 {
   gtk_widget_queue_draw(window->base);
 }
@@ -11,9 +11,9 @@ void trn_window_refresh(TetrisWindow* window)
 
 
 
-TetrisWindow* trn_window_new(size_t numberOfRows, size_t numberOfColumns)
+TrnWindow* trn_window_new(size_t numberOfRows, size_t numberOfColumns)
 {
-  TetrisWindow* window = (TetrisWindow*)malloc(sizeof(TetrisWindow));
+  TrnWindow* window = (TrnWindow*)malloc(sizeof(TrnWindow));
 
   window->base = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   g_signal_connect(G_OBJECT(window->base), "destroy", G_CALLBACK(gtk_main_quit), NULL);
@@ -47,12 +47,12 @@ TetrisWindow* trn_window_new(size_t numberOfRows, size_t numberOfColumns)
   return window;
 }
 
-void trn_window_destroy(TetrisWindow* window)
+void trn_window_destroy(TrnWindow* window)
 {
   
 }
 
-void trn_window_show(TetrisWindow* window)
+void trn_window_show(TrnWindow* window)
 {
   gtk_widget_show(window->preview);
   gtk_widget_show(window->pauseButton);
@@ -64,7 +64,7 @@ void trn_window_show(TetrisWindow* window)
   gtk_widget_show(window->base);
 }
 
-void trn_window_update_score(TetrisWindow* window, size_t score) 
+void trn_window_update_score(TrnWindow* window, size_t score) 
 {
   char score_text[255];
   sprintf(score_text, "Score: %u", score);

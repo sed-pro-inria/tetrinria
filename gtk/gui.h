@@ -7,19 +7,19 @@
 
 typedef struct
 {
-  TetrisWindow* window;
+  TrnWindow* window;
   Game* game;
-} TetrisGUI;
+} TrnGUI;
 
-TetrisGUI* trn_gui_new(size_t numberOfRows, size_t numberOfColumns);
-void trn_gui_destroy(TetrisGUI* gui);
+TrnGUI* trn_gui_new(size_t numberOfRows, size_t numberOfColumns);
+void trn_gui_destroy(TrnGUI* gui);
 gboolean on_key_press_event(GtkWidget *window,
                             GdkEventKey *event,
-                            TetrisGUI* gui);
-gboolean on_preview_expose_event(GtkWidget *matrix, GdkEventExpose *event, TetrisGUI* gui);
-gboolean on_matrix_expose_event(GtkWidget *matrix, GdkEventExpose *event, TetrisGUI* gui);
+                            TrnGUI* gui);
+gboolean on_preview_expose_event(GtkWidget *matrix, GdkEventExpose *event, TrnGUI* gui);
+gboolean on_matrix_expose_event(GtkWidget *matrix, GdkEventExpose *event, TrnGUI* gui);
 
-void trn_gui_score_complete_rows(TetrisGUI* gui);
+void trn_gui_score_complete_rows(TrnGUI* gui);
 
 
 #endif
