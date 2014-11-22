@@ -34,7 +34,7 @@ TrnWindow* trn_window_new(int const numberOfRows, int const numberOfColumns)
   gtk_container_add(GTK_CONTAINER(window->verticalBox), window->pauseButton);
 
   GtkRequisition req;
-  window->level_label = gtk_label_new("Level: 1");
+  window->level_label = gtk_label_new("Level: 0");
   gtk_container_add(GTK_CONTAINER (window->verticalBox), window->level_label);
   gtk_widget_size_request(window->level_label, &req);
   gtk_widget_set_size_request(window->level_label, req.width, req.height);

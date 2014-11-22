@@ -59,7 +59,7 @@ Game* trn_game_new(int const numberOfRows, int const numberOfColumns)
     game->grid = trn_grid_new(numberOfRows, numberOfColumns);
     game->score = 0;
     game->lines_count = 0;
-    game->level = 1;
+    game->level = 0;
 
     game->current_piece = trn_piece_new(getRandomTrnTetrominoType());
     move_piece_to_column_center(game->current_piece,game);
@@ -125,4 +125,9 @@ bool trn_game_try_to_move(Game* game,void (*move)(TrnPiece * const),
                         game->current_piece->type);
 
   return managedToMove;
+}
+
+int trn_game_update_score(Game* game, int const lines_count)
+{
+  game->score += NINTENDO_SCORING[lines_count] * (game->level+1);
 }

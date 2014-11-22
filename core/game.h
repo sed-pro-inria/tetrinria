@@ -4,7 +4,13 @@
 #include "grid.h"
 #include "piece.h"
 
+
 typedef enum { TRN_GAME_ON, TRN_GAME_OVER, TRN_GAME_PAUSED} TrnGameStatus;
+
+static int const NINTENDO_SCORING[5] = {0, 40, 100, 300, 1200};
+
+
+
 
 typedef struct {
     TrnGameStatus status;
@@ -33,5 +39,7 @@ bool trn_game_try_to_move_left(Game * const game);
 bool trn_game_try_to_move_bottom(Game * const game);
 
 bool trn_game_try_to_rotate_clockwise(Game * const game);
+
+int trn_game_update_score(Game* game, int const lines_count);
 
 #endif
