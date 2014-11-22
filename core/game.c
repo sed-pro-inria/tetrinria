@@ -49,6 +49,7 @@ Game* trn_game_new(size_t numberOfRows, size_t numberOfColumns)
     Game* game = (Game*) malloc(sizeof(Game));
     game->status = TRN_GAME_ON;
     game->grid = trn_grid_new(numberOfRows, numberOfColumns);
+    game->score = 0;
 
     // Initialize piece
     game->piece = (TrnPiece*) malloc(sizeof(TrnPiece));

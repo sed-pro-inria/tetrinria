@@ -24,7 +24,10 @@ gint on_timeout_event(gpointer data)
 {
   TetrisGUI* self = (TetrisGUI*)data;
   if (! trn_game_try_to_move_bottom(self->game) )
+  {
+    trn_gui_score_complete_rows(self);
     trn_game_new_piece(self->game);
+  }
   trn_window_refresh(self->window);
   g_timeout_add(500,on_timeout_event,(gpointer)self);
   return 0;
@@ -105,13 +108,17 @@ gboolean on_key_press_event(GtkWidget *window,
     break;
   case GDK_Down:
     if (!trn_game_try_to_move_bottom(gui->game))
+    {
+      trn_gui_score_complete_rows(gui);
       trn_game_new_piece(gui->game);
+    }
     break;
   case GDK_KEY_space:
     while (true) {
         if (! trn_game_try_to_move_bottom(gui->game))
             break;
     }
+    trn_gui_score_complete_rows(gui);
     trn_game_new_piece(gui->game);
     break;
 
@@ -162,4 +169,18 @@ void trn_gui_destroy(TetrisGUI* gui)
   trn_game_destroy(gui->game);
   trn_window_destroy(gui->window);
   free(gui);
+}
+
+void trn_gui_score_complete_rows(TetrisGUI* gui)
+{
+  size_t row_index;
+
+  for ( row_index=0; row_index<gui->game->grid->numberOfRows; ++row_index)
+  {
+    if ( trn_grid_is_row_complete(gui->game->grid, row_index) )
+    {
+      trn_grid_pop_row_and_make_above_fall(gui->game->grid, row_index);
+      ++gui->game->score;
+    }
+  }
 }

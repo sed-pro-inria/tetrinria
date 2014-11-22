@@ -10,6 +10,7 @@ typedef struct game {
     TrnGameStatus status;
     TrnGrid* grid;
     TrnPiece* piece;
+    size_t score;
 } Game;
 
 void trn_game_new_piece(Game* game);
