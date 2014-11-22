@@ -8,8 +8,8 @@
 #include "grid.h"
 #include "game.h"
 
-static size_t random_row_index;
-static size_t const ZERO = 0;
+static int random_row_index;
+static int const ZERO = 0;
 
 /* Suite initialization */
 int init_suite()
@@ -44,13 +44,13 @@ if ( suite == NULL ) { \
 void test_grid_new_destroy()
 {
     // Create a grid.
-    unsigned int numberOfRows = 3;
-    unsigned int numberOfColumns = 2;
+    int numberOfRows = 3;
+    int numberOfColumns = 2;
     TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
 
     // Check that values are initialized to TRN_TETROMINO_VOID
-    unsigned int rowIndex;
-    unsigned int columnIndex;
+    int rowIndex;
+    int columnIndex;
     for (rowIndex = 0 ; rowIndex < grid->numberOfRows; rowIndex++) {
         for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
             CU_ASSERT(grid->tetrominoTypes[rowIndex][columnIndex] == TRN_TETROMINO_VOID);
@@ -64,11 +64,11 @@ void test_grid_new_destroy()
 void test_grid_set_get_cell()
 {
     // Create a 3 rows grid.
-    unsigned int numberOfRows = 3;
-    unsigned int numberOfColumns = 2;
+    int numberOfRows = 3;
+    int numberOfColumns = 2;
     TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
 
-    unsigned int columnIndex;
+    int columnIndex;
     TrnPositionInGrid pos;
 
     // Set first row.
@@ -134,8 +134,8 @@ void test_piece_position_in_grid()
 void test_grid_set_cells_with_piece()
 {
     // Create a grid.
-    unsigned int numberOfRows = 10;
-    unsigned int numberOfColumns = 10;
+    int numberOfRows = 10;
+    int numberOfColumns = 10;
     TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
 
     // Create a piece;
@@ -153,8 +153,8 @@ void test_grid_set_cells_with_piece()
     TrnTetrominoType type;
     TrnTetrominoType expectedType;
 
-    unsigned int rowIndex;
-    unsigned int columnIndex;
+    int rowIndex;
+    int columnIndex;
     for (rowIndex = 0 ; rowIndex < grid->numberOfRows; rowIndex++) {
         for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
             pos.rowIndex = rowIndex;
@@ -177,13 +177,13 @@ void test_grid_set_cells_with_piece()
 void TestGridCellIsInGrid()
 {
     // Create a grid.
-    unsigned int numberOfRows = 2;
-    unsigned int numberOfColumns = 3;
+    int numberOfRows = 2;
+    int numberOfColumns = 3;
     TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
 
     TrnPositionInGrid pos;
-    unsigned int rowIndex;
-    unsigned int columnIndex;
+    int rowIndex;
+    int columnIndex;
 
     // Check position that are in grid
     for (rowIndex = 0 ; rowIndex < numberOfRows; rowIndex++) {
@@ -226,16 +226,16 @@ void TestGridCellIsInGrid()
 void TestGridCellIsInGridAndIsVoid()
 {
     // Create a grid.
-    unsigned int numberOfRows = 2;
-    unsigned int numberOfColumns = 3;
+    int numberOfRows = 2;
+    int numberOfColumns = 3;
     TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
 
     // TrnGrid has been initialize to TRN_TETROMINO_VOID, modify one cell type.
     TrnPositionInGrid posNotVoid = {1,2};
     trn_grid_set_cell(grid, posNotVoid, TRN_TETROMINO_O);
 
-    unsigned int rowIndex;
-    unsigned int columnIndex;
+    int rowIndex;
+    int columnIndex;
     TrnPositionInGrid pos;
     bool isInGridAndIsVoid;
 
@@ -277,8 +277,8 @@ void TestGridCanSetCellsWithPiece()
     */
 
     // Create a grid.
-    unsigned int numberOfRows = 10;
-    unsigned int numberOfColumns = 10;
+    int numberOfRows = 10;
+    int numberOfColumns = 10;
     TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
 
     // For now, the grid has only void cells.
@@ -309,7 +309,7 @@ void TestGridCanSetCellsWithPiece()
 
     // Now, fill the last grid row with non-void tetrominos.
     TrnPositionInGrid pos;
-    unsigned int columnIndex;
+    int columnIndex;
     pos.rowIndex = numberOfRows-1 ;
     for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
         pos.columnIndex = columnIndex;
@@ -332,8 +332,8 @@ void TestGridCanSetCellsWithPiece()
 void test_grid_is_row_complete()
 {
     // Create a grid.
-    unsigned int numberOfRows = 4;
-    unsigned int numberOfColumns = 4;
+    int numberOfRows = 4;
+    int numberOfColumns = 4;
     TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
 
     // Last row is void only.
@@ -341,7 +341,7 @@ void test_grid_is_row_complete()
 
     // Last row is full.
     TrnPositionInGrid pos;
-    unsigned int columnIndex;
+    int columnIndex;
     pos.rowIndex = numberOfRows-1 ;
     for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
         pos.columnIndex = columnIndex;
@@ -358,11 +358,11 @@ void test_grid_is_row_complete()
 
 void test_grid_pop_row_and_make_above_fall()
 {
-  size_t numberOfRows = 4;
-  size_t numberOfColumns = 4;
+  int numberOfRows = 4;
+  int numberOfColumns = 4;
 
-  size_t rowIndex;
-  size_t columnIndex;
+  int rowIndex;
+  int columnIndex;
   TrnPositionInGrid pos;
 
   /* Initial grid
@@ -407,11 +407,11 @@ void test_grid_pop_row_and_make_above_fall()
 
 void test_grid_find_last_complete_row_index()
 {
-  size_t numberOfRows = 4;
-  size_t numberOfColumns = 4;
+  int numberOfRows = 4;
+  int numberOfColumns = 4;
 
-  size_t rowIndex;
-  size_t columnIndex;
+  int rowIndex;
+  int columnIndex;
   TrnPositionInGrid pos;
 
   /* Initial grid
@@ -511,8 +511,8 @@ void test_piece_rotate_clockwise()
 void test_game_new_destroy()
 {
     // Create a game.
-    unsigned int numberOfRows = 3;
-    unsigned int numberOfColumns = 2;
+    int numberOfRows = 3;
+    int numberOfColumns = 2;
     Game* game = trn_game_new(numberOfRows, numberOfColumns);
 
     // Destroy the game.
@@ -543,9 +543,9 @@ void test_game_new_destroy()
 
 void stack_some_pieces()
 {
-    unsigned int numberOfRows = 20;
-    unsigned int numberOfColumns = 10;
-    unsigned int imove;
+    int numberOfRows = 20;
+    int numberOfColumns = 10;
+    int imove;
     Game* game = trn_game_new(numberOfRows, numberOfColumns);
 
     // TrnPiece 0. While the piece is falling:
@@ -613,8 +613,8 @@ void stack_some_pieces()
             break;
     }
 
-    size_t rowIndex;
-    size_t columnIndex;
+    int rowIndex;
+    int columnIndex;
     TrnPositionInGrid pos;
     TrnGrid* expected_grid = trn_grid_new(numberOfRows, numberOfColumns);
 
@@ -691,7 +691,7 @@ int main()
    /* Run all tests using the CUnit Basic interface */
    CU_basic_set_mode(CU_BRM_VERBOSE);
    CU_basic_run_tests();
-   unsigned int number_of_tests_failed = CU_get_number_of_tests_failed();
+   int number_of_tests_failed = CU_get_number_of_tests_failed();
    CU_cleanup_registry();
 
    return number_of_tests_failed;

@@ -11,7 +11,7 @@ void trn_window_refresh(TetrisWindow* window)
 
 
 
-TetrisWindow* trn_window_new(size_t numberOfRows, size_t numberOfColumns)
+TetrisWindow* trn_window_new(int numberOfRows, int numberOfColumns)
 {
   TetrisWindow* window = (TetrisWindow*)malloc(sizeof(TetrisWindow));
 

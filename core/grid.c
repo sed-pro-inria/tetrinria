@@ -1,7 +1,7 @@
 #include "grid.h"
 #include <stdlib.h>
 
-TrnGrid* trn_grid_new(unsigned int numberOfRows, unsigned int numberOfColumns)
+TrnGrid* trn_grid_new(int numberOfRows, int numberOfColumns)
 {
     /* Allocate grid */
     TrnGrid* grid = (TrnGrid*) malloc(sizeof(TrnGrid));
@@ -14,7 +14,7 @@ TrnGrid* trn_grid_new(unsigned int numberOfRows, unsigned int numberOfColumns)
      * pointers, each one pointing to contiguous memory of the column data. */
     grid->tetrominoTypes = (TrnTetrominoType**)
         malloc(sizeof(TrnTetrominoType*) * numberOfRows);
-    unsigned int rowIndex;
+    int rowIndex;
     for (rowIndex = 0 ; rowIndex < numberOfRows ; rowIndex++)
     {
         grid->tetrominoTypes[rowIndex] = (TrnTetrominoType*)
@@ -30,7 +30,7 @@ TrnGrid* trn_grid_new(unsigned int numberOfRows, unsigned int numberOfColumns)
 void trn_grid_destroy(TrnGrid* grid)
 {
     /* Deallocate C-style 2D array */
-    unsigned int rowIndex;
+    int rowIndex;
     for (rowIndex = 0 ; rowIndex < grid->numberOfRows ; rowIndex++)
     {
         free(grid->tetrominoTypes[rowIndex]);
@@ -43,8 +43,8 @@ void trn_grid_destroy(TrnGrid* grid)
 
 void trn_grid_clear(TrnGrid* grid)
 {
-    unsigned int rowIndex;
-    unsigned int columnIndex;
+    int rowIndex;
+    int columnIndex;
     for (rowIndex = 0 ; rowIndex < grid->numberOfRows; rowIndex++) {
         for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
             grid->tetrominoTypes[rowIndex][columnIndex] = TRN_TETROMINO_VOID;
@@ -64,7 +64,7 @@ TrnTetrominoType trn_grid_get_cell(TrnGrid* grid, TrnPositionInGrid pos)
 
 void trn_grid_set_cells_with_piece(TrnGrid* grid, TrnPiece* piece, TrnTetrominoType type)
 {
-    unsigned squareIndex;
+    int squareIndex;
     TrnPositionInGrid pos;
 
     for (squareIndex = 0 ; 
@@ -89,7 +89,7 @@ bool trn_grid_cell_is_in_grid_and_is_void(TrnGrid* grid, TrnPositionInGrid pos)
 
 bool trn_grid_can_set_cells_with_piece(TrnGrid* grid, TrnPiece* piece)
 {
-    unsigned squareIndex;
+    int squareIndex;
     TrnPositionInGrid pos;
 
     for (squareIndex = 0 ; 
@@ -113,8 +113,8 @@ bool trn_grid_equal(TrnGrid const * const left, TrnGrid const * const right)
 
     // Compare grid values.
     TrnPositionInGrid pos;
-    unsigned int rowIndex;
-    unsigned int columnIndex;
+    int rowIndex;
+    int columnIndex;
 
     for (rowIndex = 0 ; rowIndex < left->numberOfRows ; rowIndex++) {
         pos.rowIndex = rowIndex;
@@ -132,8 +132,8 @@ bool trn_grid_equal(TrnGrid const * const left, TrnGrid const * const right)
 void trn_grid_print(TrnGrid const * const grid)
 {
     TrnPositionInGrid pos;
-    unsigned int rowIndex;
-    unsigned int columnIndex;
+    int rowIndex;
+    int columnIndex;
     TrnTetrominoType type;
 
     char* symbols[] = {"I","O","T","S","Z","J","L"};
@@ -171,7 +171,7 @@ void trn_grid_print(TrnGrid const * const grid)
 
 bool trn_grid_is_row_complete(TrnGrid const * const grid, int rowIndex)
 {
-    unsigned int columnIndex;
+    int columnIndex;
 
     TrnPositionInGrid pos;
     pos.rowIndex = rowIndex;
@@ -218,9 +218,9 @@ void trn_grid_pop_row_and_make_above_fall(TrnGrid* grid, int rowIndexToPop)
   trn_grid_clear_row(grid,firstRowIndex);
 }
 
-size_t trn_grid_pop_first_complete_rows_block()
+int trn_grid_pop_first_complete_rows_block()
 {
-    size_t number_of_poped_rows = 0;
+    int number_of_poped_rows = 0;
     /* ... pop row blocs ... */
     return number_of_poped_rows;
 }

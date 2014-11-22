@@ -11,7 +11,7 @@ typedef struct
   Game* game;
 } TetrisGUI;
 
-TetrisGUI* trn_gui_new(size_t numberOfRows, size_t numberOfColumns);
+TetrisGUI* trn_gui_new(int numberOfRows, int numberOfColumns);
 void trn_gui_destroy(TetrisGUI* gui);
 gboolean on_key_press_event(GtkWidget *window,
                             GdkEventKey *event,

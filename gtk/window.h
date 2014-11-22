@@ -18,7 +18,7 @@ typedef struct {
   GtkWidget* preview;
 } TetrisWindow;
 
-TetrisWindow* trn_window_new(size_t numberOfRows,size_t numberOfColumns);
+TetrisWindow* trn_window_new(int numberOfRows,int numberOfColumns);
 void trn_window_destroy(TetrisWindow* window);
 void trn_window_show(TetrisWindow* window);
 void trn_window_refresh(TetrisWindow* window);
