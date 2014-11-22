@@ -13,6 +13,7 @@ typedef struct {
     TrnPiece* next_piece;
     int score;
     int lines_count;
+    int level;
 } Game;
 
 void trn_game_next_piece(Game * const game);

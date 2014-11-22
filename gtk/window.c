@@ -77,15 +77,22 @@ void trn_window_show(TrnWindow const *  const window)
 
 void trn_window_update_score(TrnWindow const * const window, int const score)
 {
-  char score_text[255];
-  sprintf(score_text, "Score: %u", score);
-  gtk_label_set_text(GTK_LABEL(window->scoreLabel), score_text);
+  char text[255];
+  sprintf(text, "Score: %u", score);
+  gtk_label_set_text(GTK_LABEL(window->scoreLabel), text);
 }
 
 void trn_window_update_lines(TrnWindow const * const window, int const lines)
 {
-  char lines_text[255];
-  sprintf(lines_text, "Lines: %u", lines);
-  gtk_label_set_text(GTK_LABEL(window->lines_label), lines_text);
+  char text[255];
+  sprintf(text, "Lines: %u", lines);
+  gtk_label_set_text(GTK_LABEL(window->lines_label), text);
+}
+
+void trn_window_update_level(TrnWindow const * const window, int const level)
+{
+  char text[255];
+  sprintf(text, "Level: %u", level);
+  gtk_label_set_text(GTK_LABEL(window->level_label), text);
 }
 

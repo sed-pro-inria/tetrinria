@@ -188,6 +188,12 @@ void trn_gui_score_complete_rows(TrnGUI* gui)
     }
   }
   gui->game->lines_count = gui->game->lines_count + lines_count;
+  if (gui->game->lines_count > LINES_PER_LEVEL * gui->game->level)
+  {
+    ++gui->game->level;
+    trn_window_update_level(gui->window,gui->game->level);
+  }
+
   gui->game->score = gui->game->lines_count;
   trn_window_update_lines(gui->window, gui->game->lines_count);
   trn_window_update_score(gui->window, gui->game->score);

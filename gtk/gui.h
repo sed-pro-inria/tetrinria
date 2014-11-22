@@ -10,6 +10,8 @@
 #  define UNUSED(x) UNUSED_ ## x
 #endif
 
+#define LINES_PER_LEVEL 10
+
 typedef struct
 {
   TrnWindow* window;
