@@ -78,7 +78,8 @@ void trn_window_refresh(TrnWindow const * const window)
 
 void trn_window_destroy(TrnWindow* window)
 {
-    free(window);
+  gtk_widget_destroy(window->base);
+  free(window);
 }
 
 void trn_window_show(TrnWindow const *  const window)
