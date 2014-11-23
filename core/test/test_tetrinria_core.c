@@ -550,47 +550,47 @@ void stack_some_pieces()
     // TrnPiece 0. While the piece is falling:
     // Rotate it 3 times.
     for (imove = 0; imove < 3; imove++) {
-        CU_ASSERT_TRUE( trn_game_try_to_move_bottom(game) );
+        CU_ASSERT_TRUE( trn_game_try_to_move_down(game) );
         CU_ASSERT_TRUE( trn_game_try_to_rotate_clockwise(game) );
     }
     // Move piece to left.
-    CU_ASSERT_TRUE( trn_game_try_to_move_bottom(game) );
+    CU_ASSERT_TRUE( trn_game_try_to_move_down(game) );
     CU_ASSERT_TRUE( trn_game_try_to_move_left(game) );
     // Reach bottom.
     while (true) {
-        if (! trn_game_try_to_move_bottom(game))
+        if (! trn_game_try_to_move_down(game))
             break;
     }
     trn_game_next_piece(game);
 
     // TrnPiece 1. While the piece is falling:
     // Rotate it 1 times.
-    CU_ASSERT_TRUE( trn_game_try_to_move_bottom(game) );
+    CU_ASSERT_TRUE( trn_game_try_to_move_down(game) );
     CU_ASSERT_TRUE( trn_game_try_to_rotate_clockwise(game) );
     // Move piece to left.
     for (imove = 0; imove < 4; imove++) {
-        CU_ASSERT_TRUE( trn_game_try_to_move_bottom(game) );
+        CU_ASSERT_TRUE( trn_game_try_to_move_down(game) );
         CU_ASSERT_TRUE( trn_game_try_to_move_left(game) );
     }
     // Reach bottom.
     while (true) {
-        if (! trn_game_try_to_move_bottom(game))
+        if (! trn_game_try_to_move_down(game))
             break;
     }
     trn_game_next_piece(game);
 
     // TrnPiece 2. While the piece is falling:
     // Rotate it 1 times.
-    CU_ASSERT_TRUE( trn_game_try_to_move_bottom(game) );
+    CU_ASSERT_TRUE( trn_game_try_to_move_down(game) );
     CU_ASSERT_TRUE( trn_game_try_to_rotate_clockwise(game) );
     // Move piece to left.
     for (imove = 0; imove < 2; imove++) {
-        CU_ASSERT_TRUE( trn_game_try_to_move_bottom(game) );
+        CU_ASSERT_TRUE( trn_game_try_to_move_down(game) );
         CU_ASSERT_TRUE( trn_game_try_to_move_left(game) );
     }
     // Reach bottom.
     while (true) {
-        if (! trn_game_try_to_move_bottom(game))
+        if (! trn_game_try_to_move_down(game))
             break;
     }
     trn_game_next_piece(game);
@@ -598,17 +598,17 @@ void stack_some_pieces()
     // TrnPiece 3. While the piece is falling:
     // Rotate it 3 times.
     for (imove = 0; imove < 3; imove++) {
-        CU_ASSERT_TRUE( trn_game_try_to_move_bottom(game) );
+        CU_ASSERT_TRUE( trn_game_try_to_move_down(game) );
         CU_ASSERT_TRUE( trn_game_try_to_rotate_clockwise(game) );
     }
     // Move piece to left.
     for (imove = 0; imove < 3; imove++) {
-        CU_ASSERT_TRUE( trn_game_try_to_move_bottom(game) );
+        CU_ASSERT_TRUE( trn_game_try_to_move_down(game) );
         CU_ASSERT_TRUE( trn_game_try_to_move_left(game) );
     }
     // Reach bottom.
     while (true) {
-        if (! trn_game_try_to_move_bottom(game))
+        if (! trn_game_try_to_move_down(game))
             break;
     }
 
