@@ -9,6 +9,7 @@ typedef struct {
   float blue;
 } TrnColor;
 
+extern TrnColor const TRN_BLACK;
 extern TrnColor const TRN_WHITE;
 extern TrnColor const TRN_RED;
 extern TrnColor const TRN_GREEN;

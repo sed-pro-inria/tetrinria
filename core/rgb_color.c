@@ -2,6 +2,7 @@
 
 #define RGB(R,G,B) {R / 255.0, G / 255.0, B / 255.0}
 
+TrnColor const TRN_BLACK = {0,0,0};
 TrnColor const TRN_WHITE = {1,1,1};
 TrnColor const TRN_RED = RGB(0xc0, 0x39, 0x2b);
 TrnColor const TRN_GREEN = RGB(0x27, 0xae, 0x60);
