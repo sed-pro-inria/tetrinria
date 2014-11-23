@@ -70,6 +70,18 @@ TrnTetrominoType trn_grid_get_cell(TrnGrid const *  const grid,
     return grid->tetrominoTypes[pos.rowIndex][pos.columnIndex];
 }
 
+void trn_grid_remove_piece(TrnGrid * const grid,
+                           TrnPiece const * const piece)
+{
+  trn_grid_set_cells_with_piece(grid, piece, TRN_TETROMINO_VOID);
+}
+
+void trn_grid_fill_piece(TrnGrid * const grid,
+                         TrnPiece const * const piece)
+{
+  trn_grid_set_cells_with_piece(grid, piece, piece->type);
+}
+
 void trn_grid_set_cells_with_piece(TrnGrid * const grid,
                                    TrnPiece const * const piece,
                                    TrnTetrominoType const type)

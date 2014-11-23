@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
   trn_init();
 
   TrnGUI* gui = trn_gui_new(numberOfRows,numberOfColumns,delay);
-   g_signal_connect(G_OBJECT(gui->window->base), "key_press_event", G_CALLBACK(on_key_press_event), gui);
+  g_signal_connect(G_OBJECT(gui->window->base), "key_press_event", G_CALLBACK(on_key_press_event), gui);
   g_signal_connect(G_OBJECT(gui->window->matrix), "expose_event", G_CALLBACK(on_matrix_expose_event),gui);
   g_signal_connect(G_OBJECT(gui->window->preview), "expose_event", G_CALLBACK(on_preview_expose_event),gui);
 

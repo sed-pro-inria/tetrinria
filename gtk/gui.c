@@ -70,7 +70,7 @@ gboolean on_matrix_expose_event(GtkWidget *matrix,GdkEventExpose* UNUSED(event),
 {
   cairo_t* cr = gdk_cairo_create(matrix->window);
 
-TrnGrid* grid = gui->game->grid;
+  TrnGrid* grid = gui->game->grid;
   TrnColor color;
 
   int irow, icol;

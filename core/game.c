@@ -30,6 +30,7 @@ static void move_piece_to_column_center(TrnPiece * const piece,
                      TRN_TETROMINO_GRID_SIZE)/2;
 
   piece->topLeftCorner.columnIndex = columnIndex;
+  trn_grid_fill_piece(game->grid, game->current_piece);
 }
 
 void trn_game_next_piece(TrnGame * const game)
@@ -134,10 +135,8 @@ bool trn_game_try_to_move(TrnGame* game,void (*move)(TrnPiece * const),
 
   bool managedToMove = true;
 
-  trn_grid_set_cells_with_piece(game->grid, 
-                        game->current_piece,
-                        TRN_TETROMINO_VOID);
-
+  trn_grid_remove_piece(game->grid, game->current_piece);
+  
   move(game->current_piece);
 
   if (! trn_grid_can_set_cells_with_piece(game->grid, game->current_piece)) {
@@ -145,9 +144,7 @@ bool trn_game_try_to_move(TrnGame* game,void (*move)(TrnPiece * const),
       unmove(game->current_piece);
   }
 
-  trn_grid_set_cells_with_piece(game->grid, 
-                        game->current_piece,
-                        game->current_piece->type);
+  trn_grid_fill_piece(game->grid, game->current_piece);
 
   return managedToMove;
 }

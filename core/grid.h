@@ -37,6 +37,13 @@ bool trn_grid_cell_is_in_grid(TrnGrid const * const grid,
 bool trn_grid_cell_is_in_grid_and_is_void(TrnGrid const * const grid,
                                           TrnPositionInGrid const pos);
 
+
+void trn_grid_remove_piece(TrnGrid * const grid,
+                           TrnPiece const * const piece);
+
+void trn_grid_fill_piece(TrnGrid * const grid,
+                         TrnPiece const * const piece);
+  
 bool trn_grid_can_set_cells_with_piece(TrnGrid * const grid,
                                        TrnPiece const *  const piece);
 
