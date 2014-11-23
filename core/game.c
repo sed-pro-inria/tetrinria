@@ -23,14 +23,16 @@ static TrnTetrominoType getRandomTrnTetrominoType()
 #endif
 }
 
-static void move_piece_to_column_center(TrnPiece * const piece,
+static bool move_piece_to_column_center(TrnPiece * const piece,
                                         TrnGame const * const game)
 {
   int columnIndex = (game->grid->numberOfColumns - 
                      TRN_TETROMINO_GRID_SIZE)/2;
 
   piece->topLeftCorner.columnIndex = columnIndex;
+  bool success = trn_grid_can_set_cells_with_piece(game->grid,game->current_piece);
   trn_grid_fill_piece(game->grid, game->current_piece);
+  return success;
 }
 
 void trn_game_next_piece(TrnGame * const game)
@@ -40,15 +42,11 @@ void trn_game_next_piece(TrnGame * const game)
 
   free(game->current_piece);
   game->current_piece = game->next_piece;
-  move_piece_to_column_center(game->current_piece,game);
+  bool success = move_piece_to_column_center(game->current_piece,game);
 
   game->next_piece = trn_piece_new(getRandomTrnTetrominoType());
 
-  if ( trn_grid_can_set_cells_with_piece(game->grid,game->current_piece) )
-    trn_grid_set_cells_with_piece(game->grid, 
-                                  game->current_piece,
-                                  game->current_piece->type);
-  else
+  if (!success)
     trn_game_over(game);
 }
 
