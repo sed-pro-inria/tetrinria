@@ -15,7 +15,7 @@
 typedef struct
 {
   TrnWindow* window;
-  Game* game;
+  TrnGame* game;
 } TrnGUI;
 
 TrnGUI* trn_gui_new(int numberOfRows, int numberOfColumns, int delay);

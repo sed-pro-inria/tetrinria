@@ -24,7 +24,7 @@ static TrnTetrominoType getRandomTrnTetrominoType()
 }
 
 static void move_piece_to_column_center(TrnPiece * const piece,
-                                        Game const * const game)
+                                        TrnGame const * const game)
 {
   int columnIndex = (game->grid->numberOfColumns - 
                      TRN_TETROMINO_GRID_SIZE)/2;
@@ -32,7 +32,7 @@ static void move_piece_to_column_center(TrnPiece * const piece,
   piece->topLeftCorner.columnIndex = columnIndex;
 }
 
-void trn_game_next_piece(Game * const game)
+void trn_game_next_piece(TrnGame * const game)
 {
   if (game->status != TRN_GAME_ON)
      return;
@@ -51,10 +51,10 @@ void trn_game_next_piece(Game * const game)
     game->status = TRN_GAME_OVER;
 }
 
-Game* trn_game_new(int const numberOfRows, int const numberOfColumns, int delay)
+TrnGame* trn_game_new(int const numberOfRows, int const numberOfColumns, int delay)
 {
     srand(time(NULL));
-    Game* game = (Game*) malloc(sizeof(Game));
+    TrnGame* game = (TrnGame*) malloc(sizeof(TrnGame));
     game->status = TRN_GAME_ON;
     game->grid = trn_grid_new(numberOfRows, numberOfColumns);
     game->score = 0;
@@ -70,7 +70,7 @@ Game* trn_game_new(int const numberOfRows, int const numberOfColumns, int delay)
     return game;
 }
 
-void trn_game_destroy(Game * game)
+void trn_game_destroy(TrnGame * game)
 {
     free(game->current_piece);
     free(game->next_piece);
@@ -78,31 +78,31 @@ void trn_game_destroy(Game * game)
     free(game);
 }
 
-bool trn_game_try_to_move_right(Game * const game)
+bool trn_game_try_to_move_right(TrnGame * const game)
 {
   return  trn_game_try_to_move(game,trn_piece_move_to_right, 
                                     trn_piece_move_to_left);
 }
 
-bool trn_game_try_to_move_left(Game * const game)
+bool trn_game_try_to_move_left(TrnGame * const game)
 {
   return trn_game_try_to_move(game,trn_piece_move_to_left, 
                                    trn_piece_move_to_right);
 }
 
-bool trn_game_try_to_move_bottom(Game * const game)
+bool trn_game_try_to_move_bottom(TrnGame * const game)
 {
   return trn_game_try_to_move(game,trn_piece_move_to_bottom,
                                    trn_piece_move_to_top);
 }
 
-bool trn_game_try_to_rotate_clockwise(Game * const game)
+bool trn_game_try_to_rotate_clockwise(TrnGame * const game)
 {
   return trn_game_try_to_move(game,trn_piece_rotate_clockwise,
                                    trn_piece_rotate_counter_clockwise);
 }
 
-bool trn_game_try_to_move(Game* game,void (*move)(TrnPiece * const),
+bool trn_game_try_to_move(TrnGame* game,void (*move)(TrnPiece * const),
                                      void (*unmove)(TrnPiece * const))
 {
   if (game->status != TRN_GAME_ON)
@@ -128,17 +128,17 @@ bool trn_game_try_to_move(Game* game,void (*move)(TrnPiece * const),
   return managedToMove;
 }
 
-void trn_game_update_score(Game* game, int const lines_count)
+void trn_game_update_score(TrnGame* game, int const lines_count)
 {
   game->score += NINTENDO_SCORING[lines_count] * (game->level+1);
 }
 
-void trn_game_level_up(Game* game)
+void trn_game_level_up(TrnGame* game)
 {
   ++game->level;
 }
 
-int trn_game_delay(Game* game)
+int trn_game_delay(TrnGame* game)
 {
   return game->initial_delay * 1./(game->level+1);
 }
