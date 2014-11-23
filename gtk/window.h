@@ -11,13 +11,16 @@ typedef struct {
 
   GtkWidget* newGameButton;
   GtkWidget* pauseButton;
-  GtkWidget* scoreLabel;
   GtkWidget* verticalBox;
   GtkWidget* horizontalBox;
   GtkWidget* matrix;
   GtkWidget* preview;
-  GtkWidget* lines_label;
-  GtkWidget* level_label;
+  GtkWidget* levelLabel;
+  GtkWidget* levelLinesSeparator;
+  GtkWidget* linesLabel;
+  GtkWidget* linesScoreSeparator;
+  GtkWidget* scoreLabel;
+  GtkWidget* scorePreviewSeparator;
 } TrnWindow;
 
 TrnWindow* trn_window_new(int const numberOfRows, int const numberOfColumns);

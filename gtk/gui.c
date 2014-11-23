@@ -3,7 +3,7 @@
 #include <malloc.h>
 
 
-void fill_cell(cairo_t *cr, TrnColor color, int i, int j)
+void fill_cell(cairo_t *cr, TrnColor color, int i, int j, bool border_shade)
 {
   const int line_width = 2;
   double x = j * NPIXELS + line_width;
@@ -16,7 +16,9 @@ void fill_cell(cairo_t *cr, TrnColor color, int i, int j)
   cairo_set_source_rgb(cr, color.red, color.green, color.blue);
   cairo_fill_preserve(cr);
   cairo_set_line_width(cr, line_width);
-  cairo_set_source_rgb(cr, color.red * 0.5, color.green * 0.5, color.blue * 0.5);
+  if (border_shade) {
+    cairo_set_source_rgb(cr, color.red * 0.5, color.green * 0.5, color.blue * 0.5);
+  }
   cairo_stroke(cr);
 }
 
@@ -45,7 +47,7 @@ gboolean on_preview_expose_event(GtkWidget* preview,
   {
     for ( columnIndex = 0; columnIndex < TRN_TETROMINO_NUMBER_OF_SQUARES; ++columnIndex)
     {
-      fill_cell(cr,TRN_WHITE,rowIndex,columnIndex);
+      fill_cell(cr,TRN_WHITE,rowIndex,columnIndex,false);
     }
   }
 
@@ -62,7 +64,7 @@ gboolean on_preview_expose_event(GtkWidget* preview,
   {
     rowIndex = tetromino_rotation[squareIndex].rowIndex;
     columnIndex = tetromino_rotation[squareIndex].columnIndex;
-    fill_cell(cr,color,rowIndex,columnIndex);
+    fill_cell(cr,color,rowIndex,columnIndex,true);
   }
 
   return TRUE;
@@ -86,7 +88,7 @@ TrnGrid* grid = gui->game->grid;
           color = TRN_BLACK;
       else
           color = TRN_ALL_TETROMINO_COLORS[type];
-      fill_cell(cr, color, irow, icol);
+      fill_cell(cr, color, irow, icol, true);
     }
   }
   cairo_destroy(cr);
@@ -177,25 +179,9 @@ void trn_gui_destroy(TrnGUI* gui)
 
 void trn_gui_score_complete_rows(TrnGUI* gui)
 {
-  int row_index;
-  int lines_count = 0;
-
-  for ( row_index=0; row_index<gui->game->grid->numberOfRows; ++row_index)
-  {
-    if ( trn_grid_is_row_complete(gui->game->grid, row_index) )
-    {
-      trn_grid_pop_row_and_make_above_fall(gui->game->grid, row_index);
-      ++lines_count;
-    }
-  }
-  gui->game->lines_count = gui->game->lines_count + lines_count;
-  if (gui->game->lines_count > LINES_PER_LEVEL * (gui->game->level+1))
-  {
-    ++gui->game->level;
-    trn_window_update_level(gui->window,gui->game->level);
-  }
-
-  trn_game_update_score(gui->game,lines_count);
+  trn_game_check_complete_rows(gui->game);
+  trn_game_update_score(gui->game,gui->game->lines_count);
+  trn_window_update_level(gui->window,gui->game->level);
   trn_window_update_lines(gui->window, gui->game->lines_count);
   trn_window_update_score(gui->window, gui->game->score);
 }

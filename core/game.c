@@ -48,7 +48,12 @@ void trn_game_next_piece(TrnGame * const game)
                                   game->current_piece,
                                   game->current_piece->type);
   else
+    trn_game_over(game);
+}
+
+void trn_game_over(TrnGame * const game) {
     game->status = TRN_GAME_OVER;
+    trn_grid_fill(game->grid, TRN_TETROMINO_I);
 }
 
 TrnGame* trn_game_new(int const numberOfRows, int const numberOfColumns, int delay)
@@ -126,6 +131,29 @@ bool trn_game_try_to_move(TrnGame* game,void (*move)(TrnPiece * const),
                         game->current_piece->type);
 
   return managedToMove;
+}
+
+void trn_game_check_complete_rows(TrnGame* game)
+{
+  if (game->status != TRN_GAME_ON)
+     return;
+  
+  int row_index;
+  int lines_count = 0;
+
+  for ( row_index=0; row_index<game->grid->numberOfRows; ++row_index)
+  {
+    if ( trn_grid_is_row_complete(game->grid, row_index) )
+    {
+      trn_grid_pop_row_and_make_above_fall(game->grid, row_index);
+      ++lines_count;
+    }
+  }
+  game->lines_count += lines_count;
+  if (game->lines_count > LINES_PER_LEVEL * (game->level+1))
+  {
+    ++game->level;
+  }
 }
 
 void trn_game_update_score(TrnGame* game, int const lines_count)

@@ -20,11 +20,15 @@ typedef struct {
     int initial_delay;
 } TrnGame;
 
+#define LINES_PER_LEVEL 10
+
 void trn_game_next_piece(TrnGame * const game);
 
 TrnGame* trn_game_new(int const numberOfRows, int const numberOfColumns, int const delay);
 
 void trn_game_destroy(TrnGame * game);
+
+void trn_game_over(TrnGame * const game);
 
 bool trn_game_try_to_move(TrnGame* game,
                           void (*move)(TrnPiece * const),
@@ -44,4 +48,6 @@ void trn_game_level_up(TrnGame* game);
 
 int trn_game_delay(TrnGame* game);
 
+void trn_game_check_complete_rows(TrnGame* game);
+  
 #endif

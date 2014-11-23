@@ -43,11 +43,16 @@ void trn_grid_destroy(TrnGrid* grid)
 
 void trn_grid_clear(TrnGrid * const grid)
 {
+    trn_grid_fill(grid, TRN_TETROMINO_VOID);
+}
+
+void trn_grid_fill(TrnGrid * const grid, TrnTetrominoType type)
+{
     int rowIndex;
     int columnIndex;
     for (rowIndex = 0 ; rowIndex < grid->numberOfRows; rowIndex++) {
         for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
-            grid->tetrominoTypes[rowIndex][columnIndex] = TRN_TETROMINO_VOID;
+            grid->tetrominoTypes[rowIndex][columnIndex] = type;
         }
     }
 }
