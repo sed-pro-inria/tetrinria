@@ -3,7 +3,7 @@
 #include <malloc.h>
 
 
-void fill_cell(cairo_t *cr, TrnRGBColor color, int i, int j)
+void fill_cell(cairo_t *cr, TrnColor color, int i, int j)
 {
   const int line_width = 2;
   double x = j * NPIXELS + line_width;
@@ -56,7 +56,7 @@ gboolean on_preview_expose_event(GtkWidget* preview,
   TrnTetrominoRotation tetromino_rotation = 
       TRN_ALL_TETROMINO_FOUR_ROTATIONS[piece->type][TRN_ANGLE_0];
 
-  TrnRGBColor color = TRN_ALL_TETROMINO_COLORS[piece->type];
+  TrnColor color = TRN_ALL_TETROMINO_COLORS[piece->type];
 
   for (squareIndex=0;squareIndex<TRN_TETROMINO_NUMBER_OF_SQUARES;++squareIndex)
   {
@@ -73,7 +73,7 @@ gboolean on_matrix_expose_event(GtkWidget *matrix,GdkEventExpose* UNUSED(event),
   cairo_t* cr = gdk_cairo_create(matrix->window);
 
   TrnGrid* grid = gui->game->grid;
-  TrnRGBColor color;
+  TrnColor color;
 
   int irow, icol;
   for (irow = 0; irow < grid->numberOfRows; irow++) {

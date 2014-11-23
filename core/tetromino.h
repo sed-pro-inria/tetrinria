@@ -28,7 +28,7 @@ typedef TrnTetrominoRotationArray
 typedef TrnPositionInGrid* TrnTetrominoRotation;
 typedef TrnPositionInGrid** TrnTetrominoFourRotations;
 
-extern TrnRGBColor
+extern TrnColor
   TRN_ALL_TETROMINO_COLORS[TRN_NUMBER_OF_TETROMINO];
 
 extern TrnTetrominoFourRotationsArray
