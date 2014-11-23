@@ -25,11 +25,7 @@ void fill_cell(cairo_t *cr, TrnColor color, int i, int j, bool border_shade)
 gint on_timeout_event(gpointer data)
 {
   TrnGUI* self = (TrnGUI*)data;
-  if (! trn_game_try_to_move_bottom(self->game) )
-  {
-    trn_gui_score_complete_rows(self);
-    trn_game_next_piece(self->game);
-  }
+  trn_game_try_to_move_down(self->game);
   trn_window_refresh(self->window);
   g_timeout_add(trn_game_delay(self->game),on_timeout_event,(gpointer)self);
   return 0;
@@ -111,19 +107,10 @@ gboolean on_key_press_event(GtkWidget* UNUSED(widget),
     trn_game_try_to_rotate_clockwise(gui->game);
     break;
   case GDK_Down:
-    if (!trn_game_try_to_move_bottom(gui->game))
-    {
-      trn_gui_score_complete_rows(gui);
-      trn_game_next_piece(gui->game);
-    }
+    trn_game_try_to_move_down(gui->game);
     break;
   case GDK_KEY_space:
-    while (true) {
-        if (! trn_game_try_to_move_bottom(gui->game))
-            break;
-    }
-    trn_gui_score_complete_rows(gui);
-    trn_game_next_piece(gui->game);
+    trn_game_move_to_bottom(gui->game);
     break;
 
     break;
@@ -176,7 +163,7 @@ void trn_gui_destroy(TrnGUI* gui)
   free(gui);
 }
 
-
+/*
 void trn_gui_score_complete_rows(TrnGUI* gui)
 {
   trn_game_check_complete_rows(gui->game);
@@ -185,3 +172,4 @@ void trn_gui_score_complete_rows(TrnGUI* gui)
   trn_window_update_lines(gui->window, gui->game->lines_count);
   trn_window_update_score(gui->window, gui->game->score);
 }
+*/

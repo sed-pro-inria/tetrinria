@@ -24,7 +24,8 @@ gboolean on_key_press_event(GtkWidget *window,
 gboolean on_preview_expose_event(GtkWidget *matrix, GdkEventExpose *event, TrnGUI* gui);
 gboolean on_matrix_expose_event(GtkWidget *matrix, GdkEventExpose *event, TrnGUI* gui);
 
+/*
 void trn_gui_score_complete_rows(TrnGUI* gui);
-
+*/
 
 #endif

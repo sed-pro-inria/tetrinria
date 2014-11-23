@@ -38,9 +38,13 @@ bool trn_game_try_to_move_right(TrnGame * const game);
 
 bool trn_game_try_to_move_left(TrnGame * const game);
 
-bool trn_game_try_to_move_bottom(TrnGame * const game);
+bool trn_game_try_to_move_down(TrnGame * const game);
+
+void trn_game_move_to_bottom(TrnGame * const game);
 
 bool trn_game_try_to_rotate_clockwise(TrnGame * const game);
+
+void trn_game_end_piece(TrnGame * const game);
 
 void trn_game_update_score(TrnGame* game, int const lines_count);
 

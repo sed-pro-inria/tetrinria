@@ -95,10 +95,29 @@ bool trn_game_try_to_move_left(TrnGame * const game)
                                    trn_piece_move_to_right);
 }
 
-bool trn_game_try_to_move_bottom(TrnGame * const game)
+bool trn_game_try_to_move_down(TrnGame * const game)
 {
-  return trn_game_try_to_move(game,trn_piece_move_to_bottom,
-                                   trn_piece_move_to_top);
+  bool success = trn_game_try_to_move(game,trn_piece_move_to_bottom,
+                                      trn_piece_move_to_top);
+  if (!success) {
+    trn_game_end_piece(game);
+  }
+  return success;
+}
+
+void trn_game_end_piece(TrnGame * const game)
+{
+  trn_game_check_complete_rows(game);
+  trn_game_next_piece(game);
+}
+
+void trn_game_move_to_bottom(TrnGame * const game)
+{
+  while (true) {
+    if (!trn_game_try_to_move_down(game)) {
+      break;
+    }
+  }
 }
 
 bool trn_game_try_to_rotate_clockwise(TrnGame * const game)
