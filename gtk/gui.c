@@ -29,7 +29,7 @@ gint on_timeout_event(gpointer data)
     trn_game_next_piece(self->game);
   }
   trn_window_refresh(self->window);
-  g_timeout_add(500,on_timeout_event,(gpointer)self);
+  g_timeout_add(trn_game_delay(self->game),on_timeout_event,(gpointer)self);
   return 0;
 }
 
@@ -135,8 +135,9 @@ gboolean on_key_press_event(GtkWidget* UNUSED(widget),
 gboolean button_newgame_clicked(GtkWidget* UNUSED(widget), TrnGUI* gui) {
   int numberOfRows = gui->game->grid->numberOfRows;
   int numberOfColumns = gui->game->grid->numberOfColumns;
+  int delay = gui->game->initial_delay;
   trn_game_destroy(gui->game);
-  gui->game = trn_game_new(numberOfRows,numberOfColumns);
+  gui->game = trn_game_new(numberOfRows, numberOfColumns, delay);
   return TRUE;
 }
 
@@ -148,12 +149,12 @@ gboolean button_pause_clicked(GtkWidget* UNUSED(widget), TrnGUI* gui) {
   return TRUE;
 }
 
-TrnGUI* trn_gui_new(int numberOfRows, int numberOfColumns)
+TrnGUI* trn_gui_new(int numberOfRows, int numberOfColumns, int delay)
 {
 
   TrnGUI* gui = (TrnGUI*)malloc(sizeof(TrnGUI));
 
-  gui->game = trn_game_new(numberOfRows,numberOfColumns);
+  gui->game = trn_game_new(numberOfRows, numberOfColumns, delay);
 
   gui->window = trn_window_new(numberOfRows,numberOfColumns);
   
@@ -161,7 +162,7 @@ TrnGUI* trn_gui_new(int numberOfRows, int numberOfColumns)
   g_signal_connect(gui->window->pauseButton, "clicked", G_CALLBACK(button_pause_clicked), gui);
 
   trn_window_show(gui->window);
-  g_timeout_add(500,on_timeout_event,(gpointer)gui);
+  g_timeout_add(trn_game_delay(gui->game),on_timeout_event,(gpointer)gui);
 
   return gui;
 }

@@ -510,7 +510,8 @@ void test_game_new_destroy()
     // Create a game.
     int numberOfRows = 3;
     int numberOfColumns = 2;
-    Game* game = trn_game_new(numberOfRows, numberOfColumns);
+    int delay = 500;
+    Game* game = trn_game_new(numberOfRows, numberOfColumns, delay);
 
     // Destroy the game.
     trn_game_destroy(game);
@@ -542,8 +543,9 @@ void stack_some_pieces()
 {
     int numberOfRows = 20;
     int numberOfColumns = 10;
+    int delay = 500;
     int imove;
-    Game* game = trn_game_new(numberOfRows, numberOfColumns);
+    Game* game = trn_game_new(numberOfRows, numberOfColumns, delay);
 
     // TrnPiece 0. While the piece is falling:
     // Rotate it 3 times.

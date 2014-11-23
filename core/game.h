@@ -20,11 +20,12 @@ typedef struct {
     int score;
     int lines_count;
     int level;
+    int initial_delay;
 } Game;
 
 void trn_game_next_piece(Game * const game);
 
-Game* trn_game_new(int const numberOfRows, int const numberOfColumns);
+Game* trn_game_new(int const numberOfRows, int const numberOfColumns, int const delay);
 
 void trn_game_destroy(Game * game);
 
@@ -40,6 +41,10 @@ bool trn_game_try_to_move_bottom(Game * const game);
 
 bool trn_game_try_to_rotate_clockwise(Game * const game);
 
-int trn_game_update_score(Game* game, int const lines_count);
+void trn_game_update_score(Game* game, int const lines_count);
+
+void trn_game_level_up(Game* game);
+
+int trn_game_delay(Game* game);
 
 #endif

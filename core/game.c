@@ -51,7 +51,7 @@ void trn_game_next_piece(Game * const game)
     game->status = TRN_GAME_OVER;
 }
 
-Game* trn_game_new(int const numberOfRows, int const numberOfColumns)
+Game* trn_game_new(int const numberOfRows, int const numberOfColumns, int delay)
 {
     srand(time(NULL));
     Game* game = (Game*) malloc(sizeof(Game));
@@ -60,6 +60,7 @@ Game* trn_game_new(int const numberOfRows, int const numberOfColumns)
     game->score = 0;
     game->lines_count = 0;
     game->level = 0;
+    game->initial_delay = delay;
 
     game->current_piece = trn_piece_new(getRandomTrnTetrominoType());
     move_piece_to_column_center(game->current_piece,game);
@@ -127,7 +128,18 @@ bool trn_game_try_to_move(Game* game,void (*move)(TrnPiece * const),
   return managedToMove;
 }
 
-int trn_game_update_score(Game* game, int const lines_count)
+void trn_game_update_score(Game* game, int const lines_count)
 {
   game->score += NINTENDO_SCORING[lines_count] * (game->level+1);
 }
+
+void trn_game_level_up(Game* game)
+{
+  ++game->level;
+}
+
+int trn_game_delay(Game* game)
+{
+  return game->initial_delay * 1./(game->level+1);
+}
+
