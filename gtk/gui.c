@@ -26,7 +26,7 @@ gint on_timeout_event(gpointer data)
 {
   TrnGUI* self = (TrnGUI*)data;
   trn_game_try_to_move_down(self->game);
-  trn_window_refresh(self->window);
+  trn_gui_update_view(self);
   g_timeout_add(trn_game_delay(self->game),on_timeout_event,(gpointer)self);
   return 0;
 }
@@ -116,7 +116,7 @@ gboolean on_key_press_event(GtkWidget* UNUSED(widget),
     break;
   }
 
-  trn_window_refresh(gui->window);
+  trn_gui_update_view(gui);
   
   return TRUE;
 }
@@ -163,13 +163,16 @@ void trn_gui_destroy(TrnGUI* gui)
   free(gui);
 }
 
-/*
-void trn_gui_score_complete_rows(TrnGUI* gui)
+void trn_gui_update_view(TrnGUI* gui)
 {
-  trn_game_check_complete_rows(gui->game);
-  trn_game_update_score(gui->game,gui->game->lines_count);
+  trn_window_refresh(gui->window);
+  trn_gui_update_labels(gui);
+}
+
+void trn_gui_update_labels(TrnGUI* gui)
+{
   trn_window_update_level(gui->window,gui->game->level);
   trn_window_update_lines(gui->window, gui->game->lines_count);
   trn_window_update_score(gui->window, gui->game->score);
 }
-*/
+
