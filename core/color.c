@@ -1,4 +1,4 @@
-#include "rgb_color.h"
+#include "color.h"
 
 #define RGB(R,G,B) {R / 255.0, G / 255.0, B / 255.0}
 

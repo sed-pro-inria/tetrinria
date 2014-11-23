@@ -1,7 +1,7 @@
 include_directories(${TETRINRIA_CORE_INCLUDE})
 
 add_library(${TETRINRIA_CORE_LIBRARY} SHARED
-    rgb_color.c
+    color.c
     piece.c
     tetromino.c
     position_in_grid.c

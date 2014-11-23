@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 #include "game.h"
-#include "rgb_color.h"
+#include "color.h"
 #include "tetromino_srs.h"
 #include "gui.h"
 #include "init.h"

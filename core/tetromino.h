@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#include "rgb_color.h"
+#include "color.h"
 #include "position_in_grid.h"
 
 #define TRN_NUMBER_OF_TETROMINO 7
