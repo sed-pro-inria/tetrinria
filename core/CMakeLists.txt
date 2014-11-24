@@ -9,3 +9,7 @@ add_library(${TETRINRIA_CORE_LIBRARY} SHARED
     game.c
     init.c
 )
+
+if(CMAKE_BUILD_TYPE MATCHES TEST)
+    add_subdirectory(test)
+endif(CMAKE_BUILD_TYPE MATCHES TEST)
