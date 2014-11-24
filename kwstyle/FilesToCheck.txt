@@ -1,2 +1,3 @@
-../core/color.h
-../core/color.c
+../../core/color.h
+../../core/color.c
+../../core/piece.h
