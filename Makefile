@@ -1,5 +1,5 @@
 CFLAGS=-fPIC -Icore -Igtk $(shell pkg-config --cflags gtk+-2.0)
-LDLIBS=-Lcore -ltetrinria_core $(shell pkg-config --libs gtk+-2.0)
+LDLIBS= -L$(abspath core) -Wl,-rpath,$(abspath core) -ltetrinria_core $(shell pkg-config --libs gtk+-2.0)
 
 LIBTETRINRIA_CORE_OBJECTS=core/color.o core/piece.o core/tetromino.o core/position_in_grid.o core/grid.o core/game.o core/init.o
 TETRINRIA_GTK_OBJECTS=gtk/tetrinria-gtk.o gtk/gui.o gtk/window.o
