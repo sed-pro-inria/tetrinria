@@ -8,7 +8,7 @@ compiler:
 
 install:
   - sudo apt-get update
-  - sudo apt-get install cmake libgtk2.0-dev libcunit1-dev cppcheck valgrind
+  - sudo apt-get install cmake libgtk2.0-dev libcunit1-dev cppcheck valgrind kwstyle
   - mkdir build_test
   - cd build_test
   - cmake -DCMAKE_BUILD_TYPE=TEST ..
