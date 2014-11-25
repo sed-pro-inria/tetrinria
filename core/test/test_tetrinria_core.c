@@ -612,10 +612,10 @@ void stack_some_pieces()
             break;
     }
 
+    TrnGrid* expected_grid = trn_grid_new(numberOfRows, numberOfColumns);
     int rowIndex;
     int columnIndex;
     TrnPositionInGrid pos;
-    TrnGrid* expected_grid = trn_grid_new(numberOfRows, numberOfColumns);
 
     // Expected expected_grid type for pieces 0 and 2
     for (rowIndex = numberOfRows-4 ; rowIndex < numberOfRows ; rowIndex++) {
@@ -634,9 +634,19 @@ void stack_some_pieces()
             trn_grid_set_cell(expected_grid, pos, TRN_TETROMINO_L);
         }
     }
-/*
+
+    // Expected next piece
+    pos.rowIndex = 0;
+    pos.columnIndex = 3;
+    trn_grid_set_cell(expected_grid, pos, TRN_TETROMINO_J);
+    pos.rowIndex = 1;
+    for (columnIndex = 3 ; columnIndex < 6 ; columnIndex++) {
+      pos.columnIndex = columnIndex;
+      trn_grid_set_cell(expected_grid, pos, TRN_TETROMINO_J);
+    }
+
     CU_ASSERT_TRUE( trn_grid_equal(game->grid, expected_grid) );
-*/
+
     trn_game_destroy(game);
 }
 
