@@ -9,15 +9,26 @@
 #include "game.h"
 #include "init.h"
 
+//TrnGame* game;
+
+
 /* Suite initialization */
 int init_suite()
 {
-   return 0;
+  int numberOfRows = 3;
+  int numberOfColumns = 2;
+  int delay = 500;
+/*  TrnGame* game; */
+  //game = trn_game_new(numberOfRows, numberOfColumns, delay);
+
+  return 0;
 }
 
 /* Suite termination */
 int clean_suite()
 {
+
+  //trn_game_destroy(game);
    return 0;
 }
 
@@ -174,8 +185,8 @@ void test_grid_set_cells_with_piece()
 void TestGridCellIsInGrid()
 {
     // Create a grid.
-    int numberOfRows = 2;
-    int numberOfColumns = 3;
+    int numberOfRows = 10;
+    int numberOfColumns = 10;
     TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
 
     TrnPositionInGrid pos;
@@ -511,10 +522,120 @@ void test_game_new_destroy()
     int numberOfRows = 3;
     int numberOfColumns = 2;
     int delay = 500;
-    TrnGame* game = trn_game_new(numberOfRows, numberOfColumns, delay);
+    TrnGame* local_game = trn_game_new(numberOfRows, numberOfColumns, delay);
 
     // Destroy the game.
-    trn_game_destroy(game);
+    trn_game_destroy(local_game);
+    
+}
+
+void test_game_update_score()
+{
+
+  int numberOfRows = 10;
+  int numberOfColumns = 10;
+  int delay = 500;
+  TrnGame* game;
+  int lines_count = 1;
+  int actual_score;
+  int expected_score = 40;
+
+  game = trn_game_new(numberOfRows, numberOfColumns, delay);
+  trn_game_update_score(game, lines_count);
+  
+  actual_score = game->score;
+
+  CU_ASSERT_EQUAL(actual_score, expected_score);
+  trn_game_destroy(game);
+
+}
+
+void test_complete_rows(void) {
+  TrnGame* game;
+  int numberOfRows = 5;
+  int numberOfColumns = 4;
+  int actual_score;
+  int expected_score = 1200;
+  int expected_level = 1;
+  int delay = 500 ;
+  int rowIndex, columnIndex;
+  TrnPositionInGrid pos;
+
+  game = trn_game_new(numberOfRows, numberOfColumns, delay);
+  game->lines_count = 19;
+  for (rowIndex = 0 ; rowIndex < 4; rowIndex++) {
+    pos.rowIndex = rowIndex;
+    for (columnIndex = 0 ; columnIndex < numberOfColumns ;columnIndex++ ) {
+      pos.columnIndex = columnIndex;
+      trn_grid_set_cell(game->grid, pos,TRN_TETROMINO_I);
+    }
+  }
+
+  trn_game_check_complete_rows(game);
+  printf("score: %d\n", game->score);
+  printf("lines_count: %d\n", game->lines_count);
+
+
+  CU_ASSERT_EQUAL(game->score, expected_score);
+  CU_ASSERT_EQUAL(game->level, expected_level);
+  trn_game_destroy(game);
+}
+
+
+
+void test_clear_row(void) {
+  int numberOfRows = 20;
+  int numberOfColumns = 10;
+  TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
+  TrnPositionInGrid pos;
+
+  // Initialization of our full grid.
+  int rowIndex;
+  int columnIndex;
+  trn_grid_fill(grid, TRN_TETROMINO_L);
+
+  // Choose a line and clear.
+  int rowIndexToClear = 5;
+  trn_grid_clear_row(grid, rowIndexToClear);
+
+  // Check that grid values are correct.
+  for (rowIndex = 0 ; rowIndex < numberOfRows; rowIndex++) {
+    pos.rowIndex = rowIndex;
+    TrnTetrominoType tetromino;
+    if (pos.rowIndex == rowIndexToClear) {
+      tetromino = TRN_TETROMINO_VOID;
+    }
+    else {
+      tetromino = TRN_TETROMINO_L;
+    }
+    for (columnIndex = 0 ; columnIndex < numberOfColumns ;columnIndex++ ) {
+      pos.columnIndex = columnIndex;
+      CU_ASSERT_EQUAL( trn_grid_get_cell(grid, pos), tetromino);
+    }
+  }
+}
+
+
+void test_set_grid_to_zero(void) {
+  int numberOfRows = 20;
+  int numberOfColumns = 10;
+  TrnGrid* grid = trn_grid_new(numberOfRows, numberOfColumns);
+  TrnPositionInGrid pos;
+
+  // Initialization full grid.
+  int rowIndex;
+  int columnIndex;
+  trn_grid_fill(grid, TRN_TETROMINO_L);
+  trn_grid_clear(grid);
+
+  // Check that grid is empty
+  for (rowIndex = 0 ; rowIndex < numberOfRows; rowIndex++) {
+    pos.rowIndex = rowIndex;
+    for (columnIndex = 0 ; columnIndex < numberOfColumns ;columnIndex++ ) {
+      pos.columnIndex = columnIndex;
+      CU_ASSERT_EQUAL( trn_grid_get_cell(grid, pos), TRN_TETROMINO_VOID);
+    }
+  }
 }
 
 
@@ -658,45 +779,51 @@ void stack_some_pieces()
 int main()
 {
   trn_init();
-  CU_pSuite suitePiece = NULL;
   CU_pSuite Suite_grid = NULL;
+  CU_pSuite Suite_game = NULL;
+  CU_pSuite suitePiece = NULL;
   CU_pSuite suiteFunctional = NULL;
 
 
-   /* initialize the CUnit test registry */
-   if (CUE_SUCCESS != CU_initialize_registry())
-      return CU_get_error();
+  /* initialize the CUnit test registry */
+  if (CUE_SUCCESS != CU_initialize_registry())
+    return CU_get_error();
 
-   /* Create TrnGrid test suite */
-   ADD_SUITE_TO_REGISTRY(Suite_grid)
-   ADD_TEST_TO_SUITE(Suite_grid,test_grid_new_destroy)
-   ADD_TEST_TO_SUITE(Suite_grid,test_grid_set_get_cell)
-   ADD_TEST_TO_SUITE(Suite_grid,test_piece_position_in_grid)
-   ADD_TEST_TO_SUITE(Suite_grid,test_grid_set_cells_with_piece)
-   ADD_TEST_TO_SUITE(Suite_grid,TestGridCellIsInGrid)
-   ADD_TEST_TO_SUITE(Suite_grid,TestGridCellIsInGridAndIsVoid)
-   ADD_TEST_TO_SUITE(Suite_grid,TestGridCanSetCellsWithPiece)
-   ADD_TEST_TO_SUITE(Suite_grid,test_grid_pop_row_and_make_above_fall)
-   ADD_TEST_TO_SUITE(Suite_grid,test_grid_find_last_complete_row_index)
-   /*ADD_TEST_TO_SUITE(Suite_grid,test_set_row_to_zero)*/
-   /*ADD_TEST_TO_SUITE(Suite_grid,test_set_grid_to_zero)*/
+  /* Create TrnGrid test suite */
+  ADD_SUITE_TO_REGISTRY(Suite_grid);
+  ADD_TEST_TO_SUITE(Suite_grid, test_grid_new_destroy);
+  ADD_TEST_TO_SUITE(Suite_grid, test_grid_set_get_cell);
+  ADD_TEST_TO_SUITE(Suite_grid, test_piece_position_in_grid);
+  ADD_TEST_TO_SUITE(Suite_grid, test_grid_set_cells_with_piece);
+  ADD_TEST_TO_SUITE(Suite_grid, TestGridCellIsInGrid);
+  ADD_TEST_TO_SUITE(Suite_grid, TestGridCellIsInGridAndIsVoid);
+  ADD_TEST_TO_SUITE(Suite_grid, TestGridCanSetCellsWithPiece);
+  ADD_TEST_TO_SUITE(Suite_grid, test_grid_pop_row_and_make_above_fall);
+  ADD_TEST_TO_SUITE(Suite_grid, test_grid_find_last_complete_row_index);
+  ADD_TEST_TO_SUITE(Suite_grid, test_clear_row);
+  ADD_TEST_TO_SUITE(Suite_grid, test_set_grid_to_zero);
 
-   /* Create TrnPiece test suite */
-   ADD_SUITE_TO_REGISTRY(suitePiece )
-   ADD_TEST_TO_SUITE(suitePiece, test_piece_move_to_left)
-   ADD_TEST_TO_SUITE(suitePiece, test_piece_move_to_right)
-   ADD_TEST_TO_SUITE(suitePiece, test_piece_move_to_bottom)
-   ADD_TEST_TO_SUITE(suitePiece, test_piece_rotate_clockwise)
+    /* Create TrnGame test suite */
+  ADD_SUITE_TO_REGISTRY(Suite_game);
+  ADD_TEST_TO_SUITE(Suite_game, test_game_update_score);
+  ADD_TEST_TO_SUITE(Suite_game, test_complete_rows);
 
-   /* Create functional test suite */
-   ADD_SUITE_TO_REGISTRY(suiteFunctional)
-   ADD_TEST_TO_SUITE(suiteFunctional, stack_some_pieces)
+    /* Create TrnPiece test suite */
+  ADD_SUITE_TO_REGISTRY(suitePiece );
+  ADD_TEST_TO_SUITE(suitePiece, test_piece_move_to_left);
+  ADD_TEST_TO_SUITE(suitePiece, test_piece_move_to_right);
+  ADD_TEST_TO_SUITE(suitePiece, test_piece_move_to_bottom);
+  ADD_TEST_TO_SUITE(suitePiece, test_piece_rotate_clockwise);
 
-   /* Run all tests using the CUnit Basic interface */
-   CU_basic_set_mode(CU_BRM_VERBOSE);
-   CU_basic_run_tests();
-   int number_of_tests_failed = CU_get_number_of_tests_failed();
-   CU_cleanup_registry();
+    /* Create functional test suite */
+  ADD_SUITE_TO_REGISTRY(suiteFunctional);
+  ADD_TEST_TO_SUITE(suiteFunctional, stack_some_pieces);
 
-   return number_of_tests_failed;
+    /* Run all tests using the CUnit Basic interface */
+    CU_basic_set_mode(CU_BRM_VERBOSE);
+  CU_basic_run_tests();
+  int number_of_tests_failed = CU_get_number_of_tests_failed();
+  CU_cleanup_registry();
+
+  return number_of_tests_failed;
 }
