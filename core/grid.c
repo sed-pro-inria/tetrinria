@@ -46,12 +46,25 @@ void trn_grid_clear(TrnGrid * const grid)
     trn_grid_fill(grid, TRN_TETROMINO_VOID);
 }
 
+static void trn_grid_fill_row(
+    TrnGrid * const grid, 
+    TrnTetrominoType const type,
+    int const rowIndex)
+{
+    int columnIndex;
+    TrnPositionInGrid pos;
+    pos.rowIndex = rowIndex;
+    for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
+        pos.columnIndex = columnIndex;
+        trn_grid_set_cell(grid, pos, type);
+    }
+}
+
 void trn_grid_fill(TrnGrid * const grid, TrnTetrominoType type)
 {
     int rowIndex;
-    int columnIndex;
     for (rowIndex = 0 ; rowIndex < grid->numberOfRows; rowIndex++) {
-	trn_grid_set_row(grid,rowIndex,type);
+        trn_grid_fill_row(grid, type, rowIndex);
     }
 }
 
@@ -278,16 +291,5 @@ void trn_grid_clear_row(TrnGrid * const grid, int const rowIndex)
   for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
     pos.columnIndex = columnIndex;
     trn_grid_set_cell(grid, pos, TRN_TETROMINO_VOID);
-  }
-}
-
-void trn_grid_set_row(TrnGrid * const grid, int const rowIndex,TrnTetrominoType const type)
-{
-  TrnPositionInGrid pos;
-  pos.rowIndex = rowIndex;
-  int columnIndex;
-  for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
-    pos.columnIndex = columnIndex;
-    trn_grid_set_cell(grid, pos, type);
   }
 }
