@@ -46,9 +46,16 @@
     </Operator>
     
     <!-- Structure names must begin with a small letter  -->
+    <!--
     <Struct>
       <regex>[a-z]<regex>
     </Struct>
+    
+    <InternalVariables>
+		<regex>[a-z]</regex>
+		<alignment>0</alignment>
+    </InternalVariables>
+    -->
     
     <!-- Typedef names must begin with a capital letter  -->
     <Typedefs>
@@ -58,7 +65,7 @@
     <!-- Function names must begin with a small letter  -->
     <!-- Function bodies must not contain more than 10 lines  -->
     <Functions>
-      <regex>[a-z]</regex>
+      <regex>RGB|[a-z]</regex>
       <length>10</length>
     </Functions>
     
