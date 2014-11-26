@@ -46,14 +46,25 @@ void trn_grid_clear(TrnGrid * const grid)
     trn_grid_fill(grid, TRN_TETROMINO_VOID);
 }
 
+void trn_grid_fill_row(
+    TrnGrid * const grid, 
+    TrnTetrominoType const type,
+    int const rowIndex)
+{
+    int columnIndex;
+    TrnPositionInGrid pos;
+    pos.rowIndex = rowIndex;
+    for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
+        pos.columnIndex = columnIndex;
+        trn_grid_set_cell(grid, pos, type);
+    }
+}
+
 void trn_grid_fill(TrnGrid * const grid, TrnTetrominoType type)
 {
     int rowIndex;
-    int columnIndex;
     for (rowIndex = 0 ; rowIndex < grid->numberOfRows; rowIndex++) {
-        for (columnIndex = 0 ; columnIndex < grid->numberOfColumns ; columnIndex++) {
-            grid->tetrominoTypes[rowIndex][columnIndex] = type;
-        }
+        trn_grid_fill_row(grid, type, rowIndex);
     }
 }
 
