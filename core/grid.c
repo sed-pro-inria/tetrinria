@@ -141,13 +141,19 @@ bool trn_grid_equal(TrnGrid const * const left, TrnGrid const * const right)
     TrnPositionInGrid pos;
     int rowIndex;
     int columnIndex;
+    TrnTetrominoType left_type, right_type;
 
     for (rowIndex = 0 ; rowIndex < left->numberOfRows ; rowIndex++) {
         pos.rowIndex = rowIndex;
         for (columnIndex = 0 ; columnIndex < left->numberOfColumns ; columnIndex++) {
             pos.columnIndex = columnIndex;
             if (trn_grid_get_cell(left, pos) != trn_grid_get_cell(right,pos)) {
-               printf("sameGrid: (%u,%u): %u VS %u\n",pos.rowIndex, pos.columnIndex, trn_grid_get_cell(left, pos), trn_grid_get_cell(right,pos));
+               left_type = trn_grid_cell(left, pos);
+               right_type = trn_grid_cell(left, pos);
+               printf("sameGrid: (%u,%u): %u VS %u\n",
+                      pos.rowIndex, pos.columnIndex,
+                      left_type, 
+                      right_type);
                return false; 
             }
         }

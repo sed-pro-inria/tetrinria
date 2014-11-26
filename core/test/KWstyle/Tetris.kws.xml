@@ -4,5 +4,14 @@
 
 <Description>
     <LineLength>81</LineLength>
+
+    <Tabs>
+    1
+    </Tabs>
+
+    <Spaces>
+    3
+    </Spaces>
 </Description>
+
 
