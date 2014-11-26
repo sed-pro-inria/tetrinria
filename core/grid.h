@@ -51,6 +51,8 @@ bool trn_grid_can_set_cells_with_piece(TrnGrid * const grid,
 
 bool trn_grid_equal(TrnGrid const * const left, TrnGrid const * const right);
 
+bool is_row_equal(const int rowIndex, TrnGrid const * const left, TrnGrid const * const right);
+
 void trn_grid_print(TrnGrid const * const grid);
 
 bool trn_grid_is_row_complete(TrnGrid const * const grid, int const rowIndex);
