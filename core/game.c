@@ -163,11 +163,19 @@ void trn_game_check_complete_rows(TrnGame* game)
       ++lines_count;
     }
   }
+
+   printf("lines_count: %d\n", lines_count);
+   printf("score: %d\n", game->score);
+  trn_game_update_score(game, lines_count);
   game->lines_count += lines_count;
+   printf("lines count: %d\n", game->lines_count);
+   printf("lines per level: %d\n", LINES_PER_LEVEL * (game->level+1));
+   printf("level: %d\n", game->level);
   if (game->lines_count > LINES_PER_LEVEL * (game->level+1))
   {
     ++game->level;
   }
+   printf("level: %d\n", game->level);
 }
 
 void trn_game_update_score(TrnGame* game, int const lines_count)
