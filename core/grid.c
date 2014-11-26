@@ -46,7 +46,7 @@ void trn_grid_clear(TrnGrid * const grid)
     trn_grid_fill(grid, TRN_TETROMINO_VOID);
 }
 
-void trn_grid_fill_row(
+static void trn_grid_fill_row(
     TrnGrid * const grid, 
     TrnTetrominoType const type,
     int const rowIndex)
@@ -149,22 +149,31 @@ bool trn_grid_equal(TrnGrid const * const left, TrnGrid const * const right)
         return false;
 
     // Compare grid values.
-    TrnPositionInGrid pos;
     int rowIndex;
-    int columnIndex;
-
     for (rowIndex = 0 ; rowIndex < left->numberOfRows ; rowIndex++) {
-        pos.rowIndex = rowIndex;
-        for (columnIndex = 0 ; columnIndex < left->numberOfColumns ; columnIndex++) {
-            pos.columnIndex = columnIndex;
-            if (trn_grid_get_cell(left, pos) != trn_grid_get_cell(right,pos)) {
-               printf("sameGrid: (%u,%u): %u VS %u\n",pos.rowIndex, pos.columnIndex, trn_grid_get_cell(left, pos), trn_grid_get_cell(right,pos));
-               return false; 
-            }
-        }
+	if (! is_row_equal(rowIndex, left, right) ) {
+	  return false;
+	}
     }
     return true;
 }
+
+bool is_row_equal(const int rowIndex, TrnGrid const * const left, TrnGrid const * const right)
+{
+  TrnPositionInGrid pos;
+  pos.rowIndex = rowIndex;
+  int columnIndex;
+  for (columnIndex = 0 ; columnIndex < left->numberOfColumns ; columnIndex++) {
+    pos.columnIndex = columnIndex;
+    TrnTetrominoType LeftType = trn_grid_get_cell(left, pos);
+    TrnTetrominoType RightType = trn_grid_get_cell(right, pos);
+    if ( LeftType != RightType) {
+      return false;
+    }
+  }
+  return true;
+}
+
 
 void trn_grid_print(TrnGrid const * const grid)
 {
