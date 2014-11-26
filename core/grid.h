@@ -20,6 +20,8 @@ void trn_grid_clear(TrnGrid * const grid);
 
 void trn_grid_fill(TrnGrid * const grid, TrnTetrominoType type);
 
+void trn_grid_set_row(TrnGrid * const grid, int const rowIndex,TrnTetrominoType const type);
+
 void trn_grid_set_cell(TrnGrid * const grid,
                        TrnPositionInGrid const pos,
                        TrnTetrominoType const type);
